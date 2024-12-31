@@ -1,7 +1,7 @@
 name = "EE546_W25"
 version = "0.1.0"
 keywords = ["math"]
-defaultTargets = ["EE546W25"]
+defaultTargets = ["Lectures","Homework"]
 
 [leanOptions]
 pp.unicode.fun = true # pretty-prints `fun a ↦ b`
@@ -12,4 +12,4 @@ name = "mathlib"
 scope = "leanprover-community"
 
 [[lean_lib]]
-name = "EE546W25"
+name = "EE546_W25"
