@@ -387,7 +387,11 @@ example : (p ∧ (¬p)) → q :=
 
 
 
+/- # IN CLASS EXERCISES
 
+- TODO
+
+-/
 
 
 

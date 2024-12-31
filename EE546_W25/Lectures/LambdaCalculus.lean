@@ -573,6 +573,16 @@ This idea is not merely cute. By building on it, as Lean and similar tools do, o
 
 
 
+/- # IN CLASS EXERCISES
+
+- TODO
+
+
+
+-/
+
+
+
 
 
 

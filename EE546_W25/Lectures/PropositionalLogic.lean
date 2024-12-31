@@ -515,6 +515,21 @@ And we're done! This is complicated though. Clearly we need a proof assistant to
 
 
 
+/- # IN CLASS EXERCISES
+
+- Prove ∅ ⊢ p → (p ∨ q)
+- Prove ∅ ⊢ (p ∨ q) → (q ∨ p)
+
+-/
+
+
+
+
+
+
+
+
+
 
 
 

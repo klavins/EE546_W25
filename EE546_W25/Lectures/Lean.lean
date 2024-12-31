@@ -317,5 +317,34 @@ def remove_zeros (L : List ℕ) : List ℕ := match L with
 
 /- # DOCUMENTATION
 
+- Loogle (It's Google for Lean)
+  https://loogle.lean-lang.org/
+
+- Lean Theorem Proving Documentation
+  https://lean-lang.org/theorem_proving_in_lean4/title_page.html
+
+- Lean Functional Programmin g
+  https://lean-lang.org/functional_programming_in_lean/title.html
+
+- Lean Metaprogramming (Advanced!)
+  https://leanprover-community.github.io/lean4-metaprogramming-book/
+
+- Mathlib (Will eventually contain all of mathematics)
+  https://github.com/haruhisa-enomoto/mathlib4-all-tactics/blob/main/all-tactics.md
+
+- The Standard Library
+  https://github.com/leanprover/lean4/blob/ffac974dba799956a97d63ffcb13a774f700149c/src/Init/Prelude.lean
+
+-/
+
+
+
+
+
+
+/- # IN CLASS EXERCISES
+
+  - Install Lean
+  - Review HW1
 
 -/

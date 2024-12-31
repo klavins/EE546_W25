@@ -463,6 +463,15 @@ so that the type of A is an implicit argument to my_lean_theorem. -/
 
 
 
+/- # IN CLASS EXERCISES
+
+- TODO
+
+-/
+
+
+
+
 
 /- # REFERENCES
 
