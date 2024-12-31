@@ -1,7 +1,7 @@
 name = "EE546_W25"
 version = "0.1.0"
 keywords = ["math"]
-defaultTargets = ["Lectures","Homework"]
+defaultTargets = ["EE546_W25"]
 
 [leanOptions]
 pp.unicode.fun = true # pretty-prints `fun a ↦ b`

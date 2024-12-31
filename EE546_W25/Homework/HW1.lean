@@ -21,7 +21,7 @@ supposing your git username is `turing` to get your code. I will pull subsequent
 
 from within that directory. Homework files should restate each problem (just copy and paste the problem statement. Textual answers should be written as comments. Lean code should be executable assuming Mathlib is installed and produce no errors. If you are stuck on part of a theorem, use `sorry` for partial credit. -/
 
-/- # EXERCISES
+/- # EXERCISES TO TURN IN
 
 1. Describe procedures by which one might justify the following statements, or argue that they are not justifiable.
 
@@ -47,5 +47,17 @@ from within that directory. Homework files should restate each problem (just cop
 5. (Lean) State the `Twin Prime Conjecture` as a theorem in Lean and put `sorry` as its proof. You can use the definition of primality in Mathlib by importing `Mathlib.Data.Nat.Prime.Defs` and using `Nat.prime`.
 
 6. (Lean) Define a function called list_double that takes a list of natural numbers and returns a list in which each number is doubled. For example, list_double [2,5,7] would return [4,10,14]. Evaluate your function on a few examples.
+
+# ADDITIONAL EXERCISES
+
+i. Consider [this paper](https://www.nature.com/articles/483531a) in which authors attemped to repreduce 53 scientific results, but were only able to confrm 6. Apparantly either many published results are false, or what is published is not a complete description of the result. In the latter case, where might the remaining knowledge reside?
+
+ii. For each of the following areas, describe how knowledge is most commonly represented:
+    - Electronic circuits
+    - Mathematical theorems
+    - Baking
+    - Olympic weightlifting
+
+iii. Consider Ohm's law stating that V = IR. What experimental context needs to be given tho this statement for it to make sense? Are there examples where it is not true?
 
 -/
