@@ -320,6 +320,9 @@ def remove_zeros (L : List ℕ) : List ℕ := match L with
 - Loogle (It's Google for Lean)
   https://loogle.lean-lang.org/
 
+- Zulip Chat (Don't abuse this -- ask prof and classmates first)
+  https://leanprover.zulipchat.com/
+
 - Lean Theorem Proving Documentation
   https://lean-lang.org/theorem_proving_in_lean4/title_page.html
 
