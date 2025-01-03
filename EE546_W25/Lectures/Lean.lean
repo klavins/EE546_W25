@@ -1,4 +1,39 @@
+/- --------------------------------------------------------------------------
+ -
+ -
+ -
+ -
+ -
+ -
+ -
+ -                                     EE 546
+ -
+ -                             **INSTALLING LEAN 4**
+ -
+ -                 DEPARTMENT OF ELECTRICAL AND COMPUTER ENGINEERING
+ -                            UNIVERISITY OF WASHINGTON
+ -                               PROF.  ERIC KLAVINS
+ -
+ -                                   WINTER 2025
+ -
+ -
+ -
+ -
+ -
+ -
+ -
+ -
+ -
+ -
+ ------/
+
 import Mathlib.Data.Nat.Prime.Defs
+
+
+
+
+
+
 
 /- # INSTALLING LEAN
 

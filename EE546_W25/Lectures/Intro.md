@@ -7,8 +7,8 @@
 #
 #                                  EE546 - W25
 #
-#                     Knowledge Representation and Reasoning
-#                                  Introduction
+#                     `Knowledge Representation and Reasoning`
+#                                  `Introduction`
 #
 #                 DEPARTMENT OF ELECTRICAL AND COMPUTER ENGINEERING
 #                            UNIVERISITY OF WASHINGTON
@@ -65,6 +65,26 @@ We'll go around the room an introduce ourselves:
     - Learn to program in Lean
     - Learn to prove theorems with Lean
     - Apply these tools to a variety of engineering problems
+
+
+
+
+
+
+
+
+
+
+
+
+
+# COURSE MATERIALS
+
+Canvas: https://canvas.uw.edu/courses/1789473?for_reload=1
+Github: https://github.com/klavins/EE546_W25 
+
+
+
 
 
 
@@ -366,7 +386,7 @@ NOTE: `Syntax subsumes the rest`
 
 # PROJECTS
 
-  Scope: Prodce a draft of a six page technical conference paper.
+  Scope: Produce a draft of a six page technical conference paper.
 
   Ideas: 
 
