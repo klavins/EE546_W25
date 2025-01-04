@@ -128,7 +128,7 @@ Church's paper on the subject is quite complicated, elucidating ideas that we qu
 
 
 
-/- # TYPES AND TERMS
+/- # TYPES
 
 The `simply typed lambda calculus` is an extremely simple programming language that nevertheless captures the essence of computation. It uses type expressions and terms that have those types. We start with the types. First, we assume a base type. In Lean the base type is called Type. You can ask lean what Type is using the #check directive (which stands for "Type Check"). -/
 
@@ -149,6 +149,10 @@ The `simply typed lambda calculus` is an extremely simple programming language t
 
 
 
+
+
+
+
 /-  # TYPE VARIABLES AND APPLICATIONS
 
 You can also define type variables using def -/
@@ -156,19 +160,53 @@ You can also define type variables using def -/
 def A := Type
 def B := Type → Type
 
-/- Which looks a bit more like what you would see in a textbook on type theory. Next, we define the terms of the calculus. These the are programs. We start with `variables`, for example x and f, which we declare in Lean as follows: -/
+/- Which looks a bit more like what you would see in a textbook on type theory. Now you can construct more types. -/
 
-variable (x : A) (f : A → A)
+#check A → B
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/- # TERMS
+
+Next, we define the terms of the lambda calculus. These are the programs. We start with `variables`, for example x and f, which we declare in Lean as follows: -/
+
+variable (x : A)
+variable (f : A → A)
 #check x
 #check f
 
-/- What we've said here is that x is a simple object with type A, while f is an function type from A into A. Next we have `applications`. These have the form e₁ e₁ where e₁ and e₂ are terms. For example -/
+/- What we've said here is that x is a simple object with type A, while f is an function type from A into A. Next we have `applications`. These have the form e₁ e₁ where e₁ and e₂ are terms. For example, -/
 
 #check f x
 #check f (f x)
 #check f (f (f x))
 
 /- are all applications of terms to terms. -/
+
+
+
+
+
+
+
 
 
 
@@ -182,7 +220,9 @@ Finally, we have `abstractions`, which have the form λ (x : τ) => e where τ i
 #check λ (y : A) => y
 #check λ (g : A → A) => λ (y : A) => g y
 
-/- In the first example, the abstraction defines a function (which, by the way, has no name) that simply returns its argument. That is, it defines the identity function on α. In the second example, the abstraction defines a function that takes another function g and returns yet another abstraction that takes an object y and returns g applied to y. Note that the parentheses groups to the right, so the second example is equivalent to: -/
+/- In the first example, the abstraction defines a function (which, by the way, has no name) that simply returns its argument. That is, it defines the identity function on α. In the second example, the abstraction defines a function that takes another function g and returns yet another abstraction that takes an object y and returns g applied to y.
+
+Note that the parentheses groups to the right, so the second example is equivalent to: -/
 
 #check λ (g : A → A) => ( λ (y : A) => g y )
 
@@ -226,7 +266,7 @@ def h₂ := λ (g : A → A) => λ (y : A) => g y
 
 /- # TYPE ERRORS
 
-The typed lambda calclus disallows expressions that do not follow typing rules. For example, the following expression produces a type error -/
+The typed lambda calculus disallows expressions that do not follow typing rules. For example, the following expression produces a type error -/
 
 #check_failure λ (g : A) => λ (y : A) => g y
 
@@ -256,7 +296,7 @@ Another example is -/
 
 /- # JUDGEMENTS AND CONTEXTS
 
-Note that when you hover over a #check directive, Lean shows the results of the type derivation as what is called a `judgement`. It is an expression in two parts separated by a `turnstile` ⊢. For example: #check h₁ x produces
+When you hover over a #check directive, Lean shows the results of the type derivation as what is called a `judgement`. It is an expression in two parts separated by a `turnstile` ⊢. For example: #check h₁ x produces
 
   x : A
   f : A → A
@@ -279,13 +319,13 @@ the variable f is not bound to an enclosing lambda. In this case it is called `f
 
 An abstraction can be `applied` to another term to produce a new term. This is called β-reduction. It is defined like this:
 
-  (λ (x:α) => M) N —β—> M[x:=N]
+  (λ (x:α) => M) N   —β—>   M[x:=N]
 
 The notation M[x:=N] means: take all `free` occurances of x in M and replace them with the expression N. We have to be careful that N does not use the variable x freely. Lean does this internally for us The bound version of x above is, internally, a completely unique variable that is just displayed as x for our convenience.
 
 To apply β-reduction in Lean, you can use the #reduce directive. For example, we can see that
 
-  (λ (g : α → α) => λ (y : α) => g y) f —β—> λ (y : α) => f y
+  (λ (g : α → α) => λ (y : α) => g y) f   —β—>   λ (y : α) => f y
 
 This is obtained by replacing g in g y with f, as the rule describes. You can have Lean do this for you using the #reduce directive. The #reduce directive needs permission to be aggressive, which we can do using the (types := true) option. -/
 

@@ -78,12 +78,19 @@ We'll go around the room an introduce ourselves:
 
 
 
-# COURSE MATERIALS
+# DETAILS
 
-Canvas: https://canvas.uw.edu/courses/1789473?for_reload=1
-Github: https://github.com/klavins/EE546_W25 
+  Course Materials
 
+  - Canvas: https://canvas.uw.edu/courses/1789473?for_reload=1
+  - Github: https://github.com/klavins/EE546_W25 
 
+  Structure
+
+  - Lecture + in class work
+  - Weekly(ish) homeworks with me grading everything
+    - 99% Lean 
+  - A project
 
 
 

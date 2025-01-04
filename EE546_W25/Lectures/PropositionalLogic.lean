@@ -146,15 +146,42 @@ The goal is this chapter is to define a mathematical framework in which we prove
   - To prove p → q we supply a method for converting a proof of p into a proof of q
   - To prove ¬p = p → ⊥ we show how a proof of p produces an absurd statement.
 
-
-
-
 -/
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+/- # EXAMPLE CONSTRUCTIVE PROOF IN LEAN -/
+
+example (p q r : Prop) : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) :=
+  Iff.intro
+    (fun h : p ∧ (q ∨ r) =>
+      have hp : p := h.left
+      have hqr : q ∨ r := h.right
+      Or.elim hqr
+        (fun hq : q => Or.inl (And.intro hp hq))
+        (fun hr : r => Or.inr (And.intro hp hr))
+    )
+    (fun h : (p ∧ q) ∨ (p ∧ r) =>
+      Or.elim h
+        (fun hpq : p ∧ q => And.intro hpq.left (Or.inl hpq.right))
+        (fun hpr : p ∧ r => And.intro hpr.left (Or.inr hpr.right))
+    )
+
+/- By the end of next week, this will be easy to understand! -/
 
 
 
