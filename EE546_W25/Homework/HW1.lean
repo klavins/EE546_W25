@@ -11,7 +11,7 @@ b. Edit the file `Basic.lean` so that it has the code from the "TESTING YOUR INS
 
 c. Create a file called `HW1.lean` in the same directory as Basic.lean.
 
-d. Make a github repo for you project using the same name. You will use this repo to turn in your homework. Make the repo private and share it with `klavins` so I can access it. Initially I will do
+d. Make a github repo for you project using the same name. You will use this repo to turn in your homework. Make the repo `private` and share it with `klavins` so I can access it. Initially I will do
 
   git clone https://github.com/turing/EE546_Turing.git
 
@@ -19,7 +19,9 @@ supposing your git username is `turing` to get your code. I will pull subsequent
 
   git pull origin master
 
-from within that directory. Homework files should restate each problem (just copy and paste the problem statement. Textual answers should be written as comments. Lean code should be executable assuming Mathlib is installed and produce no errors. If you are stuck on part of a theorem, use `sorry` for partial credit. -/
+from within that directory. Homework files should restate each problem (just copy and paste the problem statement. Textual answers should be written as comments. Lean code should be executable assuming Mathlib is installed and produce no errors. If you are stuck on part of a theorem, use `sorry` for partial credit.
+
+e. Email klavins@uw.edu with a link to your repository. -/
 
 /- # EXERCISES TO TURN IN
 
@@ -48,7 +50,7 @@ from within that directory. Homework files should restate each problem (just cop
 
 6. (Lean) Define a function called list_double that takes a list of natural numbers and returns a list in which each number is doubled. For example, list_double [2,5,7] would return [4,10,14]. Evaluate your function on a few examples.
 
-# ADDITIONAL EXERCISES
+# ADDITIONAL EXERCISES (NOT TO BE TURNED IN)
 
 i. Consider [this paper](https://www.nature.com/articles/483531a) in which authors attemped to repreduce 53 scientific results, but were only able to confrm 6. Apparantly either many published results are false, or what is published is not a complete description of the result. In the latter case, where might the remaining knowledge reside?
 

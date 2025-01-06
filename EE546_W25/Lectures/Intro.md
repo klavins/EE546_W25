@@ -88,9 +88,16 @@ We'll go around the room an introduce ourselves:
   Structure
 
   - Lecture + in class work
+
   - Weekly(ish) homeworks with me grading everything
+    - Worth 2/3 of the grade
     - 99% Lean 
+    - The first real homework is posted and due Monday
+      - https://github.com/klavins/EE546_W25/blob/main/EE546_W25/Homework/HW1.lean
+    - Also, you need to install Lean by Thursday
+
   - A project
+    - More details to come
 
 
 
@@ -110,7 +117,6 @@ We'll go around the room an introduce ourselves:
 
 
 # WHAT IS KNOWLEDGE?
-
 
 In philosophy, knowledge has many definitions, all of which are fairly loose, but which mainly amount to `cognitive states or beliefs about the world that correspond to actual facts`. The latter half of this definition distiguishes such cognitive states from unsubstantiated beliefs. 
 
@@ -477,7 +483,7 @@ NOTE: `Syntax subsumes the rest`
     - Explainability
     - Provenance
 
-  - If you have always struggled to really understand math, Lean an absolutely amazing self-learning tool. 
+  - If you have always struggled to really understand math, Lean is an absolutely amazing self-learning tool. 
 
 
 

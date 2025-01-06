@@ -10,7 +10,7 @@
  -
  -                               **PROPOSITIONAL LOGIC**
  -
- -                    DEPARTMENT OF ELECTRICAL AND COMPUTER ENGINEERING
+ -                   DEPARTMENT OF ELECTRICAL AND COMPUTER ENGINEERING
  -                              UNIVERISITY OF WASHINGTON
  -                                 PROF.  ERIC KLAVINS
  -
@@ -67,7 +67,7 @@ is a compound proposition that uses the _connective_ "or" to connect two atomic 
 
 for "p or q".
 
-Students used to digital logic will wonder why we are using ∨ instead of the symbol +. The main reason is that + will usually mean actual addition when things get more complicated. Thus, mathematicans have invented a number of new symbols for logical connectives. Here are the most important for our current purposes:
+Students used to digital logic will wonder why we are using ∨ instead of the symbol +. The main reason is that + will usually mean actual addition when things get more complicated. Thus, mathematicans have invented new symbols for logical connectives. Here are the most important for our current purposes:
 
   ¬p               not p
   p ∨ q            p or q
@@ -91,7 +91,7 @@ We also have the propositional ⊥ which denotes `absurdity`. In intuitionistic 
 
 Also note that ↔ is just → in both directions:
 
-  p ↔ q = p → q ∧ q → p
+  p ↔ q  ≡  p → q ∧ q → p
 
 
 
@@ -144,7 +144,7 @@ The goal is this chapter is to define a mathematical framework in which we prove
   - To prove p ∧ q we construct a proof of p and another proof of q.
   - To prove p ∨ q we construct a proof of p or we construct a proof of q.
   - To prove p → q we supply a method for converting a proof of p into a proof of q
-  - To prove ¬p = p → ⊥ we show how a proof of p produces an absurd statement.
+  - To prove ¬p ≡ p → ⊥ we show how a proof of p produces an absurd statement.
 
 -/
 
@@ -168,17 +168,17 @@ The goal is this chapter is to define a mathematical framework in which we prove
 
 example (p q r : Prop) : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) :=
   Iff.intro
-    (fun h : p ∧ (q ∨ r) =>
+    (λ h : p ∧ (q ∨ r) =>
       have hp : p := h.left
       have hqr : q ∨ r := h.right
       Or.elim hqr
-        (fun hq : q => Or.inl (And.intro hp hq))
-        (fun hr : r => Or.inr (And.intro hp hr))
+        (λ hq : q => Or.inl (And.intro hp hq))
+        (λ hr : r => Or.inr (And.intro hp hr))
     )
-    (fun h : (p ∧ q) ∨ (p ∧ r) =>
+    (λ h : (p ∧ q) ∨ (p ∧ r) =>
       Or.elim h
-        (fun hpq : p ∧ q => And.intro hpq.left (Or.inl hpq.right))
-        (fun hpr : p ∧ r => And.intro hpr.left (Or.inr hpr.right))
+        (λ hpq : p ∧ q => And.intro hpq.left (Or.inl hpq.right))
+        (λ hpr : p ∧ r => And.intro hpr.left (Or.inr hpr.right))
     )
 
 /- By the end of next week, this will be easy to understand! -/
@@ -210,7 +210,7 @@ and
 
   There are either a finite number of twin primes, or an infinite number of twin primes.
 
-These statements may be proved some day, but for now, we cannot conclude they are true. -/
+These statements may be proved some day, but for now, we cannot conclude they are true using constructive mathematics. -/
 
 
 
@@ -258,7 +258,9 @@ which reads gamma `entails` φ. Furthermore, if a proposition φ is tautology (m
 
   ⊢ φ
 
-to mean ∅ ⊢ φ. We will define precisely what the entails relationship means next. -/
+to mean ∅ ⊢ φ. We will define precisely what the entails relationship means next.
+
+Note: Scroll back to the Lean proof above and look at the context in the InfoView. -/
 
 
 
@@ -331,7 +333,9 @@ Next we have three rules for the ∧ connective:
   `∧-Elim-Right` —————————————
                     Γ ⊢ ψ
 
-Whenever we see "Intro" that means we are introducing a connective (in this case ∧) into our conclusion. Whenever we see "Elim" that means we are eliminating part of a compound statement in our conclusion. Here, the `And Introduction` rule shows that we can construct a proof of φ ∧ ψ whenever the context contains a proof of φ and a proof of ψ. The `And Elimination` rules allow us to "eliminate" half of the proposition φ ∧ ψ to conclude the weaker statement φ or to conclude the weaker statement ψ. Said differently, if we have a proof of φ∧ψ then we can construct a proof of φ by just eliminating the part of the proof of φ∧ψ that shows ψ. -/
+Whenever we see "Intro" that means we are introducing a connective (in this case ∧) into our conclusion. Whenever we see "Elim" that means we are eliminating part of a compound statement in our conclusion. Here, the `And Introduction` rule shows that we can construct a proof of φ ∧ ψ whenever the context contains a proof of φ and a proof of ψ. The `And Elimination` rules allow us to "eliminate" half of the proposition φ ∧ ψ to conclude the weaker statement φ or to conclude the weaker statement ψ. Said differently, if we have a proof of φ∧ψ then we can construct a proof of φ by just eliminating the part of the proof of φ∧ψ that shows ψ.
+
+Note: These rules are usually read bottom up. -/
 
 
 
