@@ -8,7 +8,7 @@
  -
  -                                     EE 546
  -
- -                             **INSTALLING LEAN 4**
+ -                             **A TOUR OF LEAN 4**
  -
  -                 DEPARTMENT OF ELECTRICAL AND COMPUTER ENGINEERING
  -                            UNIVERISITY OF WASHINGTON
@@ -58,7 +58,7 @@ This will put a ∀ in the upper right. From there, you can create a new project
 
 
 
-/- # PROJECT TYPES
+/- # LEAN "PROJECT" TYPES
 
 With the VS Code Extension, you can install two types of projects:
 
@@ -236,16 +236,17 @@ You can use Lean to evaluate expressions using the #eval command. The result wil
 We will go into proofs in great detail next week. For now, know that you can state theorems using the `theorem` keyword. -/
 
 theorem my_amazing_result (p : Prop) : p → p :=
-  id
+  λ h => h
 
 /- In this expression,
 
   my_amazing_result is the name of the theorem
-  (p : Prop) is an assumption that p is a proposition (true or false statement)
-  p → p is the actual theory
-  := delinates the statement of the theorem from the proof
-  λ h => h
-  id (the identity function) is the proof
+  (p : Prop)        is an assumption that p is a proposition
+                    (true or false statement)
+  p → p             is the actual theory
+  :=                delinates the statement of the theorem
+                    from the proof
+  λ h => h          (the identity function) is the proof
 
 You can use your theorems to prove other theorems: -/
 
@@ -382,7 +383,8 @@ def remove_zeros (L : List ℕ) : List ℕ := match L with
 
 /- # IN CLASS EXERCISES
 
-  - Install Lean
+  - Install Lean now if you would like to
   - Review HW1
+  - Fill out a "mud card"
 
 -/

@@ -28,11 +28,12 @@
 
 # INTRODUCTIONS
 
-We'll go around the room an introduce ourselves:
+We'll go around the room an introduce ourselves.
 
-  - Who are you?
-  - What are your research interests?
-  - What do you want out of the course?
+I'll talk about why I want to teach this course.
+
+
+
 
 
 
@@ -66,6 +67,37 @@ We'll go around the room an introduce ourselves:
     - Learn to prove theorems with Lean
     - Apply these tools to a variety of engineering problems
 
+  My Interests:
+    - Foundations of mathematics
+    - Correctness of programs
+    - Antidisinformation    
+
+
+
+
+
+
+
+
+
+
+
+
+# YOUR INTERESTS (FROM SURVEY)
+
+- Mathematical proof techniques for ML
+- Motion planning robotics
+- Robotic reasoning.
+- What AI can and can't do in math/engineering
+- Trust-worthy AI systems
+- Neuro-symbolic learning
+- Control theory and its different uses. 
+- Programming and/or critical thinking 
+- Hardware/circuit validation
+- Basic theory
+
+
+
 
 
 
@@ -89,7 +121,7 @@ We'll go around the room an introduce ourselves:
 
   - Lecture + in class work
 
-  - Weekly(ish) homeworks with me grading everything
+  - Weekly(ish) homeworks (with me grading everything, yikes)
     - Worth 2/3 of the grade
     - 99% Lean 
     - The first real homework is posted and due Monday
@@ -162,13 +194,13 @@ Thus, we have three notions to consider:
 
 # BELIEFS
 
-One may ask `what is a belief`. Here, we have defined it as a cognitive state. But what is that? If the brain were a computer, we might say that it a cognitive state is a `data structure` of some sort in the brain describing the belief. For example, the computer/brain may be running a simulation of the world in which it is raining -- in the simulation! 
+One may ask `what is a belief`. Here, we have defined it as a cognitive state. But what is that? If the brain were a computer, we might say that a cognitive state is a `data structure` of some sort in the brain describing the belief. For example, the computer/brain may be running a simulation of the world in which it is raining -- in the simulation! 
 
 Alternatively, we could adopt an `empirical` view, meaning that if the subject is questioned about their belief, they make statements consistent with the belief. So, if asked whether it was raining, they would say "yes". 
 
 In either of these cases, it becomes evident that to really understand what it means to know something, one must first understand what a known thing is, either as a computer state or a liguistic/syntactic element. This is the `knowledge representation` problem, although perhaps it ought to be called the `belief representation` problem since we will develop formalisms allowing us to represent beliefs whether they are justified or not, and whether they are true or not.
 
-  Q: What is an example of a fact that some people believe and others do not?
+  Q: Do you think the brain uses data structures to represent knowledge?
 
 
 
@@ -183,7 +215,7 @@ In either of these cases, it becomes evident that to really understand what it m
 
 # EMPERICAL EVIDENCE
 
-What does `justified` mean? Above, we have described `emperical evidence` and `observations`. These notions essentially describe how we come to believe, for example, a "law" of science. We keep making observations, often as about the outcome of experiments, and if they do not contradict our belief (the hypothesis), then we might begin to call that belief a "law". This doesn't mean the law is true! Just that we have never observed anything to the contrary. 
+What does `justified` mean? We described `emperical evidence` and `observations`. These notions essentially describe how we come to believe, for example, a "law" of science. We keep making observations, often as about the outcome of experiments, and if they do not contradict our belief (the hypothesis), then we might begin to call that belief a "law". This doesn't mean the law is true! Just that we have never observed enough evidence to the contrary. 
 
   Q: What is an example of a scientific law? What is the evidence for it?
 
@@ -209,7 +241,7 @@ What does `justified` mean? Above, we have described `emperical evidence` and `o
 
 The notion of `justified` can have another meaning, which is that the belief follows from other beliefs via a sound argument. For example, one might believe the sidewalk is wet *because* it is raining. Whether it actually is raining is one question, but the belief that "raining implies wet sidewalks" is a belief in a new statement that is justified because of some model of the physical world and a logical inference made with respect to that model. 
 
-This type of knowledge is most similar to mathematics. For example, from the definition of prime numbers it follows (via Euclid's theorem) that there are an infinite number of primes. The `proof` of the theorem is the `justification` in this case. 
+This type of knowledge is most similar to mathematics. For example, from the definition of prime numbers it follows (via Euclid's theorem) that there are an infinite number of of them. The `proof` of the theorem is the `justification` in this case. 
 
 Thus, justifications can be either empirical observations or logical arguments. The former may correspond to actual facts or not, while the latter definitely do correspond to actual facts. 
 
@@ -233,7 +265,7 @@ What then is a `fact`?
 
 Without getting too philosophical, an `empirical` fact is a statement about the true nature of the universe. We mere humans may never know which of our beliefs are actual facts, as we are limited to our senses, which can deceive us. 
 
-Alternatively, a `logical` fact is a statement that follos from other statements that are assumed true. This sort of fact can be checked, as with a mathematical proof. 
+Alternatively, a `logical` fact is a statement that follows from other statements that are assumed true. This sort of fact can be checked, as with a mathematical proof. 
 
   - Q: What is an example of an emperical fact?
   - Q: What is an example of a logical fact?
@@ -256,7 +288,7 @@ Alternatively, a `logical` fact is a statement that follos from other statements
 
 # KNOWLEDGE REPRESENTATION
 
-Thus, we have arrived at the first task in this course: It is to understand how to `represent` beliefs, emperical evidence, logical arguments, and facts. And since it is an engineering course, our goal will be to make such representations computer-based so that we can manipulate these notions, enabling our computers to form their own beliefs and justifications.
+The first task in this course is to understand how to `represent` beliefs, emperical evidence, logical arguments, and facts. And since it is an engineering course, our goal will be to make such representations computer-based so that we can manipulate these notions, enabling our computers to form their own beliefs and justifications.
 
 
 
@@ -282,14 +314,14 @@ Thus, we have arrived at the first task in this course: It is to understand how 
 # KINDS OF KNOLWEDGE
 
 - Embodied knowledge
-    - E.g. how to walk
+    - E.g. how to walk (a neuro-genetically encoded control algorithm)
 
 - Scientific knowledge
     - E.g. F = ma or E = mc^2
     - Mathematical models and simulations
 
 - Deductive knowledge
-  - Knowledge that arises from observations through possibly complex reasoning
+  - Knowledge that arises from observations through reasoning
 
 - Engineering knowledge
     - Recipes, procedures
@@ -297,10 +329,12 @@ Thus, we have arrived at the first task in this course: It is to understand how 
     - Computer code
 
 - Mathematical knowledge
-    - Knowledge that arises from assumptions through possibly complex reasoning
+    - Knowledge that arises from assumptions through reasoning
     - E.g. there an infinite number of prime numbers
 
 Q: What are examples of each of these types of knowledge?
+
+Q: Can you think of other types of knowledge?
 
 
 
@@ -322,7 +356,7 @@ Q: What are examples of each of these types of knowledge?
     - Specification languages (Verilog, HTML, SVG, STL)
     - Logic: propositional, first order, second order, specialy (e.g. temporal logic)
 
-NOTE: `Syntax subsumes the rest`
+THESIS: `Syntax subsumes the all other categories` --> In principle, you can write a simulation of pretty much anything, and that simulation would be written with code.
 
   Q: To what extent does an LLM know anything?
   Q: What is the primary source of knowledge for an LLM like Chat GPT?
@@ -342,7 +376,7 @@ NOTE: `Syntax subsumes the rest`
 
   - `Reasoning`: How do deduce new true statements from existing true statements? How do you check your results? How do you automate reasoning?
 
-  - `Soundess`: How do you ensure that everything provable is actually true?
+  - `Soundness`: How do you ensure that everything provable is actually true?
 
   - `Completness`: How do you ensure that everythying true is provable?
 
@@ -352,14 +386,14 @@ NOTE: `Syntax subsumes the rest`
 
   - `The frame problem`: When you formally state that something changes, you also have to formally state that nothing else changes (https://plato.stanford.edu/entries/frame-problem/)
 
-  - And many more ...
+Q: How do LLMs score on all these challenges?
 
 
 
 
 
 
-# BUT WHAT IS THIS COURSE ABOUT? 
+# BUT, REALLY, WHAT IS THIS COURSE ABOUT? 
 
   An introduction to formal logic
     - Propositional Logic
@@ -382,7 +416,7 @@ NOTE: `Syntax subsumes the rest`
     - Analysis
     - Algebraic structures
 
-  Other Topics : Let me know your interests
+  Other Topics : There are a millions directions to go
 
 
 
@@ -399,7 +433,7 @@ NOTE: `Syntax subsumes the rest`
 
 # PROJECTS
 
-  Scope: Produce a draft of a six page technical conference paper.
+  Scope: Produce a draft of a six page technical conference paper with some really nice Lean code as the core contribution.
 
   Ideas: 
 
@@ -414,15 +448,39 @@ NOTE: `Syntax subsumes the rest`
       - e.g. Machine learning
 
     - Formally specify a scientifc theory
-      - e.g. Newtonian physics
+      - e.g. Quantum electrodynamics
 
     - Connect an LLM to Lean to make a proof assistant
-
     - Automaticaaly generate proofs that LLM outputs are correct
-
     - Build a new proof tactic (an algorithm for helping prove stuff)
 
-  We'll return to this list as you learn more abotu Lean.
+  We'll return to this list as you learn more about Lean.
+
+
+
+
+
+
+# SO, WHY NOW?
+
+  - Theorem provers have become so powerful that soon all of math will be taught with them.
+
+  - Disparate tools used in AI, KR, Model Checking, and elsewhere are subsumed by Lean.
+
+  - LLM based reasoning is unreliable, toxic, and horrible. The need for alternatives has never been more important.
+  
+  - Neuro-symbolic approaches may help with
+    - Correctness
+    - Explainability
+    - Provenance
+
+  - If you have always struggled to really understand math, Lean is an absolutely amazing self-learning tool. 
+
+
+
+
+
+
 
 
 
@@ -472,18 +530,6 @@ NOTE: `Syntax subsumes the rest`
 
 
 
-# SO, WHY NOW?
-
-  - Theorem provers have become so powerful that soon all of math will be taught with them.
-
-  - LLM based reasoning is unreliable, toxic, and horrible. The need for alternatives has never been more important.
-  
-  - Neuro-symbolic approaches may help with
-    - Correctness
-    - Explainability
-    - Provenance
-
-  - If you have always struggled to really understand math, Lean is an absolutely amazing self-learning tool. 
 
 
 
