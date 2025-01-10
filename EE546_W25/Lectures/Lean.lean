@@ -183,7 +183,7 @@ Lean is based on type theory. This means that every term has a very well defined
 #check ∃ (x : Nat) , x > 0
 #check λ x => x+1
 #check (4,5)
-#check Nat × Nat
+#check ℕ × ℕ
 #check Type
 
 
@@ -267,7 +267,7 @@ theorem a_less_amazing_result : True → True :=
 Results don't have to be named, which is useful for trying things out or when you don't need the result again. -/
 
 example (p : Prop) : p → p :=
-  id
+  λ h => h
 
 example (p q r : Prop) : (p → q) ∧ (q → r) → (p → r) :=
   λ ⟨ hpq, hqr ⟩ hp => hqr (hpq hp)
@@ -300,7 +300,11 @@ The examples above use fairly low level Lean expressions to prove statements. Le
 Proving results uses the super `sorry` keyword. Here is an example of Tactics and sorry. -/
 
 example (p q r : Prop) : (p → q) ∧ (q → r) → (p → r) := by
-  sorry
+  intro h hp
+  have hpq := h.left
+  have hqr := h.right
+  exact hqr (hpq hp)
+
 
 /- which can be built up part by part into -/
 
@@ -333,7 +337,7 @@ Here is an example program: -/
 
 def remove_zeros (L : List ℕ) : List ℕ := match L with
   | [] => List.nil
-  | x::L' => if x = 0 then remove_zeros L' else x::(remove_zeros L')
+  | x::Q => if x = 0 then remove_zeros Q else x::(remove_zeros Q)
 
 #check remove_zeros
 
@@ -362,7 +366,7 @@ def remove_zeros (L : List ℕ) : List ℕ := match L with
 - Lean Theorem Proving Documentation
   https://lean-lang.org/theorem_proving_in_lean4/title_page.html
 
-- Lean Functional Programmin g
+- Lean Functional Programming
   https://lean-lang.org/functional_programming_in_lean/title.html
 
 - Lean Metaprogramming (Advanced!)

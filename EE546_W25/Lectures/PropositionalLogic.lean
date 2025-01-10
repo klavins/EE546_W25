@@ -34,14 +34,14 @@ A `proposition` is a statement that is either true or false. The following are e
   - It is raining outside.
   - All cats are animals.
   - Darth Vader is Luke's Father.
-  - Four is greater than three.
+  - Four is greater than five.
 
 In propositional logic, we assign `propositional variables` to represent the value of these statments. So we might make the assignments:
 
   p := It is raining outside.
   q := All cats are animals.
   r := Darth Vader is Luke's Father.
-  s := Four is greater than three.
+  s := Four is greater than five.
 
 Note that we are not saying p is the English language sentence "It is raining outside". We are not doing natural language processing here. Rather, we are saying that p is a `propositional variable` that is true when it actually is raining outside, and false otherwise. To determine the truth value of p, we would need some way to check whether it is raining outside (as well as some specifics like outside _where_ and _when_? For now, we'll just be informal about such things). -/
 
@@ -82,22 +82,23 @@ Students used to digital logic will wonder why we are using ∨ instead of the s
 
 
 
-
-/- # NOT, FALSE AND IF AND ONLY IF
+/- # NOT AND IF AND ONLY IF
 
 We also have the propositional ⊥ which denotes `absurdity`. In intuitionistic logic, ¬p is just shorthand for
 
   p → ⊥
 
-Also note that ↔ is just → in both directions:
+In Lean, ⊥ is denoted by False:
+
+-/
+
+#check False
+
+/-
+
+Also note that ↔ is just shorthand for → in both directions:
 
   p ↔ q  ≡  p → q ∧ q → p
-
-
-
-
-
-
 
 -/
 
@@ -137,6 +138,8 @@ be a set of propositional variables. Then the set of propositions Φ is defined 
 
 
 
+
+
 /- # CONSTRUCTIVE PROOFS
 
 The goal is this chapter is to define a mathematical framework in which we prove statements by constructing proofs. In particular,
@@ -144,7 +147,7 @@ The goal is this chapter is to define a mathematical framework in which we prove
   - To prove p ∧ q we construct a proof of p and another proof of q.
   - To prove p ∨ q we construct a proof of p or we construct a proof of q.
   - To prove p → q we supply a method for converting a proof of p into a proof of q
-  - To prove ¬p ≡ p → ⊥ we show how a proof of p produces an absurd statement.
+  - To prove ¬p (which is p → ⊥) we supply a method to convert a proof of p to ⊥
 
 -/
 
