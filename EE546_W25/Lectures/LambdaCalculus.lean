@@ -32,7 +32,7 @@
 
 The `lambda calculus` was introduced in the 1930s by Alonzo Church as a way to represent how functions on natural numbers are calculated using symbols. The goal was to determine whether every function on the natural numbers had an effective means of being calculating.
 
-Said differently, the question is: Does every function have an algorithm? Astonishingly, Church showed that the answer is "no". In fact, there are functions on the natural numbers for which there is no effective algorithm for computing. Church's 1935 paper "An unsolvable problem in elementary number theory" proved this result. -/
+Said differently, the question is: Does every function have an algorithm? Astonishingly, Church showed that the answer is "no". In fact, there are functions on the natural numbers for which there is no effective algorithm. Church's 1935 paper "An unsolvable problem in elementary number theory" proved this result. -/
 
 
 
@@ -69,7 +69,9 @@ The Church-Turing Thesis is the observation that _all_ formalizations of computa
 
 /- # PROGRAMMING LANGUAGES
 
-Thus, the λ-calclus and the formal notion of computation has its roots in the foundations of mathematics. Later, around the 1960s, linguists and computer scientists realized that the λ-calculus was an useful framework for the theory and design of programming languages. Simultaenously, logicians were becoming frustrated with Set Theory as a foundation for mathematics and started exploring Type Theory as an alternative. Around the 1990s many of these ideas came together, especially through the work of Thierry Coquand, it was that typed programming languages were not only an ideal foundation for all of mathematics, they could be used to develop computational proof assistants and theoerm provers. -/
+Thus, the λ-calclus and the formal notion of computation has its roots in the foundations of mathematics. Later, around the 1960s, linguists and computer scientists realized that the λ-calculus was an useful framework for the theory and design of programming languages.
+
+Simultaenously, logicians were becoming frustrated with Set Theory as a foundation for mathematics and started exploring Type Theory as an alternative. Around the 1990s many of these ideas came together, especially through the work of Thierry Coquand, it was that typed programming languages were not only an ideal foundation for all of mathematics, they could be used to develop computational proof assistants and theoerm provers. -/
 
 
 
@@ -112,7 +114,7 @@ For example, X → Y could mean "If this sentence is true, then 1 > 0." Any fram
 
 /- # TYPES
 
-One solution was to give _types_ to all terms in the lambda calculus. We will see below that a self referential programs are impossible to assign types to. A the same time, infinite loops are no longer allowed, making the formalism not as powerful from a computational point of view.
+One solution was to give _types_ to all terms in the lambda calculus. We will see below that certain self referential programs are impossible to assign types to. A the same time, infinite loops are no longer allowed, making the formalism not as powerful from a computational point of view.
 
 Thus was born the simply-typed λ-calculus. Eventually, more complicated types were added, in which type definitions could depend on other types and even terms. Most modern programming languages and some logical frameworks have these properties.
 
@@ -140,7 +142,7 @@ The `simply typed lambda calculus` is an extremely simple programming language t
 #check Type → (Type → Type)
 #check (Type → Type) → Type
 
-/- That is, whenevever τ is a type, so is τ → τ. Arrow types are supposed to denote function types. So τ → τ is the type of any function that takes objects in τ and returns objects in τ. Note that the arrow → associates to the right. So The second expression above is equivalent to Type → Type → Type. -/
+/- That is, whenevever τ is a type, so is τ → τ. Arrow types are supposed to denote function types. So τ → τ is the type of any function that takes objects in τ and returns objects in τ. Note that the arrow → associates to the right. So the second expression above is equivalent to Type → Type → Type. -/
 
 
 
@@ -188,8 +190,9 @@ def B := Type → Type
 
 Next, we define the terms of the lambda calculus. These are the programs. We start with `variables`, for example x and f, which we declare in Lean as follows: -/
 
-variable (x : A)
-variable (f : A → A)
+variable (x : A)               -- declare a variable x of type a
+variable (f : A → A)           -- declare a function f from A into A
+
 #check x
 #check f
 
@@ -215,18 +218,18 @@ variable (f : A → A)
 
 /- # TYPE ABSTRACTIONS
 
-Finally, we have `abstractions`, which have the form λ (x : τ) => e where τ is a type and e is a term. The x in this expression is said to be `bound` to the abstraction. It is essentially a dummy variable and could be renamed without any change in meaning. This is similar to the dummy variable seen in integration in normal calculus. For example, the following are terms in the λ-calculus:  -/
+Finally, we have `abstractions`, which have the form λ (x : τ) => e where τ is a type and e is a term. The x in this expression is said to be `bound` to the abstraction. It is a dummy variable and could be renamed without any change in meaning. For example, the following are terms in the λ-calculus:  -/
 
 #check λ (y : A) => y
 #check λ (g : A → A) => λ (y : A) => g y
 
-/- In the first example, the abstraction defines a function (which, by the way, has no name) that simply returns its argument. That is, it defines the identity function on α. In the second example, the abstraction defines a function that takes another function g and returns yet another abstraction that takes an object y and returns g applied to y.
+/- In the first example, the abstraction defines a function that simply returns its argument. In the second example, the abstraction defines a function that takes another function g and returns yet another abstraction that takes an object y and returns g applied to y.
 
-Note that the parentheses groups to the right, so the second example is equivalent to: -/
+Note that the parentheses group to the right, so the second example is equivalent to: -/
 
 #check λ (g : A → A) => ( λ (y : A) => g y )
 
-/- In Lean, we can also abbreviate such chained lamdba abstractions by writing: -/
+/- In Lean, we can also abbreviate a chained lamdba abstractions by writing: -/
 
 #check λ (g : A → A) (y : A) => g y
 
@@ -241,11 +244,11 @@ Note that the parentheses groups to the right, so the second example is equivale
 
 All `terms have types`. These can be found using type theory's `derivation rules`:
 
-  VAR: Variables are declared either globally to have a given type (using Lean's variable command) or in a λ-expression.
+  `VAR`: Variables are declared either globally to have a given type (using Lean's variable command) or are bound in a λ-expression.
 
-  ABST: The type of an abstraction is always of the form A → B where A is the type of the argument and B is the type of the result.
+  `ABST`: The type of an abstraction is always of the form A → B where A is the type of the argument and B is the type of the result.
 
-  APPL: If f : A → B and x : A, then the type of the application of f to x is B.
+  `APPL`: If f : A → B and x : A, then the type of the application of f to x is B.
 
 These derivation rules are applied automatically by Lean in the process of type checking using the #check directive. We can see the types Lean derives as follows. -/
 
@@ -343,13 +346,13 @@ This is obtained by replacing g in g y with f, as the rule describes. You can ha
 
 Some interesting observations are in order. We won't prove these here, but they are good to know:
 
-  (Uniqueness of Types) Every term has exacly one type.
+  `Uniqueness of Types` Every term has exacly one type.
 
-  (Subject Reduction Lemma) If M₁ : α and M₁ —β—> M₂ then M₂ : α. That is, beta reduction does't change the type of expressions. It just simplifies them.
+  `Subject Reduction Lemma` If M₁ : α and M₁ —β—> M₂ then M₂ : α. That is, beta reduction does't change the type of expressions. It just simplifies them.
 
-  (Church-Rosser Theorem) If M —β—> N₁ and M —β—> N₂ then there is some N₃ such that N₁ —β—> N₃ and N₂ —β—> N₃. That is, it doesn't matter what order you β-reduce an expression's sub-expressions in, you always end up with the same term.
+  `Church-Rosser Theorem` If M —β—> N₁ and M —β—> N₂ then there is some N₃ such that N₁ —β—> N₃ and N₂ —β—> N₃. That is, it doesn't matter what order you β-reduce an expression's sub-expressions in, you always end up with the same term.
 
-  (Strong Normalization) β-reduction eventually stops at an irreducible term. This is a very strong statement. In most programming languages, you can write infinite loops. But not in the simply typed lambda calculus!
+  `Strong Normalization` β-reduction eventually stops at an irreducible term. This is a very strong statement. In most programming languages, you can write infinite loops. But not in the simply typed lambda calculus!
 
 -/
 
@@ -393,11 +396,11 @@ With all of these types of types, you can define an most of logic and mathematic
 
 
 
-/- # CHURCH NUMERALS
+/- # EXTENDED EXAMPLE: CHURCH NUMERALS
 
 Even though the λ-calculus looks simple, you can encode quite a bit of math with it. The goal of this next section is to show you how do do arithmetic with only what we have so far. We do this not because it is efficient -- it isn't! Instead, we want to show that the essence of arithmetic is captured by the λ-calculus.
 
-First, we need a way to represent numbers. Church devised the following scheme, where c₀ is the Church Numeral for 0" and so on. -/
+First, we need a way to represent numbers. Church devised the following scheme, where c₀ is the Church Numeral for 0 and so on. -/
 
 def α := Type
 
@@ -406,6 +409,13 @@ def c₁ := λ ( f : α → α ) => λ ( x : α ) => f x
 def c₂ := λ ( f : α → α ) => λ ( x : α ) => f (f x)
 def c₃ := λ ( f : α → α ) => λ ( x : α ) => f (f (f x))
 
+/- You can check the type of a Church numeral: -/
+
+#check c₂
+
+/- For convenience, let's give this type a name: -/
+
+def N := (α → α) → α → α
 
 
 
@@ -423,15 +433,15 @@ def c₃ := λ ( f : α → α ) => λ ( x : α ) => f (f (f x))
 
 /- # ARITHMETIC
 
-We can define functions on numbers. For example, the successor function is defined below. The type N, for `number` is shortand to make the expressions easier to read.  -/
+We can define functions on numbers. For example, the successor function is defined below. -/
 
-def N := (α → α) → α → α
 def succ := λ (m : N) => λ (f : α → α) => λ (x: α) => f (m f x)
 
-/- To see how this works, let's apply succ to c₀. We omit the types to make it easier to read. Note for clarity we use the dummy variable y in c₀ instead of x.
+/- To see how this works, let's apply succ to c₀. We omit the types to make it easier to read. Note for clarity we use the dummy variables g and y in c₀ instead of f and x.
 
-  succ c₀ = (  λ m => λ f => λ x => f (m f x) )  ( λ f => λ y => y )
-          —β—> λ f => λ x => f ( ( λ f => λ y => y ) f x )
+  succ c₀ = ( λ m => λ f => λ x => f (m f x) )  ( λ g => λ y => y )
+          —β—> λ f => λ x => f ( ( λ g => λ y => y ) f x )
+                          [note, g is not used, so f x disappears]
           —β—> λ f => λ x => f ( ( λ y => y ) x )
           —β—> λ f => λ x => f x
           = c₁
@@ -442,14 +452,14 @@ This is a lot of work, so let's let Lean do this for us: -/
 #reduce (types := true ) succ c₃
 
 
+def exp := λ (n : N) => λ (m : N) => λ (f : α → α) => λ (x: α) => (m n) f x
 
 
 
 
 
 
-
-/- # ADDITION
+/- # OTHER OPERATIONS
 
 We can also add two numbers together: -/
 
@@ -479,9 +489,38 @@ def ifzero := λ (m : N) => λ (n : N) => λ (p : N) =>
 
 
 
-/- # CHURCH NUMERALS ARE INCONVENIENTLY TYPED
+/- # LEAN CAN PROVE 1+1 = 2 -/
 
-You can define other opertations on the natural numbers in a similar fashion. It is also fairly straightforward to define Booleans and Boolean Logic, as well as a number of other basic mathematical structures. Building up from these basic ideas to more complex mathematics is the point of Lean. Eventually, we will arrive at cutting edge mathematics in Lean. Because it is defined in terms of thee basic building blocks, we always have a proof that goes from the high level mathematica statements to the low level meaning in terms of the typed λ-calculus: That is, a proof from first princples.
+theorem one_plus_one_is_two : add c₁ c₁ = c₂ :=
+  rfl
+
+/- Although this is not scalable and in fact Lean has a much more expressive type system that we will harness soon. -/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/- # CHURCH NUMERALS ARE INCONVENIENT
+
+You can define other opertations on the natural numbers in a similar fashion. It is also fairly straightforward to define Booleans and Boolean Logic, as well as a number of other basic mathematical structures.
+
+Building up from these basic ideas to more complex mathematics is the point of Lean. Eventually, we will arrive at cutting edge mathematics in Lean. Because it is defined in terms of thee basic building blocks, we always have a proof that goes from the high level mathematica statements to the low level meaning in terms of the typed λ-calculus: That is, a proof from first princples.
 
 That said, it will ultimately be better to define a richer set of types. For example, we'll define the natural numbers and almost every other mathematical object in Lean using what are called `inductive types`. -/
 
@@ -505,19 +544,19 @@ That said, it will ultimately be better to define a richer set of types. For exa
 
 Now that we have a simple programming language and a way to assign types to terms in that language, we can explore a number of problems in type theory, each with its own purpose and challenges.
 
-  TYPE CHECKING: In a given context, does a term M have a given type σ?
+  `TYPE CHECKING`: In a given context, does a term M have a given type σ?
 
     Γ ⊢ M : σ
 
-  WELL TYPEDNESS: Does there exist a context in which a type be assigned to a term M? Another way of saying this is "is M a legal term?"
+  `WELL TYPEDNESS`: Does there exist a context in which a type be assigned to a term M? Another way of saying this is "is M a legal term?"
 
     ? ⊢ M : ?
 
-  TYPE INFERENCE: Can M be assigned a type consistent with a given context?
+  `TYPE INFERENCE`: Can M be assigned a type consistent with a given context?
 
     Γ ⊢ M : ?
 
-  INHABITATION: Does there exist a term of a given type?
+  `INHABITATION`: Does there exist a term of a given type? If σ is a logical statement, then this is the question of whether σ has a proof.
 
     Γ ⊢ ? : σ
 
@@ -542,7 +581,7 @@ Lean is good at type inference. We can go a step further with Lean and leave out
 
 /- We can't leave out all of the type information though. Consider: -/
 
--- #check λ g y => g y
+#check_failure λ g y => g y
 
 /- In the above, there are any number of ways types could be assigned to g and y, so Lean complains that it can't assign types to them. So while the expression is typeable, Lean can't infer a type for it and you have to give it more information.
 
@@ -574,7 +613,49 @@ But since M is operating on itself, M has to be of type τ:
 
 So M has two different types, which is not possible. Lean is not able to find a type for x. The placeholder symbol _ is used by Lean as a way to ask the type checker to infer a type. -/
 
--- #check (λ (M:_) => M M)
+#check_failure (λ (M:_) => M M)
+
+
+
+
+
+
+/- # PROPOSITIONS
+
+Lean has a special type called Prop which stands for `Proposition`. It treats this type somewhat differently than all other types, but in most ways it ist just another type. -/
+
+variable (p : Prop)
+#check Prop
+#check p
+
+/- If p is of type Prop, then an element hp : p is evidence that the type p is not empty. Alternatively, you can think of hp as a `proof` of p.
+
+Furthermore, arrow types which above denoted functions, can be thought of as denoting `implication` if Prop is involved.  -/
+
+#check p → p
+
+/- Armed with the lambda calculus and we can now prove theorems involving implication: -/
+
+example (p : Prop) : p → p :=
+  λ hp => hp
+
+example (p q : Prop) : p → (p → q) → q :=
+  λ hp hpq => hpq hp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -584,10 +665,12 @@ So M has two different types, which is not possible. Lean is not able to find a 
 The most important problem in using type theory for proofs is INHABITATION, followed by TYPE CHECKING. To motivate why, we will see later the following remarkable fact, called the Curry-Howard corresponence, which says that in the judgement Γ ⊢ M : σ,
 
   Γ can be considered a set of givens or assumptions
-  σ can be considered a mathematical theorem
+  σ can be considered a mathematical statement like a theorem or lemma
   M can be considered a proof of the theorem assuming the statements in Γ.
 
-Thus, type checking amounts to checking that M is a proof of σ, which is a relatively straightfoward problem and we have seen that Lean is quite good at it. This is why tools like Lean are called `proof assistants`. They check to make sure your proofs are correct. On the other hand, type inhabitation amounts to finding a proof of σ. This is a very difficult problem, essentially the job of the working mathematician. From a computational point of view, finding a proof means searching over terms M until one finds one that has type σ. Depending on how expressive the programming language for terms is, this can either be a computationally intractable problem (meaning search is the best you can do) or it can be a computationally unsolvable problem (meaning there may not be an algorithm that is guaranteed to find an M of type σ). Both of these observations are job security for mathematicians! -/
+Thus, type checking amounts to checking that M is a proof of σ, which is a relatively straightfoward problem and we have seen that Lean is quite good at it. This is why tools like Lean are called `proof assistants`. They check to make sure your proofs are correct.
+
+On the other hand, type inhabitation amounts to finding a proof of σ. This is a very difficult problem, essentially the job of the working mathematician. From a computational point of view, finding a proof means searching over terms M until one finds one that has type σ. Depending on how expressive the programming language for terms is, this can either be a computationally intractable problem (meaning search is the best you can do) or it can be a computationally unsolvable problem (meaning there may not be an algorithm that is guaranteed to find an M of type σ). Both of these observations are job security for mathematicians! -/
 
 
 
@@ -605,7 +688,9 @@ which may have type
 
   σ → τ
 
-is the general form of a proof of the statement σ → τ where → means "implies". It can be thought of as a transformation taking a proof of σ, which one assumes is available, and returning a proof of τ, which is thought of as a goal to be proved. Writing the details of what q is amounts to programming. As a computer scientist myself it is very satisfying to know that programming functions with given type specifications is _the same thing as_ proving theorems!
+is the general form of a proof of the statement σ → τ where → means "implies". It can be thought of as a transformation taking a proof of σ, which one assumes is available, and returning a proof of τ, which is thought of as a goal to be proved. Writing the details of what q is amounts to programming.
+
+As a computer scientist myself it is very satisfying to know that programming functions with given type specifications is _the same thing as_ proving theorems!
 
 This idea is not merely cute. By building on it, as Lean and similar tools do, one can enocde an astonishingly large set of all of mathematics, and presumably knowledge in general. We'll learn how to take advantage of the Curry-Howard corresponence soon. -/
 
@@ -613,13 +698,7 @@ This idea is not merely cute. By building on it, as Lean and similar tools do, o
 
 
 
-/- # IN CLASS EXERCISES
 
-- TODO
-
-
-
--/
 
 
 

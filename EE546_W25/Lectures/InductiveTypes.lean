@@ -57,16 +57,20 @@ So far we have introduced only simple `arrow types` composed Lean's basic type (
 
 An inductive type is `generated` by `constructors` that may refer to the type itself. They say how to make objects of the given type.
 
-EXAMPLE A type with only two elements is defined by: -/
+`EXAMPLE` A type with only two elements is defined by: -/
 
 inductive Two where
   | thing_1 : Two
   | thing_2 : Two
 
 #check Two.thing_1
+#check Two.thing_1
+
+def t := Two.thing_1
+#eval t
 
 
-/- EXAMPLE: The simplest inductive Type has _no_ constructors, meaning it specifies the empty type. -/
+/- `EXAMPLE` The simplest inductive Type has _no_ constructors, meaning it specifies the empty type. -/
 
 inductive Empty
 
@@ -78,19 +82,35 @@ inductive Empty
 
 You can also have constructors that take arguments and transform them into objects of the given type.
 
-EXAMPLE: The type Nat of `Natural Numbers` is defined by two constructors: -/
+`EXAMPLE` The type Nat of `Natural Numbers` is defined by two constructors: -/
 
 inductive Nat where
   | zero : Nat
-  | succ : Nat → Nat
+  | succ : Nat → Nat           -- succ stand for `successor`
 
 open Nat
 #check succ (succ zero)
 
-/- All the constructors in an inductively defined type live in a namespace with the same name as the type. The open command allows us to write succ instead of Nat.succ.
+/- All the constructors in an inductively defined type live in a namespace with the same name as the type. The open command allows us to write succ instead of Nat.succ.-/
 
 
-EXAMPLE: The type of `BinaryTree` is defined by two constructors: -/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/- # A BINARY TREE TYPE
+
+`EXAMPLE` The type of `BinaryTree` is defined by two constructors: -/
 
 inductive BinaryTree where
   | leaf : BinaryTree
@@ -101,29 +121,75 @@ open BinaryTree
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /- # FUNCTIONS OF INDUCTIVE TYPES
 
 To work with objects of inductive types, we usually need to know how the object was constructed. Lean uses the keyword `match` for that.
 
-For example: -/
+`EXAMPLE` Toggling a two values object -/
 
-open Two
-def toggle ( x : Two ) := match x with
+def Two.toggle ( x : Two ) := match x with
   | thing_1 => thing_2
   | thing_2 => thing_1
 
 /- Lean also knows how to reduce expressions involving match. -/
 
+open Two
 #reduce toggle (toggle thing_1)
 
 
-open Nat
-def sub_two ( x : Nat ) := match x with
-  | zero => zero
-  | succ zero => zero
-  | succ (succ k) => k
+/- `EXAMPLE` 1+1 = 2 -/
 
-#reduce sub_two (succ (succ (succ zero)))
+def Nat.plus (n m : Nat) := match n with
+  | zero => m
+  | succ x => succ (plus x m)
+
+open Nat
+#reduce plus (succ zero) (succ zero)
+
+
+
+/- # DOT NOTATION -/
+
+#reduce thing_1.toggle
+
+#reduce plus zero.succ zero.succ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -138,9 +204,11 @@ inductive NatList where
   | cons : Nat → NatList → NatList
 
 namespace NatList
-#check cons zero (cons zero empty)              -- [0, 0]
-end NatList
 
+#check cons zero (cons zero empty)              -- [0, 0]
+#check (empty.cons zero).cons zero              -- [0, 0]
+
+end NatList
 
 /- Or we can define a List of elements of any type. In the the next bit of code, we implicitly state that List depends on an arbitrary type α. -/
 
@@ -169,14 +237,54 @@ It states that whenever we know propositions φ and ψ, then we know φ ∧ ψ. 
 inductive And (φ ψ : Prop) : Prop where
   | intro : φ → ψ → And φ ψ
 
-/- By the Curry-Howard Isomorphism, You can think of
+/- You can think of `h : And p q` as
 
-  h : And p q
+  - h has type And p q
+  - h is evidence that the type And p q is not empty
+  - h is a proof of the proposition And p q. -/
 
-as either stating that h is evidence that the type And p q is not empty, or h is a proof of the proposition And p q. This allows us to do our first  propositional logic proof: -/
 
-example : p → q → And p q :=
+
+
+
+
+
+
+/- # A PROOF OF A SIMPLE PROPOSITION
+
+Consider the proposition
+
+  p → q → And p q
+
+As a type, this proposition is a function from p to q to And p q. Thus, we know that an element of this type has the form
+
+  λ hp => λ hq => sorry
+
+For the body of this lambda abstraction, we need to `introduce` an And type, which requires proofs of p and q respectively. Using the inductive definition of And we get
+
   λ hp hq => And.intro hp hq
+
+-/
+
+example (p q : Prop) : p → q → And p q :=
+  λ hp hq => And.intro hp hq
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -185,7 +293,7 @@ example : p → q → And p q :=
 
 /- # AND ELIMINIATION
 
-Recall the elimination rules
+The elimination rules for And are
 
                   Γ ⊢ φ ∧ ψ                            Γ ⊢ φ ∧ ψ
   `∧-Elim-Left` ——————————————         `∧-Elim-Right` —————————————
@@ -193,34 +301,62 @@ Recall the elimination rules
 
 which we can write in Lean as -/
 
-def And.left {p : Prop} {q : Prop} (hpq : And p q) :=
+def And.left {p q : Prop} (hpq : And p q) :=
   match hpq with
   | And.intro p q => p
 
-def And.right (hpq : And p q) :=
+def And.right {p q : Prop} (hpq : And p q) :=
   match hpq with
   | And.intro p q => q
 
-/- With these inference rules, we can do even more proofs: -/
 
-example : (And p q) → p :=
+
+
+
+
+
+
+
+
+
+
+/- # PROOFS WITH AND ELIMINATION
+
+With these inference rules, we can do even more proofs: -/
+
+example (p q : Prop) : (And p q) → p :=
   λ hpq => And.left hpq
 
-example : (And p q) → (And q p) :=
+example (p q : Prop) : (And p q) → (And q p) :=
   λ hpq => And.intro hpq.right hpq.left
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 /- # MATCH IS ENOUGH
 
-Note that the elimination rules above are a convenience we defined to make the proof look more like propositional logic. We could also just write: -/
+Note that the elimination rules above are a `convenience` we defined to make the proof look more like propositional logic. We could also just write: -/
 
 example : (And p q) → p :=
   λ hpq => match hpq with
     | And.intro p q => p
 
-/- This pattern suggests that with inductive types, we should expect that match is a generic elimination rule.  -/
+/- This pattern suggests that with inductive types, we can think of match as a generic elimination rule.  -/
 
 
 
@@ -257,7 +393,7 @@ inductive Or (φ ψ : Prop) : Prop where
 
 /- And use this inference rule in proofs as well. -/
 
-example : And p q → Or p q :=
+example (p q : Prop) : And p q → Or p q :=
   λ hpq => Or.inl hpq.left
 
 
@@ -286,15 +422,39 @@ def Or.elim {p q r : Prop} (hpq : Or p q) (hpr : p → r) (hqr : q → r) :=
   | Or.inl hpq => hpr hpq
   | Or.inr hpq => hqr hpq
 
-/- Here is an example proof using introduction and elimination. -/
 
-example : Or p q → Or q p :=
+
+
+
+
+
+
+
+
+
+
+
+
+/- # EXAMPLE OR ELIM PROOF
+
+Here is an example proof using introduction and elimination. -/
+
+example (p q : Prop): Or p q → Or q p :=
   λ hpq => Or.elim
-    hpq
-    (λ hp => Or.inr hp)
-    (λ hq => Or.inl hq)
+    hpq                               -- p ∨ q
+    (λ hp => Or.inr hp)               -- p → (q ∨ p)
+    (λ hq => Or.inl hq)               -- q → (q ∨ p)
 
 /- Once again, the elimination rule is just a convenience and the proof could be written with match. -/
+
+
+
+
+
+
+
+
+
 
 
 
@@ -314,13 +474,20 @@ def Not (p : Prop) : Prop := p → False
 
 /- Here is an example proof: -/
 
-example : (p → q) → (Not q → Not p) :=
-  fun hpq hnq hp => hnq (hpq hp)
+example (p q : Prop): (p → q) → (Not q → Not p) :=
+  λ hpq hq => sorry
 
+example (p q : Prop): (p → q) → (Not q → Not p) :=
+  λ hpq hq => λ hp => sorry
 
+example (p q : Prop): (p → q) → (Not q → Not p) :=
+  λ hpq hq => λ hp => hq sorry
 
+example (p q : Prop): (p → q) → (Not q → Not p) :=
+  λ hpq hq => λ hp => hq (hpq sorry)
 
-
+example (p q : Prop): (p → q) → (Not q → Not p) :=
+  λ hpq hq => λ hp => hq (hpq hp)
 
 
 
@@ -345,12 +512,12 @@ we take advantage of the fact that False was defined inductively. -/
 def False.elim { p : Prop } (h : False) : p :=
   nomatch h
 
-/- TODO: Explain the nomatch keyword in Lean -/
+/- Here is an example proof that from False you can conclude anything: -/
 
-/- Here is an example proof: -/
-
-example : And p (Not p) → q :=
+example (p q : Prop): And p (Not p) → q :=
   λ h => False.elim (h.right h.left)
+
+
 
 
 
@@ -375,7 +542,7 @@ Now we can write -/
 
 end Temp -- start using Lean's propositions
 
-example : (p ∧ (¬p)) → q :=
+example (p q : Prop): (p ∧ (¬p)) → q :=
   λ h => False.elim (h.right h.left)
 
 
@@ -387,11 +554,8 @@ example : (p ∧ (¬p)) → q :=
 
 
 
-/- # IN CLASS EXERCISES
 
-- TODO
 
--/
 
 
 
