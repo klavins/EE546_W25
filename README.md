@@ -24,12 +24,12 @@
 
 - Jan 16 : What do types have to do with logic?
   - [Inductive Types](./EE546_W25/Lectures/InductiveTypes.lean)
+  - Reading: [TPIL](https://lean-lang.org/theorem_proving_in_lean4/title_page.html) chapters 3, 7 and 8. 
 
 ## Week 3
 
-- Jan 21 : Practice Proving Propositions
-  - [Propositional Proofs](./EE546_W25/Lectures/PropositionalProofs.lean)
+- Jan 21 : TBA
 
-- Jan 23 : What does programming have to do with logic?
-  - [The Curry-Howard Isomorphism](./EE546_W25/Lectures/CurryHoward.lean)
+- Jan 23 : TBA
+
 

@@ -517,6 +517,11 @@ def False.elim { p : Prop } (h : False) : p :=
 example (p q : Prop): And p (Not p) → q :=
   λ h => False.elim (h.right h.left)
 
+/- By the way, this is another way to prove the HW1 example: -/
+
+example : False → True :=
+  λ h => False.elim h
+
 
 
 

@@ -161,7 +161,7 @@ A: Following the derivation above in reverse gives the following type inference 
             ————————————————————————————————————————————————————— ABST
              ⊢  λ x : C → A => λ y : C => x y : (C → A) → C → A
 
-Thus, tye type of λ x => λ y => x y is (C → A) → C → A. Note that with a little help, Lean can figure this out for us, but we do need to tell it that x is a function type of some kind. -/
+Thus, the type of λ x => λ y => x y is (C → A) → C → A. Note that with a little help, Lean can figure this out for us, but we do need to tell it that x is a function type of some kind. -/
 
 #check λ x : _ → _ => λ y : _ => x y
 
