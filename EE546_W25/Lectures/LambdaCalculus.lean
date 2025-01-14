@@ -216,7 +216,7 @@ variable (f : A → A)           -- declare a function f from A into A
 
 
 
-/- # TYPE ABSTRACTIONS
+/- # ABSTRACTIONS
 
 Finally, we have `abstractions`, which have the form λ (x : τ) => e where τ is a type and e is a term. The x in this expression is said to be `bound` to the abstraction. It is a dummy variable and could be renamed without any change in meaning. For example, the following are terms in the λ-calculus:  -/
 
@@ -232,6 +232,71 @@ Note that the parentheses group to the right, so the second example is equivalen
 /- In Lean, we can also abbreviate a chained lamdba abstractions by writing: -/
 
 #check λ (g : A → A) (y : A) => g y
+
+
+
+
+
+/- # EQUIVALENCE WITH DEF
+
+A lambda abstraction is basically an unamed function. You could also give your functions names and use def. -/
+
+def inc₁ (x : Nat) : Nat := x + 1
+def inc₂ := λ x => x + 1
+
+#eval inc₁ 3
+#eval inc₂ 3
+#eval (λ x => x + 1) 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/- # CURRYING
+
+Consider the lambda abstraction -/
+
+variable (α : Type)
+variable (a : α)
+
+#check λ (g : α → α) => λ (x: α) => g x
+
+/- If we apply the abstraction to particular function, then we get another function. -/
+
+#reduce (λ (g : α → α) => λ (x: α) => g x) (λ x => x)
+
+/- Which we can then apply again -/
+
+#reduce (λ (g : α → α) => λ (x: α) => g x) (λ x => x) a
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -259,6 +324,7 @@ def h₂ := λ (g : A → A) => λ (y : A) => g y
 #check h₁
 #check h₂
 #check h₁ x
+#check h₂ h₁               --> `Currying` again
 #check h₂ h₁ x
 
 
