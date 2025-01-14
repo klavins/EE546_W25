@@ -46,7 +46,7 @@ e. Email klavins@uw.edu with a link to your repository. -/
   False → True
   True → True
 
-5. (Lean) State the `Twin Prime Conjecture` as a theorem in Lean and put `sorry` as its proof. You can use the definition of primality in Mathlib by importing `Mathlib.Data.Nat.Prime.Defs` and using `Nat.prime`.
+5. (Lean) State the `Twin Prime Conjecture` as a theorem in Lean and put `sorry` as its proof. You can use the definition of primality in Mathlib by importing `Mathlib.Data.Nat.Prime.Defs` and using `Nat.Prime`.
 
 6. (Lean) Define a function called list_double that takes a list of natural numbers and returns a list in which each number is doubled. For example, list_double [2,5,7] would return [4,10,14]. Evaluate your function on a few examples.
 
