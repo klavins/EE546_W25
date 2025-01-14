@@ -273,18 +273,18 @@ def inc₂ := λ x => x + 1
 
 Consider the lambda abstraction -/
 
-variable (α : Type)
-variable (a : α)
+variable (X : Type)
+variable (a : X)
 
-#check λ (g : α → α) => λ (x: α) => g x
+#check λ (g : X → X) => λ (x: X) => g x
 
 /- If we apply the abstraction to particular function, then we get another function. -/
 
-#reduce (λ (g : α → α) => λ (x: α) => g x) (λ x => x)
+#reduce (λ (g : X → X) => λ (x: X) => g x) (λ x => x)
 
 /- Which we can then apply again -/
 
-#reduce (λ (g : α → α) => λ (x: α) => g x) (λ x => x) a
+#reduce (λ (g : X → X) => λ (x: X) => g x) (λ x => x) a
 
 
 
@@ -324,10 +324,10 @@ def h₂ := λ (g : A → A) => λ (y : A) => g y
 #check h₁
 #check h₂
 #check h₁ x
-#check h₂ h₁               --> `Currying` again
+#check h₂ h₁               --> This is called `Currying`
 #check h₂ h₁ x
 
-
+/- Note: Currying is named after the Logician Haskel Curry, who studied Electrical Engineering at MIT in the 1920s, although he eventually switched to Physics. -/
 
 
 
@@ -482,6 +482,8 @@ def c₃ := λ ( f : α → α ) => λ ( x : α ) => f (f (f x))
 /- For convenience, let's give this type a name: -/
 
 def N := (α → α) → α → α
+
+#check N
 
 
 
