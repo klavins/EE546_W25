@@ -352,7 +352,7 @@ example (p q : Prop) : (And p q) → (And q p) :=
 
 Note that the elimination rules above are a `convenience` we defined to make the proof look more like propositional logic. We could also just write: -/
 
-example : (And p q) → p :=
+example (p q : Prop) : (And p q) → p :=
   λ hpq => match hpq with
     | And.intro p q => p
 
@@ -556,6 +556,39 @@ example (p q : Prop): (p ∧ (¬p)) → q :=
 
 
 
+
+
+
+/- # EXAMPLES
+
+You should try to do as many of these as possible -/
+
+variable (p q r : Prop)
+
+example (h : p ∨ q) : q ∨ p := sorry
+example : p ∧ q ↔ q ∧ p := sorry
+example : p ∨ q ↔ q ∨ p := sorry
+
+example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) :=
+  Iff.intro
+  (λ h => And.intro h.left.left (And.intro h.left.right h.right))
+  (λ h => And.intro (And.intro h.left h.right.left) h.right.right)
+
+example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) := sorry
+example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := sorry
+example : p ∨ (q ∧ r) ↔ (p ∨ q) ∧ (p ∨ r) := sorry
+example : (p → (q → r)) ↔ (p ∧ q → r) := sorry
+example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) := sorry
+example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := sorry
+example : ¬p ∨ ¬q → ¬(p ∧ q) := sorry
+example : ¬(p ∧ ¬p) := sorry
+example : p ∧ ¬q → ¬(p → q) := sorry
+example : ¬p → (p → q) := sorry
+example : (¬p ∨ q) → (p → q) := sorry
+example : p ∨ False ↔ p := sorry
+example : p ∧ False ↔ False := sorry
+example : (p → q) → (¬q → ¬p) := sorry
+example : (p → q) → (¬q → ¬p) := sorry
 
 
 

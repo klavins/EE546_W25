@@ -45,7 +45,7 @@ Define these in Lean. Here is a start: -/
   def Nor.elim_right {p q : Prop} (hnpq : Nor p q) := sorry
 
 
-/- 5b) Use the above Nor inference rules, and the regular inference rules from Lean's propopsitional logic, to prove the following examples: -/
+/- 5b) Use the above Nor inference rules, and the regular inference rules from Lean's propopsitional logic, to prove the following examples. Note, *do not* use the Classical logic option for these. It isn't needed.  -/
 
   example (p : Prop) : ¬p → (Nor p p) := sorry
   example (p q : Prop) : (Nor p q) → ¬(p ∨ q) := sorry
