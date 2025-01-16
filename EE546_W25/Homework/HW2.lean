@@ -65,7 +65,6 @@ open Nat
 def mult (m n : Nat) : Nat := sorry
 def exp (m n : Nat) : Nat := sorry
 
-
 /- 7) Using Lean's built in Integer class, we can define a new inductive type ComplexInt as follows: -/
 
 inductive ComplexInt where

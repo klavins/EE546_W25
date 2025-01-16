@@ -108,19 +108,6 @@ open Nat
 
 
 
-/- # A BINARY TREE TYPE
-
-`EXAMPLE` The type of `BinaryTree` is defined by two constructors: -/
-
-inductive BinaryTree where
-  | leaf : BinaryTree
-  | node : BinaryTree → BinaryTree → BinaryTree
-
-open BinaryTree
-#check node leaf (node leaf leaf)
-
-
-
 
 
 
@@ -168,7 +155,7 @@ open Nat
 
 #reduce thing_1.toggle
 
-#reduce plus zero.succ zero.succ
+#reduce plus zero.succ zero.succ.succ
 
 
 
@@ -210,7 +197,7 @@ namespace NatList
 
 end NatList
 
-/- Or we can define a List of elements of any type. In the the next bit of code, we implicitly state that List depends on an arbitrary type α. -/
+/- Or we can define a List of elements of any type. In the the next bit of code, we implicitly state (using curly braced instead of parens) that List depends on an arbitrary type α. -/
 
 inductive List {α : Type} where
   | empty : List
@@ -303,11 +290,11 @@ which we can write in Lean as -/
 
 def And.left {p q : Prop} (hpq : And p q) :=
   match hpq with
-  | And.intro p q => p
+  | And.intro hp _ => hp
 
 def And.right {p q : Prop} (hpq : And p q) :=
   match hpq with
-  | And.intro p q => q
+  | And.intro _ hq => hq
 
 
 
@@ -354,7 +341,7 @@ Note that the elimination rules above are a `convenience` we defined to make the
 
 example (p q : Prop) : (And p q) → p :=
   λ hpq => match hpq with
-    | And.intro p q => p
+    | And.intro hp _ => hp
 
 /- This pattern suggests that with inductive types, we can think of match as a generic elimination rule.  -/
 
@@ -468,7 +455,7 @@ Finally, we have False. Which has no introduction rule, kind of like Empty, exce
 
 inductive False : Prop
 
-/- From False we get the Not connective, which is just syntactic sugar. -/
+/- From False we get the Not connective, which is just "syntactic sugar". -/
 
 def Not (p : Prop) : Prop := p → False
 

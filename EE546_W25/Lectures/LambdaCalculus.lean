@@ -463,7 +463,6 @@ With all of these types of types, you can define an most of logic and mathematic
 
 
 /- # EXTENDED EXAMPLE: CHURCH NUMERALS
-
 Even though the λ-calculus looks simple, you can encode quite a bit of math with it. The goal of this next section is to show you how do do arithmetic with only what we have so far. We do this not because it is efficient -- it isn't! Instead, we want to show that the essence of arithmetic is captured by the λ-calculus.
 
 First, we need a way to represent numbers. Church devised the following scheme, where c₀ is the Church Numeral for 0 and so on. -/
@@ -520,7 +519,6 @@ This is a lot of work, so let's let Lean do this for us: -/
 #reduce (types := true ) succ c₃
 
 
-def exp := λ (n : N) => λ (m : N) => λ (f : α → α) => λ (x: α) => (m n) f x
 
 
 
@@ -561,6 +559,8 @@ def ifzero := λ (m : N) => λ (n : N) => λ (p : N) =>
 
 theorem one_plus_one_is_two : add c₁ c₁ = c₂ :=
   rfl
+
+/- You can prove this by rfl because, as we will see, two lambda expressions that beta reduce to the same thing are considered `definitionally equal`. -/
 
 /- Although this is not scalable and in fact Lean has a much more expressive type system that we will harness soon. -/
 
@@ -645,7 +645,7 @@ Lean is good at type inference. We can go a step further with Lean and leave out
 
 /- We haven't said what the type of y is in these expressions. And we haven't even given the first bound variable in c₀ a name, since it isn't used in the the body of the abstraction. Lean infers that y must have type α because it is being acted upon by a function from α to α. We can also write the other operations, like multiplication, more concisely: -/
 
-#check λ (m : N) (n : N) f x => m (n f) x
+#check λ (m n : N) f x => m (n f) x
 
 /- We can't leave out all of the type information though. Consider: -/
 
