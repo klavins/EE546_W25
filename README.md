@@ -28,8 +28,18 @@
 
 ## Week 3
 
-- Jan 21 : TBA
+- Jan 21 : First Order Logic and Tactics
+  - [FOL](./EE546_W25/Lectures/FOL.lean)
+  - [Tactics](./EE546_W25/Lectures/Tactics.lean)
+  - Reading: [TIPL](https://lean-lang.org/theorem_proving_in_lean4/title_page.html) chapters 4 and 5
 
-- Jan 23 : TBA
+- Jan 23 : Equality 
+  - Under construction
+
+## Week 4
+
+- Jan 28 : TBA
+
+- Jan 30 : TBA
 
 
