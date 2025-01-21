@@ -203,7 +203,7 @@ Lean is based on type theory. This means that every term has a very well defined
 
 /- # EVALUATION
 
-You can use Lean to evaluate expressions using the #eval command. The result will show up in the Inforview. -/
+You can use Lean to evaluate expressions using the #eval command. The result will show up in the Infoview. -/
 
 #eval 1+1
 #eval "hello".append " world"
@@ -295,7 +295,7 @@ example (p q r : Prop) : (p → q) ∧ (q → r) → (p → r) :=
 
 /- # THE TACTIC LANGUAGE AND SORRY
 
-The examples above use fairly low level Lean expressions to prove statements. Lean provides a very powerful, higher level DSL (domain specific language) for proving. You enter the Tactice DSL using `by`.
+The examples above use fairly low level Lean expressions to prove statements. Lean provides a very powerful, higher level DSL (domain specific language) for proving. You enter the Tactic DSL using `by`.
 
 Proving results uses the super `sorry` keyword. Here is an example of Tactics and sorry. -/
 

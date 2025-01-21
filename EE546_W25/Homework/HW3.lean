@@ -1,5 +1,4 @@
 
-
 -- 1) Prove the following FOL examples using introduction, elimination, etc using either direct proofs or tactics. Do not use the built in theorems from the standard library that match these, that's too easy.
 
 variable (p q : Type → Prop)
@@ -21,6 +20,7 @@ def S (n : Nat) : Nat := match n with
 
 example (n : Nat) : 6 * (S n) = n * (n+1) * (2*n+1) :=
   sorry
+
 
 -- 3) Given the definitions of Person, on_right, and next_to:
 
@@ -45,6 +45,7 @@ example : ∀ p : Person, ∃ q : Person, next_to p q :=
 
 example : ∀ p : Person, ∃ q : Person, ¬next_to p q :=
   sorry
+
 
 /- 4) Besides ∀ and ∃, there are other quantifiers we can define. For example, the "Exists Exactly One" quantifer allows you to state that there is only one of something. We usually written ∃! as in
 
@@ -79,4 +80,67 @@ example : Exists1 (λ x => x=0) := sorry
 example : ¬Exists1 (λ x => x ≠ 0) := sorry
 
 
--- 5 UNDER CONSTRUCTION
+/- 5) In this exercise, you will make a simple library, interface with the simplifier, and prove some theorems. -/
+
+/- 5a) Take all of your ComplexInt definitions from HW2 and put them in a file called ComplexInt.lean. Make the operations re, im, cadd, csub, cmul, etc accessible to the simplifier by putting @[simp] just before each definition, as in
+
+@[simp]
+def re (x : ComplexInt) : Int := match x with
+  | complex a b => a
+
+Add this notation definition to the bottom of the ComplexInt file:
+
+  infixl:65   " + " => cadd
+  infixl:85   " * " => cmul
+
+which allows you two write, for example, a*b instead of cmul a b.
+
+To tell Lean where to find your library file, edit EE546_YourLaseName.lean in the base directory of your repo and add
+
+  import EE546_YourLaseName.Homework.ComplexInt
+
+Then, to compile the library to native code (so it runs really fast) do
+
+  lake build
+
+at the command line.
+
+Test your configuration by putting
+
+  import EE546_YourLaseName.Homework.ComplexInt
+
+at the top of your HW3 solutions file and doing
+
+  #eval (complex 1 2) * (complex 3 4) + complex (5 6)
+
+-/
+
+/- 5b) Prove the following using the simplifier and basic logic: -/
+
+open ComplexInt
+
+theorem c_add_comm (a b : ComplexInt) : a + b = b + a := sorry
+theorem c_mul_comm (a b : ComplexInt) : a * b = b * a := sorry
+theorem c_add_assoc (a b c : ComplexInt) :  a + (b + c) = (a + b) + c := sorry
+theorem c_mul_add_distrib (a b c : ComplexInt) : a * (b + c) = (a * b) + (a * c) := sorry
+
+example : (complex 0 1) * (complex 0 (-1)) = complex 1 0 := sorry
+
+/- 5c) Complete the following definition for raising a ComplexInt a to the power of natural number n. Move the resulting definition to your library and rebuild everything. Use match and recursion. Prove the simple theorem after the definition. -/
+
+@[simp]
+def cpow (a : ComplexInt) (n: Nat) : ComplexInt := sorry
+
+example : cpow (complex 0 1) 4 = complex 1 0 := sorry
+
+/- 5d) Add the following definition to your library, rebuild everything, prove the example, and prove the theorem stating that only ComplexInts with norm 1 have inverses. -/
+
+@[simp]
+def cnorm (a : ComplexInt) : Int := re ( a * (conjugate a) )
+
+example : cnorm (complex 1 1) = 2 := sorry
+
+-- Note: This one is challenging. You might want to make some auxilliary lemmas. Also it's ok to use classical logic.
+theorem invertibles (a : ComplexInt)
+  : cnorm a = 1 → ∃ x : ComplexInt, a*x = complex 1 0 :=
+  sorry

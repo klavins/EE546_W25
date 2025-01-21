@@ -1,5 +1,6 @@
 /.lake
 Prop-Proof-Solutions.lean
-Solutions.lean
+*Solutions.lean
 todo.txt
 Sandbox.lean
+ComplexInt.lean
