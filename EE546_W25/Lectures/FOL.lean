@@ -137,7 +137,7 @@ def InSeattle (x : Person) : Prop := match x with
 #check InSeattle
 
 example : InSeattle steve ∨ ¬InSeattle steve :=
-  sorry
+  Or.inr (λ h => h)
 
 
 /- `EXAMPLE` Or we might define a predicate inductively on the natural numbers. -/
@@ -148,13 +148,14 @@ def is_zero(n : Nat) : Prop := match n with
 
 #check is_zero
 
-example : ¬is_zero 91 :=
+example : ¬is_zero 91 :=  -- is_zero 91 → False
   λ h => h
 
+theorem t : is_zero 0 := True.intro
 
 
 
-
+theorem t1 : True := True.intro
 
 
 
@@ -201,7 +202,7 @@ A two-argument predicate is called a relation.
 
 `EXAMPLE` We might define a predicate on pairs of people such as -/
 
-def on_right (p q : Person) := match p with
+def on_right (p q : Person) : Prop := match p with
   | mary => q = steve
   | steve => q = ed
   | ed => q = jolin
@@ -212,10 +213,10 @@ def on_right (p q : Person) := match p with
 def next_to (p q : Person) := on_right p q ∨ on_right q p
 
 example : next_to mary steve :=
-  sorry
+  Or.inl (Eq.refl steve)
 
 
-
+-- rfl == Eq.refl _
 
 
 
@@ -272,7 +273,11 @@ EXAMPLE: Here's how you say "All people who live in Seattle also live in Washing
 EXAMPLE: In Lean, let's say we wanted to prove that every person either lives in Seattle or does not live in Seattle. A proof of this fact has the form of a function that takes an arbtrary person x and returns a proof that that person either lives in Seattle or does not. Thus, we can say: -/
 
 example : ∀ (x : Person) , (InSeattle x) ∨ ¬(InSeattle x) :=
-  sorry
+  λ x => match x with
+  | steve => Or.inr (λ h => h)
+  | mary => sorry
+  | ed => sorry
+  | jolin => sorry
 
 
 /- ∀ is just syntactic sugar for polymorphism. The above FOL statement can be equally well written as: -/
@@ -341,7 +346,8 @@ For example, here is a proof that uses both of these rules: -/
 variable (α : Type) (P Q : α → Prop)
 
 example : (∀ x : α, P x ∧ Q x) → ∀ y : α, P y :=
-  sorry
+  λ h q => (h q).left
+
 
 
 
@@ -408,7 +414,7 @@ end temp
 An example use of the introduction rule is the following. Note the assumption that `α has at least one element q` is necessary.  -/
 
 example (q : α) : (∀ x , P x) → (∃ x , P x) :=
-  sorry
+  λ hp => Exists.intro q (hp q)
 
 
 
@@ -455,7 +461,8 @@ which allow us to conclude b -/
 For example, in -/
 
 example (h₁ : ∃ x, P x ∧ Q x) : ∃ x, Q x ∧ P x :=
-  sorry
+  Exists.elim h₁
+  (λ c h => Exists.intro c (And.intro h.right h.left))
 
 
 
@@ -486,7 +493,9 @@ variable (p: Type → Prop)
 variable (r : Prop)
 
 example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r :=
-  sorry
+  Iff.intro
+  (λ h => Exists.elim h (λ c h => And.intro (Exists.intro c h.left) h.right))
+  (λ h => Exists.elim h.left (λ c h1 => Exists.intro c (And.intro h1 h.right)))
 
 example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) :=
   sorry
