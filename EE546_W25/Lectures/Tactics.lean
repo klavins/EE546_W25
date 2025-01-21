@@ -28,6 +28,8 @@
  -
  ------/
 
+ import Mathlib.Tactic.Linarith
+
 
  /- # TACTIC MODE
 
@@ -272,19 +274,6 @@ example (P Q : Type → Prop): (∃ x, P x ∧ Q x) → ∃ x, Q x ∧ P x := by
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /- # GETTING HELP WITH APPLY?
 
 You can ask Lean to try to find someting to apply with `apply?` -/
@@ -298,6 +287,50 @@ example : (∃ x , ¬p x) → ¬ ∀ x, p x := by
 variable (α : Type) (P Q : α → Prop)
 example : (∃ x, P x ∧ Q x) → ∃ x, Q x ∧ P x :=
   by apply?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/- # FOL EXAMPLES REVISITED -/
+
+variable (p: Type → Prop)
+variable (r : Prop)
+
+example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) := by
+  sorry
+
+example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r := by
+  sorry
+
+example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) :=
+  sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -474,6 +507,33 @@ example (r : Prop) (a : Type) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := by
 
 
 
+/- # INDUCTION
+
+Proof by induction works for all inductive types. It is similar to using cases, but it adds an `inductive hypothesis` where needed.
+
+As an example, consider the natural numbers and suppose P : Nat → Prop is a property. To prove P with induction, you do :
+
+    `BASE CASE`: P(0)
+    `INDUCTIVE STEP`: ∀ n, P(n) → P(n+1)
+
+ -/
+
+def E (n : Nat) : Prop := match n with
+  | Nat.zero => True
+  | Nat.succ x => ¬E x
+
+example : ∀ n : Nat, E n ∨ E n.succ := by
+  intro n
+  induction n with
+  | zero => exact Or.inl trivial
+  | succ k ih =>
+    apply Or.elim ih
+    . intro h1
+      exact Or.inr (λ h2 => h2 h1)
+    . intro h3
+      exact Or.inl h3
+
+
 
 
 
@@ -517,6 +577,15 @@ There are a lot of tactics:
 
 
 /- # SOLUTIONS -/
+
+example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) := by
+  apply Iff.intro
+  . intro h x hp
+    exact h (Exists.intro x hp)
+  . intro h hepx
+    apply Exists.elim hepx
+    intro x hpa
+    exact (h x) hpa
 
 example (n : Nat) : n = 0 ∨ ∃ x , n = Nat.succ x := by
   by_cases h : n = 0

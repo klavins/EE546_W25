@@ -708,7 +708,7 @@ example (p : Prop) : p → p :=
   λ hp => hp
 
 example (p q : Prop) : p → (p → q) → q :=
-  λ hp hpq => hpq hp
+  λ hp => λ hpq => hpq hp
 
 
 

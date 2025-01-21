@@ -34,7 +34,7 @@
   - Reading: [TIPL](https://lean-lang.org/theorem_proving_in_lean4/title_page.html) chapters 4 and 5
 
 - Jan 23 : Equality 
-  - Under construction
+  - [Equality](./EE546_W25/Lectures/Equality.lean)
 
 ## Week 4
 

@@ -137,7 +137,7 @@ def InSeattle (x : Person) : Prop := match x with
 #check InSeattle
 
 example : InSeattle steve ∨ ¬InSeattle steve :=
-  Or.inr (λ h => h)
+  sorry
 
 
 /- `EXAMPLE` Or we might define a predicate inductively on the natural numbers. -/
@@ -175,7 +175,7 @@ variable (P : Prop)
 
 -- A one-argument predicate
 variable (InWashington : Person → Prop)
-#check W steve
+#check InWashington steve
 
 -- A two-argument predicate
 variable (Age : Person → Nat → Prop)
@@ -212,7 +212,7 @@ def on_right (p q : Person) := match p with
 def next_to (p q : Person) := on_right p q ∨ on_right q p
 
 example : next_to mary steve :=
-  Or.inl rfl
+  sorry
 
 
 
@@ -357,7 +357,6 @@ example : (∀ x : α, P x ∧ Q x) → ∀ y : α, P y :=
 
 
 
-
 /- # EXISTS
 
 The ∃ quantifer is like an OR over a lot of propositions:
@@ -437,7 +436,7 @@ end temp
 
 /- In this rule
 
-  b is an arbitrary (possibly quantified) proposition
+  b is an arbitrary proposition
   h₁ is a proof of ∃ x , p x
   h₂ is a proof that ∀ a , p a → b
 

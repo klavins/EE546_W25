@@ -1,6 +1,5 @@
 /- # HOMEWORK 2 : DUE MON JAN 20, 2024 (by Midnight) -/
 
-
 /- 1) Define a lambda abstraction, called double, that takes a Church numeral and doubles it. Evaluate it on a few examples. -/
 
 
