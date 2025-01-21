@@ -46,7 +46,7 @@ example : ∀ p : Person, ∃ q : Person, next_to p q :=
 example : ∀ p : Person, ∃ q : Person, ¬next_to p q :=
   sorry
 
-/- 4) Besides ∀ and ∃ that are other quantifiers we can define. For example, the "Exists Exactly One" quantifer allows you to state that there is only one of something. We usually written ∃! as in
+/- 4) Besides ∀ and ∃, there are other quantifiers we can define. For example, the "Exists Exactly One" quantifer allows you to state that there is only one of something. We usually written ∃! as in
 
     ∃! x, P x
 
