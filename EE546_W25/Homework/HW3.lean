@@ -71,7 +71,8 @@ theorem Exists1.elim {α : Type} {P : α → Prop} {b : Prop}
 
 -- b) Prove the following examples:
 
-example : ∀ x, Exists1 (λ y : Person => ¬next_to y x ) := sorry
+example : ∀ x, Exists1 (λ y : Person => x ≠ y ∧ ¬next_to y x ) :=  by
+  sorry
 
 example (α : Type) (P : α → Prop) : Exists1 ( λ x => P x ) → ¬ ∀ x, ¬ P x  := sorry
 
