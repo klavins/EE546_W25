@@ -168,7 +168,7 @@ structure Point where
 
 def p₁ := Point.mk 1 2
 def p₂ : Point := { x := 1, y := 2 }
-def p₃ : Point := ⟨ 1, 2 ⟩
+def p₃ : Point := ⟨ 1,2 ⟩
 
 
 
@@ -218,8 +218,9 @@ example : ∃ (p : Point) , p.x = 0 :=  by
 
 /- # TACTICS PRODUCE LOW LEVEL PROOFS THAT CAN BE CHECKED -/
 
-theorem t (p : Type → Prop) (c : Type) : (∀ x, p x) → ∃ x, p x :=
-  λ h => ⟨ c, h c ⟩
+theorem t (p : Type → Prop) (c : Type) : (∀ x, p x) → ∃ x, p x := by
+  intro h
+  exact ⟨ c, h c ⟩
 
 #print t
 
@@ -251,8 +252,8 @@ theorem t (p : Type → Prop) (c : Type) : (∀ x, p x) → ∃ x, p x :=
 You can match constructors with intro to more easily break up expressions. -/
 
 example (p q : Prop) : p ∧ q → q := by
-  intro ⟨ hp, hq ⟩
-  sorry
+  intro ⟨ _, hq ⟩
+  exact hq
 
 example : (∃ x , ¬p x) → ¬ ∀ x, p x := by
   intro ⟨ x, hnp ⟩ hnap
@@ -280,7 +281,7 @@ You can ask Lean to try to find someting to apply with `apply?` -/
 
 example : (∃ x , ¬p x) → ¬ ∀ x, p x := by
   intro ⟨ x, hnp ⟩ hnap
-  apply?
+  exact hnp (hnap x)
 
 /- It doesn't always work though. -/
 
@@ -309,8 +310,18 @@ example : (∃ x, P x ∧ Q x) → ∃ x, Q x ∧ P x :=
 variable (p: Type → Prop)
 variable (r : Prop)
 
-example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) := by
-  sorry
+theorem asd : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) := by
+  exact not_exists
+
+  -- apply Iff.intro
+  -- . intro h x
+  --   exact forall_not_of_not_exists h x
+  -- . intro h
+  --   exact not_exists.mpr h
+
+#print forall_exists_index
+
+#check forall_not_of_not_exists
 
 example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r := by
   sorry
@@ -356,8 +367,8 @@ example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) :=
 You can use have to record intermediate results -/
 
 example (p q : Prop) : p ∧ q → p ∨ q := by
-  intro h
-  have hp : p := h.left
+  intro ⟨ h1, h2 ⟩
+  have hp : p := h1
   exact Or.inl hp
 
 
@@ -390,7 +401,7 @@ The cases tactic wraps around Or.elim to make proofs easier to read. -/
 example (p q : Prop) : (p ∨ q) → q ∨ p  := by
   intro h
   cases h with
-  | inl hp => sorry
+  | inl hp => apply Or.inr hp
   | inr hq => sorry
 
 example (p q : Prop) : (p ∨ q) → q ∨ p  := by
@@ -404,7 +415,8 @@ example (p q : Prop) : (p ∨ q) → q ∨ p  := by
 example (p q : Prop) : (p ∨ q) → q ∨ p  := by
   intro h
   apply Or.elim h
-  . sorry
+  . intro hp
+    sorry
   . sorry
 
 
@@ -450,8 +462,8 @@ The cases tactic is not to be confused with the by_cases tactic, which uses `cla
 
 example (p : Prop): p ∨ ¬p := by
   by_cases h : p
-  . sorry -- assuming h : p
-  . sorry -- assuming h : ¬p
+  . exact Classical.em p -- assuming h : p
+  . exact Classical.em p -- assuming h : ¬p
 
 
 /- Another example: -/

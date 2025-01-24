@@ -112,7 +112,7 @@ Test your configuration by putting
 
 at the top of your HW3 solutions file and doing
 
-  #eval (complex 1 2) * (complex 3 4) + complex (5 6)
+  #eval (complex 1 2) * (complex 3 4) + (complex 5 6)
 
 -/
 

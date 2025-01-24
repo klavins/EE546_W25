@@ -217,6 +217,7 @@ theorem t4 (a b c d e : Nat)
  : a = e := by
    simp only[h1,h2,h3,h4,Nat.add_comm]
 
+
 #check Nat.add_comm
 
 #print t4
