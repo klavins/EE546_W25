@@ -541,7 +541,7 @@ example : ∀ n : Nat, E n ∨ E n.succ := by
   | succ k ih =>
     apply Or.elim ih
     . intro h1
-      exact Or.inr (λ h2 => h2 h1)
+      exact Or.inr (by exact fun a ↦ a h1)
     . intro h3
       exact Or.inl h3
 

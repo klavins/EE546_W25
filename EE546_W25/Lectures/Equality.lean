@@ -278,6 +278,8 @@ def S (n : Nat) : Nat := match n with
   | Nat.zero => 0
   | Nat.succ x => n + S x
 
+#eval S 3
+
 example : ∀ n, 2 * S n = n*(n+1) := by
   intro n
   induction n with

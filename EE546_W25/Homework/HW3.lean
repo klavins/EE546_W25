@@ -116,7 +116,7 @@ at the top of your HW3 solutions file and doing
 
 -/
 
-/- 5b) Prove the following using the simplifier and basic logic: -/
+/- 5b) Prove the following using the simplifier, basic logic, and linarith: -/
 
 open ComplexInt
 
