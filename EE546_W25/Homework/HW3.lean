@@ -141,7 +141,7 @@ def cnorm (a : ComplexInt) : Int := re ( a * (conjugate a) )
 
 example : cnorm (complex 1 1) = 2 := sorry
 
--- Note: This one is challenging. You might want to make some auxilliary lemmas. Also it's ok to use classical logic.
+-- Note: This one is challenging. You might want to make some auxilliary lemmas. Also it's ok to use classical logic, although I didn't need it to prove this one.
 theorem invertibles (a : ComplexInt)
   : cnorm a = 1 → ∃ x : ComplexInt, a*x = complex 1 0 :=
   sorry
