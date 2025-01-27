@@ -18,7 +18,7 @@ def S (n : Nat) : Nat := match n with
 
 -- Show the following result using induction.
 
-example (n : Nat) : 6 * (S n) = n * (n+1) * (2*n+1) :=
+example (n : Nat) : 6 * (S n) = (n * (n+1)) * (2*n+1) :=
   sorry
 
 
