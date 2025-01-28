@@ -67,9 +67,7 @@ variable (r : ℝ) (c : ℂ)
 
 /- # NATURAL NUMBERS
 
-As we've seen, the Natural Numbers are defined inductively.
-
--/
+As we've seen, the Natural Numbers are defined inductively. -/
 
 namespace TempNat
 
@@ -164,14 +162,7 @@ The `calc` tactic also allows you to do extended calculuations using these theor
 -/
 
 example (n m : Nat) : n+m+1 = 1+m+n := by
-  calc n+m+1
-  _  = n+(m+1) := by rw[Nat.add_assoc]
-  _  = n+(1+m) := by simp[Nat.add_comm]
-  _  = n+1+m   := by rw[Nat.add_assoc]
-  _  = 1+n+m   := by simp[Nat.add_comm]
-  _  = 1+(n+m) := by rw[Nat.add_assoc]
-  _  = 1+(m+n) := by simp[Nat.add_comm]
-  _  = 1+m+n   := by rw[Nat.add_assoc]
+  sorry
 
 
 
