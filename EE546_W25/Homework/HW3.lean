@@ -21,7 +21,6 @@ def S (n : Nat) : Nat := match n with
 example (n : Nat) : 6 * (S n) = (n * (n+1)) * (2*n+1) :=
   sorry
 
-
 -- 3) Given the definitions of Person, on_right, and next_to:
 
 inductive Person where | mary | steve | ed | jolin

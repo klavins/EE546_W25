@@ -38,8 +38,20 @@
 
 ## Week 4
 
-- Jan 28 : TBA
+- Jan 28 : Natural Numbers, Intergers and Rationals
+  - [Numbers](./EE546_W25/Lectures/Numbers.lean)
+  - Reading [TIPL](https://lean-lang.org/theorem_proving_in_lean4/title_page.html)  chapter 4 (the section about the `calc` tactic)
+  - Reading [MIL](https://leanprover-community.github.io/mathematics_in_lean/C01_Introduction.html) 2.1 and 2.2
 
-- Jan 30 : TBA
+- Jan 30 : Real Numbers
+  - [Reals](./EE546_W25/Lectures/Reals.lean)
+  - Reading [MIL](https://leanprover-community.github.io/mathematics_in_lean/C01_Introduction.html) 2.3-2.5, 3.6
+
+## Week 5
+
+ - Feb 4: TBA
+
+ - FEB 6 : TBA
+
 
 

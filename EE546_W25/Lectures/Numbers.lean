@@ -28,7 +28,10 @@
  ------/
 
 import Mathlib.Tactic.Linarith
+import Mathlib.Topology.Instances.Real
 import  Mathlib.Data.Set.Defs
+import Mathlib.Tactic
+
 
 
 /- # SOME OF THE NUMEBRS PROVIDED BY LEAN
@@ -720,3 +723,63 @@ example (x y z : ℚ) : (x+y)/z = y/z + x/z := by
 
 #check add_comm  --> Works for any `AddCommMagma`
 #check add_div   --> Works for any `DivisionSemiring`
+
+
+
+
+
+
+
+
+
+
+
+
+/- # THEOREMS ABOUT INEQUALITY
+
+Many results using rational numbers and real numbers require inequalties. So it is good to get some practice in with these. This is all from MIL 2. -/
+
+variable (a b c d e: ℚ)
+
+#check (le_refl : ∀ a : ℚ, a ≤ a)
+#check (le_trans : a ≤ b → b ≤ c → a ≤ c)
+
+#check (le_refl : ∀ a : Real, a ≤ a)
+#check (le_refl a : a ≤ a)
+#check (le_trans : a ≤ b → b ≤ c → a ≤ c)
+
+#check (le_refl : ∀ a, a ≤ a)
+#check (le_trans : a ≤ b → b ≤ c → a ≤ c)
+#check (lt_of_le_of_lt : a ≤ b → b < c → a < c)
+#check (lt_of_lt_of_le : a < b → b ≤ c → a < c)
+#check (lt_trans : a < b → b < c → a < c)
+
+
+
+
+
+/- # EXAMPLES -/
+
+/- A transitivity proof. -/
+example (x y z :ℚ) (h0 : x ≤ y) (h1 : y ≤ z) : x ≤ z := by
+  apply le_trans
+  apply h0
+  apply h1
+
+/- A system of inequalites. -/
+example (h₀ : a ≤ b) (h₁ : b < c) (h₂ : c ≤ d) (h₃ : d < e) : a < e := by
+  apply lt_trans
+  apply lt_of_le_of_lt h₀ h₁
+  apply lt_of_le_of_lt h₂ h₃
+
+/- You can use calc with inequalities. -/
+example : 2*a*b ≤ a^2 + b^2 := by
+
+  have h : 0 ≤ a^2 - 2*a*b + b^2
+  calc a^2 - 2*a*b + b^2
+     _ = (a - b)^2 := by ring
+     _ ≥ 0 := by exact sq_nonneg (a - b)
+
+  calc 2* a*b = 2*a*b + 0 := by linarith
+     _ ≤ 2*a*b + (a^2 - 2*a*b + b^2) := add_le_add (le_refl _) h
+     _ = a^2 + b^2 := by linarith

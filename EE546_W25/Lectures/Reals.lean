@@ -1,18 +1,149 @@
+/- --------------------------------------------------------------------------
+ -
+ -
+ -
+ -
+ -
+ -
+ -
+ -                                       EE 546
+ -
+ -                              **REAL NUMBERS IN LEAN**
+ -
+ -                    DEPARTMENT OF ELECTRICAL AND COMPUTER ENGINEERING
+ -                              UNIVERISITY OF WASHINGTON
+ -                                 PROF.  ERIC KLAVINS
+ -
+ -                                     WINTER 2025
+ -
+ -
+ -                               Reading: MIL 2.3-2.5, 3.6
+ -
+ -
+ -
+ -
+ ------/
+
 import Mathlib.Data.Real.Basic
-import Mathlib.Tactic.Linarith
---import Mathlib.Algebra.Order.Floor
+import Mathlib.Tactic
+import Mathlib.Topology.Instances.Real
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 
-/- # SEQUENCES -/
 
-def σ₁ (n : ℕ) : ℚ := (1:ℚ) / n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/- # WHAT IS A REAL NUMBER?
+
+One way to characterize the reals is that they are numbers with inifite decimal expansions. For example,
+
+  1.0000000 ...        --> Also an integer
+  3.5                  --> Also a fracton
+  3.3333333 ...        --> Also a fracton
+  1.4142135 ...        --> √2, an algebraic number
+  3.1415927 ...        --> π, a trancendental number
+
+We might be tempted to define the reals as all sequences of integers, and in fact at least one Real Analysis textbook does this.
+
+But the usual method, and the one taken by Lean, is to define `Cauchy Sequences` over ℚ that converge to irrational values. For example, the sequence
+
+  4/1
+  4/1 - 4/3
+  4/1 - 4/3 + 4/5
+  4/1 - 4/3 + 4/5 - 4/7
+  4/1 - 4/3 + 4/5 - 4/7 + 4/9
+
+Converges to pi.
+
+-/
+
+
+
+
+/- # ISSUES
+
+Two issues arise.
+
+  1) What does it mean for a sequence over ℚ to converge? The normal notion of convergence over ℝ doesn't work, because it the existence of a real number being converged to. But we haven't defined ℝ yet.
+
+    To address this, we'll define `Cauchy Convergence`, which states that as you go out in the sequence the values become arbitrarily close to each other. This means it converges to something, but that something might not be rational. So we'll call it real.
+
+  2) Multiple sequences can converge in this sense to the same value. That is, the values of two sequences become arbitrarily close to each other.
+
+    To address this issue, we'll define a notion of equality on Cauchy Sequences and correspond to each `equivalence classes` of sequences a real number.
+
+-/
+
+
+
+
+
+
+
+
+
+
+
+
+/- # SEQUENCES
+
+Sequences over the rational numbers are just functions from ℕ to ℚ. -/
+
+/- Example: (1/n) -/
+def σ₁ (n : ℕ) : ℚ := (1:ℚ) / (n+1)
+
 #eval [σ₁ 0, σ₁ 1, σ₁ 2, σ₁ 3]
 
-#check σ₁
+
+/- Example: Converges to 0.9999 ... -/
+def one (n : Nat) : ℚ := match n with
+  | Nat.zero => 9/10
+  | Nat.succ k => one k + 9/(10^(n+1))
+
+#eval [one 0, one 1, one 2, one 3]
+
+
+/- Example: Converges to √2 -/
+def sqrt2 (n : Nat) : ℚ := match n with
+  | Nat.zero => 1
+  | Nat.succ k => (sqrt2 k + 2 / (sqrt2 k))/2
+
+#eval [sqrt2 0, sqrt2 1, sqrt2 2, sqrt2 3, sqrt2 4]
+#eval (665857.0/470832)^2
+
+
+
+
+
+
+/- # OPERATIONS ON SEQUENCES
+
+You can perform many of the same operations on sequences as you can on numbers. This allows you to make new sequences out of old ones.  -/
+
 
 def add (a b : ℕ → ℚ) := λ n => a n + b n
 def mul (a b : ℕ → ℚ) := λ n => (a n)*(b n)
+def scale (c : ℚ) (a : ℕ → ℚ) := λ n => c * (a n)
+-- and more
 
-def σ₂ := add σ₁ (mul σ₁ σ₁)
+-- Example
+def σ₂ := scale 3 (add σ₁ (mul σ₁ σ₁))
 
 #eval [σ₂ 0, σ₂ 1, σ₂ 2, σ₂ 3]
 
@@ -21,22 +152,101 @@ def σ₂ := add σ₁ (mul σ₁ σ₁)
 
 
 
-/- # CAUCHY SEQUENCES -/
 
-def IsCauchy (σ : ℕ → ℚ) := ∀ ε > 0 , ∃ N : ℕ , ∀ n m,
-  n > N ∧ m > N → abs (σ n - σ m) < ε
 
-example : IsCauchy σ₁ := by
+
+
+
+
+
+
+
+
+
+/- # THE USUAL NOTION OF CONVERGENCE
+
+One notion of convergence is to specify what the sequence converges to: -/
+
+def ConvergesTo (f : ℕ → ℚ) (x:ℚ) := ∀ ε > 0, ∃ n , ∀ m ≥ n, |f m - x| < ε
+
+/- Here's an easy example of a constant sequence. -/
+example : ConvergesTo (λ _ => 3) 3 := by
   intro ε hε
-  let N := Int.toNat (Rat.ceil (1/ε))
-  apply Exists.intro N
-  intro n m ⟨ h1, h2 ⟩
-  simp[σ₁]
-  simp[abs_lt]
-  exact ⟨
-    sorry,
-    sorry
-  ⟩
+  use 1
+  intro n h
+  simp[hε]
+
+/- Advanced: (1/n) → 0. This method is not covered in this class, but see MIL. -/
+example : Filter.Tendsto (λ n => (1:ℚ)/n) Filter.atTop (nhds (0:ℚ)) := by
+  intro X h
+  simp
+  exact mem_nhdsWithin_of_mem_nhds h
+
+/- NOTE: This notion of convergence requires you know what the sequence is converging to and that it is rational. -/
+
+
+
+
+
+
+
+
+
+
+/- # CONVERGENCE OF THE SUM OF TWO SEQUENCES -/
+
+theorem converge_add                 -- Adapted from MIL 3.6
+    {σ₁ σ₂ : ℕ → ℚ } {a b : ℚ}
+    (h1 : ConvergesTo σ₁ a) (h2 : ConvergesTo σ₂ b) :
+    ConvergesTo (add σ₁ σ₂) (a+b) := by
+
+  intro ε εpos
+  simp[add]
+  have ε2pos : 0 < ε / 2 := by linarith
+  have ⟨Ns, hs⟩ := h1 (ε/2) ε2pos
+  have ⟨Nt, ht⟩ := h2 (ε/2) ε2pos
+
+  use max Ns Nt
+  intro m hm
+
+  have ngeNs : m ≥ Ns := le_of_max_le_left hm
+  have ngeNt : m ≥ Nt := le_of_max_le_right hm
+
+  calc |σ₁ m + σ₂ m - (a + b)|
+    _ = |σ₁ m - a + (σ₂ m - b)| := by congr; linarith
+    _ ≤ |σ₁ m - a| + |σ₂ m - b| := (abs_add _ _)
+    _ < ε / 2 + ε / 2           := (add_lt_add (hs m ngeNs) (ht m ngeNt))
+    _ = ε                       := by norm_num
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/- # CAUCHY SEQUENCES
+
+A different notion of convergence is Cauchy Convergence, stating that values become arbitrary close without saying what they become close to. In fact, whatever the value is, it may not rational. -/
+
+def IsCauchy (σ : ℕ → ℚ) :=
+  ∀ ε > 0 , ∃ N : ℕ , ∀ n m : ℕ,
+  n > N → m > N → abs (σ n - σ m) < ε
+
+/- Here's the same example as above.  -/
+theorem three_c : IsCauchy (λ _ => 3) := by
+  intro ε hε
+  use 1
+  intro n m hn hm
+  simp[hε]
+
+/- Proving more complicated examples, even just 1/n, is tough without more machinery. -/
 
 
 
@@ -54,46 +264,278 @@ example : IsCauchy σ₁ := by
 
 
 
+/- # EXAMPLE: THE SUM OF CAUCHY SEQUENCES IS CAUCHY -/
 
-
-
-
-
-
-theorem helper {n m N1 N2 : Nat} :
-  (n > N1 + N2) →
-  (m > N1 + N2) →
-  (n > N1 ∧ m > N1) ∧ (n > N2 ∧ m > N2) := by
-  intro h1 h2
-  exact ⟨ ⟨ by linarith, by linarith ⟩, ⟨ by linarith, by linarith ⟩ ⟩
-
-theorem cauchy_add (s1 s2 : ℕ → ℚ) : IsCauchy s1 → IsCauchy s2 → IsCauchy (add s1 s2) := by
+theorem cauchy_add {s1 s2 : ℕ → ℚ}
+  : IsCauchy s1 →
+    IsCauchy s2 →
+    IsCauchy (add s1 s2) := by
 
   -- Introduce everything
   intro h1 h2 ε hε
   have ⟨ N1, h1' ⟩ := h1 (ε/2) (by exact half_pos hε)
   have ⟨ N2, h2' ⟩ := h2 (ε/2) (by exact half_pos hε)
-  let N := N1 + N2
-  apply Exists.intro N
-  intro m n ⟨ gm, gn ⟩
+  use N1 + N2
+  intro m n gm gn
 
   -- Dispatch assumptions in the hypotheses
-  have h1'' := h1' n m (helper gn gm).left
-  have h2'' := h2' n m (helper gn gm).right
+  have h1'' := h1' n m (by linarith) (by linarith)
+  have h2'' := h2' n m (by linarith) (by linarith)
 
-  -- Break the add up
-  simp[add]
-
-  -- Split up the absolute values
-  have ⟨ f1, f2 ⟩ := abs_lt.mp h1''
-  have ⟨ f3, f4 ⟩ := abs_lt.mp h2''
-  simp[abs_lt]
+  -- Break the add up and the absolute values
+  simp_all[add,abs_lt]
 
   -- The rest is arithmetic
-  apply And.intro
-  . linarith
-  . linarith
+  exact ⟨ by linarith, by linarith ⟩
 
-#check abs_add
 
-theorem cauchy_mul (s1 s2 : ℕ → ℚ) : IsCauchy s1 → IsCauchy s2 → IsCauchy (mul s1 s2) := by
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/- # EXAMPLE THE PRODUCT OF TWO CAUCHY SEQUENCES IS CAUCHY -/
+
+theorem cauchy_mul (s1 s2 : ℕ → ℚ) :
+  IsCauchy s1 →
+  IsCauchy s2 →
+  IsCauchy (mul s1 s2) := by
+    sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/- # EQUALITY OF SEQUENCES
+
+Different sequences may converge to the same value. For example, here is a list of ways to approximate π:
+
+  https://mathworld.wolfram.com/PiFormulas.html
+
+Thus, every real number corresponds to a whole equivalence class of sequences. Here is the notion of equality er can use. -/
+
+def eq (σ₁ σ₂ : ℕ → ℚ) :=
+  ∀ ε > 0, ∃ N, ∀ m n,
+  m > N → n > N → |σ₁ n - σ₂ m| < ε
+
+/- Here's an example that ought to be true -/
+example : eq (mul sqrt2 sqrt2) (λ n => 2) := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/- # EXAMPLE : COMMUTATIVITY OF SEQUENCE ADDITION -/
+
+theorem sadd_comm {σ τ : ℕ → ℚ}
+  : IsCauchy σ → IsCauchy τ → eq (add σ τ) (add τ σ) := by
+  intro h1 h2 ε hε
+  have ⟨ N1, h1' ⟩ := h1 ε hε
+  have ⟨ N2, h2' ⟩ := h2 ε hε
+  use N1 + N2
+  intro m n hm hn
+  have h1'' := h1' m n (by linarith) (by linarith)
+  have h2'' := h2' m n (by linarith) (by linarith)
+  simp_all[add]
+  sorry
+
+
+
+
+
+
+
+
+/- # EQ IS REFLEXIVE, SYMMETRIC, AND TRANSITIVE -/
+
+theorem eq_refl {σ : ℕ → ℚ}
+  : IsCauchy σ → eq σ σ := by
+  intro hc ε hε
+  have ⟨ N, h ⟩ := hc ε hε
+  use N
+  intro m n hm hn
+  have h' := h n m hn hm
+  exact h'
+
+theorem eq_sym {σ₁ σ₂ : ℕ → ℚ}
+  : IsCauchy σ₁ → IsCauchy σ₂ → eq σ₁ σ₂ → eq σ₂ σ₁ := by
+  intro h1 h2 h12 ε hε
+  have ⟨ N1, h1' ⟩ := h1 ε hε
+  have ⟨ N2, h2' ⟩ := h2 ε hε
+  use N1 + N2
+  intro m n hm hn
+  have h1'' := h1' n m (by linarith) (by linarith)
+  have h2'' := h2' n m (by linarith) (by linarith)
+  sorry
+
+theorem eq_trans {σ₁ σ₂ σ₃: ℕ → ℚ}
+  : IsCauchy σ₁ → IsCauchy σ₂ → eq σ₁ σ₂ → eq σ₂ σ₃ → eq σ₁ σ₃ := by
+  sorry
+
+
+
+
+
+
+
+
+
+
+
+/- # THE CAUCHY COMPLETION OF THE RATIONALS = THE REALS -/
+
+namespace Temp
+
+inductive Real where
+  | ofCauchy (σ : ℕ → ℚ) (h : IsCauchy σ) : Real
+
+open Real
+
+def three := ofCauchy (λ _ => 3) three_c
+
+
+
+
+
+
+
+
+
+
+
+
+
+/- # OPERATIONS, RELATIONS, and PROPERTIES "LIFT" -/
+
+/- Example operation -/
+def radd (x y : Real) : Real := match x, y with
+  | ofCauchy σ h1, ofCauchy τ h2 => ofCauchy (add σ τ) (cauchy_add h1 h2)
+
+#check radd three three
+
+
+/- Example relation -/
+def req (x y : Real) : Prop := match x, y with
+  | ofCauchy σ _, ofCauchy τ _ => eq σ τ
+
+theorem req_refl (x : Real) : req x x := match x with
+  | ofCauchy _ h => eq_refl h
+
+example : req three three := by apply req_refl
+
+
+/- Example Property -/
+theorem radd_comm {x y : Real} : req (radd x y) (radd y x) := by
+  match x, y with
+  | ofCauchy σ h1, ofCauchy τ h2 =>
+    simp[req,radd]
+    exact sadd_comm h1 h2
+
+end Temp
+
+
+
+/- # ALL THE PROPERTIES OF THE REALS
+
+ℝ is a field (so is ℚ)
+  + and * are associative, commutative, distributive, inverses
+  there are additive and multiplicative identities
+
+ℝ is totally ordered by ≤ and respected by + and * (so is ℚ)
+
+ℝ is complete with respect to ≤ (but ℚ isn't)
+  Every bounded nonempty set has a least upper bound
+  This is the only
+
+All these properties are available, along with many more. -/
+
+#check mul_assoc
+#check add_mul
+#check mul_le_mul_left
+#check le_total
+#check le_csSup
+
+
+
+
+
+
+
+
+
+
+
+/- # AND MORE REAL STUFF -/
+
+open Real
+
+example : ∃ x : ℝ, x^2 = 2 := by
+  use sqrt 2
+  simp
+
+example (x : Real) : (cos x)^2 + (sin x)^2 = 1 := by
+  exact cos_sq_add_sin_sq x
+
+example : deriv (fun x : ℝ ↦ x^5) 6 = 5 * 6^4 := by
+  simp
+
+example : deriv sin π = -1 := by
+  simp
+
+
+
+
+
+
+
+
+
+
+
+
+/- # REFERENCES
+
+A nice description of the Cauchy Completion: https://mathweb.ucsd.edu/~tkemp/140A/Construction.of.R.pdf
+
+A book that describes the Cauchy Completion:  Rudin, W.: Principles of Mathematical Analysis. Third Edition. International Series in Pure and Applied Mathematics. McGraw-Hill Book Co., New York – Aukland – Dusseldorf, 1976.ß
+
+A real analysis book in which ℝ is constructed from decimal expansions of the form f : ℕ → ℤ with f(0) being the integer part and f(n) ∈ {0, ..., 9} for n ≥ 1. https://docs.ufpr.br/%7Ehigidio/Ensino/Seminario/Davidson-Donsig-2010-Real%20Analysis%20and%20Aplications.pdf  -/
