@@ -50,8 +50,8 @@
 ## Week 5
 
  - Feb 4: Real Numbers
-  - [Reals](./EE546_W25/Lectures/Reals.lean)
-  - Reading [MIL](https://leanprover-community.github.io/mathematics_in_lean/C01_Introduction.html) 2.3-2.5, 3.6
+   - [Reals](./EE546_W25/Lectures/Reals.lean)
+    - Reading [MIL](https://leanprover-community.github.io/mathematics_in_lean/C01_Introduction.html) 2.3-2.5, 3.6
 
  - FEB 6 : Temporal Logic: Kripke Structures
 
