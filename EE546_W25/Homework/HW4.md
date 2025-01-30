@@ -7,5 +7,7 @@ Project Decisions
 
 3) For each idea, discuss ways to break the work up among your team. 
 
-4) Turn in your work in the usual way, but also be prepared to discuss on Tuesday 2/6. 
+4) Turn in your work in the usual way, but also be prepared to discuss on Tuesday 2/6. If one person on your team is turning in the writeup, you can just submit something saying who it was. 
+
+
 
