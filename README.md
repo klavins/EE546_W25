@@ -43,15 +43,23 @@
   - Reading [TIPL](https://lean-lang.org/theorem_proving_in_lean4/title_page.html)  chapter 4 (the section about the `calc` tactic)
   - Reading [MIL](https://leanprover-community.github.io/mathematics_in_lean/C01_Introduction.html) 2.1 and 2.2
 
-- Jan 30 : Real Numbers
-  - [Reals](./EE546_W25/Lectures/Reals.lean)
-  - Reading [MIL](https://leanprover-community.github.io/mathematics_in_lean/C01_Introduction.html) 2.3-2.5, 3.6
+- Jan 30 : More rationals and a proof that the square root of a prime number is not rational.
+  - [Sqrt2](./EE546_W25/Lectures/Sqrt2.lean)
+  - Reading [MIL] 5.1
 
 ## Week 5
 
- - Feb 4: TBA
+ - Feb 4: Real Numbers
+  - [Reals](./EE546_W25/Lectures/Reals.lean)
+  - Reading [MIL](https://leanprover-community.github.io/mathematics_in_lean/C01_Introduction.html) 2.3-2.5, 3.6
 
- - FEB 6 : TBA
+ - FEB 6 : Temporal Logic: Kripke Structures
+
+## Week 6
+
+ - FEB 11: Temporal Logic: Proofs
+
+ - Feb 13: TBA
 
 
 
