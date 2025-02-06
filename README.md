@@ -53,13 +53,16 @@
    - [Reals](./EE546_W25/Lectures/Reals.lean)
     - Reading [MIL](https://leanprover-community.github.io/mathematics_in_lean/C01_Introduction.html) 2.3-2.5, 3.6
 
- - FEB 6 : Temporal Logic: Kripke Structures
+ - FEB 6 : 
+   - [Temporal Logic](./EE546_W25/Lectures/KripkeStructures.lean)
 
 ## Week 6
 
- - FEB 11: Temporal Logic: Proofs
+ - FEB 11: 
+   - [Temporal Logic Continued](./EE546_W25/Lectures/KripkeStructures.lean)
 
- - Feb 13: TBA
+ - Feb 13:
+   - Group Presentations for [HW5](./EE546_W25/Homework/HW5.lean)
 
 
 
