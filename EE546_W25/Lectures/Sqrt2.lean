@@ -16,7 +16,7 @@ import Mathlib.Tactic
   So rewrite m = 2k for some k
 
   So 4 k k = 2 n n
-     2 = n n
+     2 k k = n n
 
   So n is a multiple of 2.
 
@@ -105,10 +105,6 @@ theorem prime_not_rat (p: ℕ) {m n: ℕ}
 
   -- p is less than or equal to 1 since it is a divisor of 1
   have p_le_1 : p ≤ 1 := Nat.le_of_dvd zero_lt_one this
-
-  -- have : 2 ≤ 1 := by
-  --   apply prime_p.two_le.trans
-  --   exact Nat.le_of_dvd zero_lt_one this
 
   -- since 2 ≤ p and p ≤ 1, we get 2 ≤ 1
   have : 2 ≤ 1 := by
