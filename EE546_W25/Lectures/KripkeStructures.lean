@@ -1,5 +1,32 @@
+/- --------------------------------------------------------------------------
+ -
+ -
+ -
+ -
+ -
+ -
+ -
+ -                                       EE 546
+ -
+ -                              **LINEAR TEMPORAL LOGIC**
+ -
+ -                    DEPARTMENT OF ELECTRICAL AND COMPUTER ENGINEERING
+ -                              UNIVERISITY OF WASHINGTON
+ -                                 PROF.  ERIC KLAVINS
+ -
+ -                                     WINTER 2025
+ -
+ -
+ -                               Reading: MIL 2.3-2.5, 3.6
+ -
+ -
+ -
+ -
+ ------/
+
 import Mathlib.Data.Set.Basic
 import Mathlib.Tactic
+
 
 /- # EXAMPLE: MICROWAVE OVEN ON/OFF BEHAVIOR
 
@@ -11,7 +38,7 @@ Consider a FSM that has three states.
    3.  closed
       ¬off
 
-In each state, there is a set of properties that are true. Questions we might have about this model:
+Each state is labeled by a set of properties that are true in that state. Questions we might have about this model:
 
   - Starting in state 1, is it always true that if the oven is on, then the door is closed?
   - Is it always the case the if the oven is on, then it is eventually off?
