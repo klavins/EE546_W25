@@ -427,7 +427,7 @@ example (τ:Trace MWState)
   intro h
   exact h 0
 
--- **Example** Prove the following
+-- **Exercise** Prove the following
 example (n:ℕ) (τ:Trace MWState)
   : AL1 τ → later (is one) n τ := by
   sorry
