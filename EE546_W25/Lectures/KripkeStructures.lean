@@ -17,7 +17,7 @@
  -                                     WINTER 2025
  -
  -
- -                               Reading: MIL 2.3-2.5, 3.6
+ -
  -
  -
  -
@@ -117,8 +117,8 @@ example : ∀ x, x ∈ Ev → x ∉ Od := by
   exact h' he
 
 -- **Exercise**
-example : Ev ∩ Od = ∅ :=
-  sorry
+theorem t : Ev ∩ Od = ∅ := by
+  simp[Ev,Od]
 
 
 
@@ -237,7 +237,7 @@ def NVT : tProp MWState :=  λ τ => ∀ n, τ n ≠ two
 
 -- **Exercise** Define a sequence that is always three immediately
 -- after it is two
-def TAT : tProp MWState := sorry
+def TAT : tProp MWState := λ τ => ∀ n, τ n = two → τ (n+1) = three
 
 
 
@@ -290,8 +290,10 @@ example : AL1 ⊆ EV1 := by
   simp_all[AL1,EV1]
 
 -- **Exercise** prove the following
-example : N10 ⊆ EV1 :=
-  sorry
+example : N10 ⊆ EV1 := by
+  intro x h
+  simp_all[N10,EV1]
+  use 10
 
 
 
@@ -330,14 +332,16 @@ def g (x:ℕ) := 1+x
 example : f = g :=
   funext (λ x => add_comm x 1)
 
-example : f = g := by
+theorem t1 : f = g := by
   apply funext
   intro x
   simp only[f,g,add_comm]
 
 -- **Exercise**: Prove the following
-example : (λ x:ℚ => x) = (λ x:ℚ => (2*x+2)/2 -1) :=
-  sorry
+example : (λ x:ℚ => x) = (λ x:ℚ => (2*x+2)/2 -1) := by
+  apply funext
+  intro x
+  linarith
 
 
 
@@ -356,7 +360,7 @@ example : (λ x:ℚ => x) = (λ x:ℚ => (2*x+2)/2 -1) :=
 
 Takes a Trace τ = ⟨ τ₀, τ₁, τ₂, τ₃, τ₄, τ₅, ... ⟩  and returns the `rest of the Trace` after a given point in time. E.g.
 
-  s τ 3 = ⟨ τ₃, τ₄, τ₅, ... ⟩
+  shift τ 3 = ⟨ τ₃, τ₄, τ₅, ... ⟩
 
 -/
 
@@ -388,10 +392,14 @@ theorem s_compose {T: Type} {τ : Trace T} {i j: ℕ}
   have : n + j + i = n + (i + j) := by linarith
   simp[this]
 
--- **Exercise** Prove this theorem about wapping indices
+-- **Exercise** Prove this theorem about wrapping indices
 theorem s_swap {T: Type} {τ : Trace T} {i j: ℕ}
-  : shift (shift τ i) j = shift (shift τ j) i :=
-  sorry
+  : shift (shift τ i) j = shift (shift τ j) i := by
+  apply funext
+  intro n
+  simp
+  have : n + j + i = n + i + j := by linarith
+  simp[this]
 
 
 
@@ -430,7 +438,8 @@ example (τ:Trace MWState)
 -- **Exercise** Prove the following
 example (n:ℕ) (τ:Trace MWState)
   : AL1 τ → later (is one) n τ := by
-  sorry
+  intro h
+  exact h n
 
 
 
@@ -457,8 +466,9 @@ example : argnext 10 (now (is two)) τ12 := by rfl
 example : next (later (is two) 9) τ12 := by rfl
 
 -- **Exericse** Show the following
-example {n:ℕ} : argnext (n+1) (now P) = next (later P n) :=
-  sorry
+example {n:ℕ} : argnext (n+1) (now P) = next (later P n) := by
+  funext τ
+  simp
 
 
 
@@ -485,8 +495,11 @@ example : ¬always (now (is one)) τ12 := by
 
 -- **Exercise** Prove the following:
 example {τ:Trace MWState}:
-  always (now (is three)) τ → ¬(now (is two)) τ :=
-  sorry
+  always (now (is three)) τ → ¬(now (is two)) τ := by
+  intro h1 h2
+  --have h3 := h1 0
+  simp_all
+
 
 
 

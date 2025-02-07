@@ -1,7 +1,7 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Tactic
 
--- 1) Prove the theorem `cauchy_mul` stated below.
+-- 1) Prove the theorem `cauchy_mul` stated below. It will be easier if you use the fact that all Cauchy sequences are bounded.
 
 def IsCauchy (σ : ℕ → ℚ) :=
   ∀ ε > 0 , ∃ N : ℕ , ∀ n m : ℕ,
@@ -9,6 +9,12 @@ def IsCauchy (σ : ℕ → ℚ) :=
 
 def mul (a b : ℕ → ℚ) := λ n => (a n)*(b n)
 
+-- 1a) Optional : Prove Cauchy sequences are bounded
+theorem cauchy_bounded {σ : ℕ → ℚ}
+ : IsCauchy σ → ∃ b, ∀ n, |σ n| < b :=
+ sorry
+
+-- 1b) Prove the product of Cauchy sequences is Cauchy
 theorem cauchy_mul (s1 s2 : ℕ → ℚ) :
   IsCauchy s1 →
   IsCauchy s2 →
