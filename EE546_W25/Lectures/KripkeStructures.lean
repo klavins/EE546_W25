@@ -254,6 +254,8 @@ def TAT : tProp MWState := λ τ => ∀ n, τ n = two → τ (n+1) = three
 
 /- # TELLING LEAN THAT tProp T IS A SET -/
 
+#check EV1 ∩ AL1
+
 instance {T: Type u} : Inter (tProp T) := ⟨ Set.inter ⟩    -- ∩
 instance {T: Type u} : Union (tProp T) := ⟨ Set.union ⟩    -- ∪
 instance {T: Type u} : HasSubset (tProp T) :=  ⟨λ S T => ∀ a, S a → T a⟩ -- ⊆
@@ -261,7 +263,7 @@ instance {T: Type u} : Membership (Trace T) (tProp T) := ⟨ id ⟩
 instance {T: Type u} : EmptyCollection (tProp T) :=  ⟨ { _x | False } ⟩
 instance {T: Type u} : HasCompl (tProp T) :=  ⟨ λ S => { x | ¬S x } ⟩
 
-
+#check EV1 ∩ AL1
 
 
 
@@ -547,8 +549,10 @@ example : always (eventually (later (is two) 1)) τ1212 := by
 
 -- **Exercise** Hint: Use Set.subset_setOf.mpr and Set.mem_def
 example {T: Type u} {P Q: tProp T}
-  : P ⊆ Q → eventually P ⊆ eventually Q :=
-  sorry
+  : P ⊆ Q → eventually P ⊆ eventually Q := by
+  intro hpq τ ⟨ n, h ⟩
+  use n
+  exact hpq (shift τ n) h
 
 
 
@@ -594,8 +598,11 @@ theorem eventually_monotonic {T: Type u} {P Q: tProp T}
 
 -- **Exercise** Prove the following theorem
 theorem always_eventually {T : Type u} (A : tProp T)
-  : tautology (implies (always A) (eventually A)) :=
-  sorry
+  : tautology (implies (always A) (eventually A)) :=  by
+  intro τ h
+  use 0
+  exact h 0
+
 
 /- Many more theorems can be stated and proved -/
 
@@ -654,7 +661,7 @@ A trajectory σ `Respects` a Kripke structure if:
 def Trajectory := Trace (Set Prop)
 
 -- Example trajectory. Does not actually respect MW
-def idle : Trajectory := λ _n => {off}
+def idle : Trajectory := λ _ => {off}
 
 
 
@@ -738,10 +745,15 @@ example : k_satisfies MW AO := by
     apply Or.inr rfl
 
   -- two
-  . sorry
+  . simp[hs] at hlabel
+    simp[hlabel,MW]
+    exact rfl
 
   -- three
-  . sorry
+  . simp[hs] at hlabel
+    simp[MW] at hlabel
+
+    sorry
 
 
 
@@ -822,8 +834,31 @@ example : k_satisfies MW (always (atomic off ∪ atomic closed)) := by
 
 /- # OTHER EXAMPLES-/
 
-example : k_satisfies MW (always (eventually (atomic off))) :=
-  sorry
+example : k_satisfies MW (always (eventually (atomic off))) := by
+  intro σ h k
+  unfold eventually
+  obtain ⟨ τ, h1 ⟩ := h
+  cases hs : τ k
+  . use 0
+    simp[atomic]
+    have ⟨ h2, h3 ⟩ := h1 k
+    simp[h3,MW,hs]
+  . use 0
+    simp[atomic]
+    have ⟨ h2, h3 ⟩ := h1 k
+    simp[h3,MW,hs]
+  . use 1
+    simp[atomic,MW]
+    have ⟨ h2, h3 ⟩ := h1 k
+    simp_all[hs]
+    have h5 : τ (k+1) = one := by exact h2
+    have h6 : k+1 = 1+k := by exact Nat.add_comm k 1
+    simp[h6] at h5
+    simp[h5]
+    apply Set.mem_insert_iff.mpr
+    exact Or.inr rfl
+
+
 
 example : ¬k_satisfies MW (always (eventually (atomic (¬off)))) :=
   sorry
