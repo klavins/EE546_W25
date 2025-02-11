@@ -8,7 +8,7 @@
  -
  -                                  EE 546
  -
- -                        **HEIRARCHY EXAMPLE: SL2**
+ -                        **HIERARCHY EXAMPLE: SL2**
  -
  -               DEPARTMENT OF ELECTRICAL AND COMPUTER ENGINEERING
  -                          UNIVERISITY OF WASHINGTON
