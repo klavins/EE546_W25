@@ -164,8 +164,33 @@ inductive MWState where
 
 open MWState
 
-inductive closed : Prop
-inductive off : Prop
+
+
+/- # HAVE TO GO THROUGH SOME EFFORT TO MAKE TWO UNEQUAL ATOMIC PROPS -/
+
+inductive closed : Prop where
+  | a : closed
+
+inductive off : Prop where
+
+def off.elim { p : Prop } (h : off) : p :=
+  nomatch h
+
+@[simp]
+theorem closed_ne_off : closed ≠ off := by
+  intro h
+  simp at h
+  obtain ⟨ h1, h2 ⟩ := h
+  have : closed := closed.a
+  have o : off := h1 closed.a
+  apply off.elim at o
+  exact o
+
+
+
+
+
+/- # DEFININNG A KRIPKE STRUCTURE -/
 
 def MW : Kripke := {
   states := MWState,             -- For now, just worry about the states
@@ -178,7 +203,6 @@ def MW : Kripke := {
     | two   => {off}
     | three => {closed}
 }
-
 
 
 
@@ -734,6 +758,7 @@ example : k_satisfies MW AO := by
   intro σ τ h
   intro n
   have ⟨ htraj, hlabel ⟩ := h n
+  have ⟨ htraj', hlabel' ⟩ := h (n+1)
 
   cases hs : τ n
 
@@ -750,10 +775,55 @@ example : k_satisfies MW AO := by
     exact rfl
 
   -- three
-  . simp[hs] at hlabel
-    simp[MW] at hlabel
-
+  . simp_all[hs,MW,hs,htraj]
+    -- AAHHH! THIS ISN'T ACTUALLY TRUE!
     sorry
+
+
+-- Here's a quick and ditry proof that the opposite of the above is true.
+-- It could be cleaned up a lot!
+example : ¬k_satisfies MW AO := by
+  simp
+  let σ : Trajectory := (λ n => if n%2 = 0 then {closed,off} else {closed})
+  let τ : Trace MWState := (λ n => if n%2 = 0 then one else three)
+  use σ
+  apply And.intro
+  . use τ
+    intro n
+    by_cases h1 : n % 2 = 0
+    . have h2 : τ n = one := if_pos h1
+      have h3 : (n+1) % 2 = 1 := Nat.succ_mod_two_eq_one_iff.mpr h1
+      have h4 : (n+1) % 2 ≠ 0 := by exact Nat.mod_two_ne_zero.mpr h3
+      have h5 : τ (n+1) = three := by exact if_neg h4
+      apply And.intro
+      . simp[h5,MW,h2]
+      . simp[h5,MW,h2]
+        have h6 : σ n = {closed,off} := by exact if_pos h1
+        simp[h6]
+    . have h6 : τ n = three := if_neg h1
+      have h7 : n%2 = 1 := Nat.mod_two_ne_zero.mp h1
+      have h8 : (n+1)%2 = 0 := Nat.succ_mod_two_eq_zero_iff.mpr h7
+      have h9 : τ (n+1) = one := by exact if_pos h8
+      apply And.intro
+      . simp[h9,h6,MW]
+      . simp[h9,MW,h6]
+        have h10 : σ n = {closed} := by exact if_neg h1
+        simp[h10]
+  . intro h
+    simp_all[AO]
+    have h' := h 1
+    simp at h'
+    have : σ 1 = {closed} := by exact rfl
+    simp[this] at h'
+    apply Set.mem_def.mpr at h'
+    simp[Set.mem_insert_iff] at h'
+    have h10 := closed_ne_off
+    simp at h10
+    exact h10 (id (Iff.symm h'))
+
+
+
+
 
 
 
