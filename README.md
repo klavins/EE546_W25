@@ -71,23 +71,29 @@
    - [Hierarchies](./EE546_W25/Lectures/SL2.lean)
 
  - Feb 13:
-   - Group Presentations for [HW6](./EE546_W25/Homework/HW6.lean)
+   - Group Progess Updates for [HW6](./EE546_W25/Homework/HW6.lean)
    - Keep presentations to 10 minutes
 
 ## Week 8
 
   - FEB 18: TBA
 
-  - FEB 20 : Group Presentations 
+  - FEB 20 : Group Progess Updates 
 
 ## Week 9
 
-  - FEB 18: TBA
+  - FEB 25: TBA
 
-  - FEB 20 : Group Presentations 
+  - FEB 27: Group Progess Updates 
 
 ## Week 10
 
-  - FEB 18: TBA
+  - MAR 4: TBA
 
-  - FEB 20 : FINAL PRESENATIONS
+  - MAR 6: TBA
+
+## Week 11
+
+  - MAR 4: Final Presentations
+
+  - MAR 6: Final Presentations 

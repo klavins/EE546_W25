@@ -37,6 +37,34 @@ import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
 
 
 
+/- # SOME IDEAS TO CONSIDER
+
+  - Arrows
+    - I shot an arrow into the sky, and where it landed I painted a target.
+
+  - Wheels
+    - It's ok to reinvent the wheel if you think wheels are really interesting.
+    - When wheels first became a thing, people reinvented them all the time.
+
+-/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /- # WORK BACK FROM YOUR GOAL
 
   1. Can you express your goal?
@@ -56,9 +84,7 @@ import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
       i. Try to make standalone simple examples that use the theorems
     c. Everything is there, but you can't figure it out
       i. Make sure you can prove your theorem by hand
-      ii. Back up and try a more specific example
-
--/
+      ii. Back up and try a more specific example -/
 
 
 
@@ -75,7 +101,6 @@ import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
         - Now exp_add_of_commute is not unifying
            - Oh, I have a typo B*B should be B+B. -/
 
-
 namespace ex1
 open NormedSpace
 
@@ -84,6 +109,11 @@ def B : Matrix (Fin 3) (Fin 3) ℂ  := !![1,2,1;0,3,4;1,2,3]
 example : (exp ℂ (B+B)) = (exp ℂ B) * (exp ℂ B) := by
   apply Matrix.exp_add_of_commute
   rfl
+
+
+
+
+
 
 
 
@@ -144,6 +174,7 @@ end ex1
 
 
 
+
 /- # WHAT IS A MATRIX ANYWAY? -/
 
 #check (Fin 3)
@@ -151,6 +182,11 @@ end ex1
 def Vect (n:ℕ) := (Fin n) → ℂ
 
 def Mat (m n: ℕ) := (Fin m) → (Fin n) → ℂ
+
+
+
+
+
 
 
 
@@ -524,28 +560,86 @@ theorem sum_mul {a:ℚ} {n:ℕ}
   Actually, we did this in HW3!!  -/
 
 def my_sum (f : ℕ → ℚ) (n:ℕ) := match n with
-  | Nat.zero => f 0
+  | Nat.zero => 0
   | Nat.succ k => f k + my_sum f k
 
 #eval my_sum (λ i => i) 10
 
-theorem my_sep {f : ℕ → ℚ} (n:ℕ)
-  : my_sum f (n+1) = f n + my_sum f n := by
-  induction n with
-  | zero => simp[my_sum]
-  | succ k ih =>
-    unfold my_sum
-    rw[ih]                --- boom!
+-- But this only works for rationals. It would be cool if it worked for anything.
 
-theorem my_sum_mul {a:ℚ} {n:ℕ}
-  : my_sum (λ i => i*a) n = a * my_sum (λ i => i) n := by
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/- # MORE GENERAL SUMS
+
+  To define a sum, you really only need 0 and addition.
+
+  Using Lean's hierarchies, we can define sum on any time that instantiates 0 and +. -/
+
+namespace MySum
+
+def sum {α : Type*} [Add α] [Zero α] (f : ℕ → α) (n:ℕ) : α
+  := match n with
+  | Nat.zero => 0
+  | Nat.succ k => f k + sum f k
+
+#eval sum (λ i : ℕ => i) 10
+
+def M : Matrix (Fin 2) (Fin 2) ℕ := !![1,0;0,1]
+
+#eval sum (λ _ => M) 3
+
+
+
+
+
+
+
+
+
+
+
+/- # SOME RESULTS ABOUT SUMS -/
+
+theorem sum_sep {α : Type*} [Ring α] {f : ℕ → α} (n:ℕ)
+  : sum f (n+1) = f n + sum f n := by
   induction n with
-  | zero => simp[my_sum]
-  | succ k ih => calc my_sum (fun i ↦ ↑i * a) (k + 1)
-  _ = k*a + my_sum (fun i ↦ ↑i * a) k := by rw[my_sep]
-  _ = k*a + a * my_sum (fun i ↦ ↑i) k := by rw[ih]
-  _ = a * (k + my_sum (fun i ↦ ↑i) k) := by ring
-  _ = a * (my_sum (fun i ↦ ↑i) (k+1)) := by rw[←my_sep] -- yowza!
+  | zero => simp[sum]
+  | succ k ih => unfold sum; rw[ih]
+
+theorem sum_mul {α : Type*} [Ring α] {a:α} {n:ℕ}
+  : sum (λ i => i*a) n = (sum (λ i => (i:α)) n) * a := by
+  induction n with
+  | zero => simp[sum]
+  | succ k ih => rw[sum_sep,sum_sep,add_mul,←ih]
+
+theorem sum_add {α : Type*} [Field α] {n:ℕ} {f g : ℕ → α}
+  : sum (λ i => f i) n + sum (λ i => g i) n = sum (λ i => f i + g i) n := by
+  induction n with
+  | zero => simp[sum]
+  | succ k ih =>
+    rw[sum_sep,sum_sep,sum_sep,←ih]
+    ring
+
+
+
+
+
+
+
+
 
 
 
@@ -553,7 +647,7 @@ theorem my_sum_mul {a:ℚ} {n:ℕ}
 
 /- # THOUGHTS
 
-  - So now I'm wondering if the Mathematacians programing Mathlib have our best interests in mind?
+  - I'm wondering if the Mathematacians programing Mathlib have our best interests in mind?
 
   - Maybe we need to make EngrLib?
 
