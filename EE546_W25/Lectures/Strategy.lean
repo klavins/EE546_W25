@@ -34,6 +34,8 @@ import Mathlib.Tactic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+import Mathlib.Data.Nat.Factorial.Basic
+
 
 
 
@@ -586,7 +588,7 @@ def my_sum (f : ℕ → ℚ) (n:ℕ) := match n with
 
   To define a sum, you really only need 0 and addition.
 
-  Using Lean's hierarchies, we can define sum on any time that instantiates 0 and +. -/
+  Using Lean's hierarchies, we can define sum on any type that instantiates 0 and +. -/
 
 namespace MySum
 
@@ -600,6 +602,23 @@ def sum {α : Type*} [Add α] [Zero α] (f : ℕ → α) (n:ℕ) : α
 def M : Matrix (Fin 2) (Fin 2) ℕ := !![1,0;0,1]
 
 #eval sum (λ _ => M) 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -633,6 +652,26 @@ theorem sum_add {α : Type*} [Field α] {n:ℕ} {f g : ℕ → α}
     rw[sum_sep,sum_sep,sum_sep,←ih]
     ring
 
+
+
+
+
+
+
+
+/- # APPROXIMATON OF THE MATRIX EXPONENTIAL -/
+
+def smul {m n:ℕ} (a:ℚ) (A: Matrix (Fin m) (Fin n) ℚ) :=
+  λ i j => a * A i j
+
+def exp {n:ℕ} (A : Matrix (Fin n) (Fin n) ℚ) :=
+  sum (λ k => (smul ((1:ℚ)/(Nat.factorial k)) (A^k)) ) 8
+
+#eval exp !![1,1;0,1]
+
+#eval !![(685.0 )/252, (1957.0 )/720; 0, (685.0)/252]
+
+/- With a suitable definition of limits, we can define the actual Matrix exponential. -/
 
 
 
