@@ -19,7 +19,7 @@
  -
  -
  -
- -                        Solutions in H2Solved.lean
+ -
  -
  -
  -
@@ -142,7 +142,13 @@ def S := SL2.mk !![0, -1; 1, 0]
 
 /- # EXERCISES -/
 
-example : ¬∃ M: SL2 , M.val = !![0,0;0,0] := sorry
+example : ¬∃ M: SL2 , M.val = !![0,0;0,0] := by
+  intro ⟨ M, h ⟩
+  have h1 : M.val.det = 0 := by rw[h]; exact rfl
+  simp[M.det1] at h1
+
+
+
 
 
 
@@ -197,14 +203,20 @@ def SL2.default : SL2 := Inhabited.default
 
 /- # EXERCISE
 
-A nontrivial type has at leas two elements. A class noting this is declared like this:
+A nontrivial type has at least two elements. A class noting this is declared like this:
  -/
 
- class Nontrivial' (α : Type*) : Prop where
-   exists_pair_ne : ∃ x y : α, x ≠ y
+class Nontrivial' (α : Type*) : Prop where
+  exists_pair_ne : ∃ x y : α, x ≠ y
 
 instance mod_non_triv : Nontrivial SL2 :=
-  ⟨ sorry ⟩
+  ⟨ by
+    use S
+    use T
+    intro h
+    have : S.val 0 0 = T.val 0 0 := by simp[h];
+    simp[S,T] at this
+  ⟩
 
 
 
@@ -279,7 +291,11 @@ theorem mod_mul (A B : SL2) : A * B = ⟨ A*B, by simp[A.det1,B.det1] ⟩ := by
 
 /- # EXERCISE -/
 
-example : ¬ ∀ A B : SL2, A*B = B*A := sorry
+example : ¬ ∀ A B : SL2, A*B = B*A := by
+  intro h
+  have h1 := h S T
+  have h2 : (S*T).val 0 0 = (T*S).val 0 0 := by simp[h1]
+  simp[S,T] at h2
 
 
 
@@ -321,8 +337,10 @@ theorem mod_inv (A : SL2) : A⁻¹ = ⟨ A⁻¹, by simp[A.det1] ⟩ := rfl
 
 /- # EXERCISE -/
 
-example : ∀ A B : SL2, (A*B)⁻¹ = B⁻¹ * A⁻¹ := sorry
-
+example : ∀ A B : SL2, (A*B)⁻¹ = B⁻¹ * A⁻¹ := by
+  intro A B
+  simp[mod_inv]
+  exact Matrix.mul_inv_rev A.val B.val
 
 
 
@@ -388,7 +406,12 @@ theorem one_expl : (1:SL2) = !![(1:ℤ),0;0,1] := by
 
 -- Hint: use Matrix.nonsing_inv_mul
 
-example : ∀ A : SL2, A⁻¹*A = 1 := sorry
+example : ∀ A : SL2, A⁻¹*A = 1 := by
+  intro A
+  simp[mod_inv]
+  apply Matrix.nonsing_inv_mul
+  simp[A.det1]
+
 
 
 
@@ -447,7 +470,10 @@ instance inst_mul_one : MulOneClass SL2 :=
 #eval S*T
 #eval T*S
 
-example : S*T ≠ T*S := sorry
+example : S*T ≠ T*S :=  by
+  intro h
+  have h2 : (S*T).val 0 0 = (T*S).val 0 0 := by simp[h]
+  simp[S,T] at h2
 
 
 
@@ -505,4 +531,4 @@ example (A B : SL2): (A⁻¹*B*A)⁻¹ = A⁻¹*B⁻¹*A := by group
 
 /- # EXERCISE -/
 
-example (A B C : SL2) : A * (B * C) * (A * C)⁻¹ * (A * B * A⁻¹)⁻¹ = 1 := sorry
+example (A B C : SL2) : A * (B * C) * (A * C)⁻¹ * (A * B * A⁻¹)⁻¹ = 1 := by group

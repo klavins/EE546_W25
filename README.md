@@ -67,8 +67,27 @@
 ## Week 7
 
  - FEB 11: 
-   - [Hierarchies](./EE546_W25/Lectures/SL2.lean)
+   - [Project Strategies](./EE546_W25/Lectures/Strategy.lean)
+     [Hierarchies](./EE546_W25/Lectures/SL2.lean)
 
  - Feb 13:
    - Group Presentations for [HW6](./EE546_W25/Homework/HW6.lean)
+   - Keep presentations to 10 minutes
 
+## Week 8
+
+  - FEB 18: TBA
+
+  - FEB 20 : Group Presentations 
+
+## Week 9
+
+  - FEB 18: TBA
+
+  - FEB 20 : Group Presentations 
+
+## Week 10
+
+  - FEB 18: TBA
+
+  - FEB 20 : FINAL PRESENATIONS
