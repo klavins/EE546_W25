@@ -68,7 +68,7 @@
 
  - FEB 11: 
    - [Project Strategies](./EE546_W25/Lectures/Strategy.lean)
-     [Hierarchies](./EE546_W25/Lectures/SL2.lean)
+   - [Hierarchies](./EE546_W25/Lectures/SL2.lean)
 
  - Feb 13:
    - Group Presentations for [HW6](./EE546_W25/Homework/HW6.lean)
