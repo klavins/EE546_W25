@@ -47,6 +47,15 @@ For your final project, you will need to use this script (or figure out how to u
 
 -/
 
+/- # Code structure
+
+  * SL2.lean : This file
+    * Lots of documentation!
+  * Lib/ComplexSimps.lean : A lot of obvious things about complex numbers
+  * Lib/UHP.lean : Definitions for the upper half plane of the complex numbers
+
+-/
+
 /-
 
 # Some of Mathlibs Classes

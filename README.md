@@ -69,7 +69,7 @@
  - FEB 11: [Temporal Logic Continued](./EE546_W25/Lectures/KripkeStructures.lean)
 
  - Feb 13:
-   - Group Progess Updates for [HW6](./EE546_W25/Homework/HW6.lean)
+   - Group Progess Updates 
    - Keep presentations to 10 minutes
 
 ## Week 8
@@ -77,7 +77,9 @@
   - FEB 18: 
     - [Project Strategies](./EE546_W25/Lectures/Strategy.lean)
 
-  - FEB 20 : Group Progess Updates 
+  - FEB 20 : 
+    - Group Progess Updates 
+    - Keep presentations to 10 minutes    
 
 ## Week 9
 
@@ -85,7 +87,9 @@
     - [Hierarchies Rendered](./docmaker/build/SL2.md)
     - [Hierarchies Code](./EE546_W25/Lectures/SL2.lean)
 
-  - FEB 27: Group Progess Updates 
+  - FEB 27: 
+    - Group Progess Updates 
+    - Keep presentations to 10 minutes
 
 ## Week 10
 
