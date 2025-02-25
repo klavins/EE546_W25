@@ -54,21 +54,19 @@
     - Reading [MIL](https://leanprover-community.github.io/mathematics_in_lean/C01_Introduction.html) 2.3-2.5, 3.6
 
  - FEB 6 : 
-   - [Temporal Logic](./EE546_W25/Lectures/KripkeStructures.lean)
+   - Real numbers continued
 
 ## Week 6
 
  - FEB 11: 
-   - [Temporal Logic Continued](./EE546_W25/Lectures/KripkeStructures.lean)
+   - [Temporal Logic](./EE546_W25/Lectures/KripkeStructures.lean)
 
  - Feb 13:
    - Group Presentations for [HW5](./EE546_W25/Homework/HW5.lean)
 
 ## Week 7
 
- - FEB 11: 
-   - [Project Strategies](./EE546_W25/Lectures/Strategy.lean)
-   - [Hierarchies](./EE546_W25/Lectures/SL2.lean)
+ - FEB 11: [Temporal Logic Continued](./EE546_W25/Lectures/KripkeStructures.lean)
 
  - Feb 13:
    - Group Progess Updates for [HW6](./EE546_W25/Homework/HW6.lean)
@@ -76,13 +74,16 @@
 
 ## Week 8
 
-  - FEB 18: TBA
+  - FEB 18: 
+    - [Project Strategies](./EE546_W25/Lectures/Strategy.lean)
 
   - FEB 20 : Group Progess Updates 
 
 ## Week 9
 
-  - FEB 25: TBA
+  - FEB 25: 
+    - [Hierarchies Rendered](./EE546_W25/docmaker/build/SL2.md)
+    - [Hierarchies Code](./EE546_W25/Lectures/SL2.lean)
 
   - FEB 27: Group Progess Updates 
 

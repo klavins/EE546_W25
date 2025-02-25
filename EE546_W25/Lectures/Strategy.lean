@@ -8,7 +8,7 @@
  -
  -                                  EE 546
  -
- -                         **PROJECT STRATEGY IDEAS**
+ -                       **PROJECT STRATEGY AND IDEAS**
  -
  -               DEPARTMENT OF ELECTRICAL AND COMPUTER ENGINEERING
  -                          UNIVERISITY OF WASHINGTON
@@ -106,7 +106,7 @@ import Mathlib.Data.Nat.Factorial.Basic
 namespace ex1
 open NormedSpace
 
-def B : Matrix (Fin 3) (Fin 3) ℂ  := !![1,2,1;0,3,4;1,2,3]
+abbrev B : Matrix (Fin 3) (Fin 3) ℂ := !![1,2,1;0,3,4;1,2,3]
 
 example : (exp ℂ (B+B)) = (exp ℂ B) * (exp ℂ B) := by
   apply Matrix.exp_add_of_commute
@@ -186,7 +186,7 @@ def Vect (n:ℕ) := (Fin n) → ℂ
 def Mat (m n: ℕ) := (Fin m) → (Fin n) → ℂ
 
 
-
+--def A : Mat 2 1 := λ i j => -- put something here
 
 
 
@@ -234,9 +234,9 @@ def A : Mat 2 2 := λ i j => i+j
 def B : Mat 2 1 := λ i j => 1
 
 example : smul 2 (mul A B)  = !![2;6] := by
-  funext U V
+  funext i j
   simp[A,B,smul,mul]
-  fin_cases U <;> fin_cases V <;> dsimp
+  fin_cases i <;> fin_cases j <;> dsimp
   . ring
   . ring
 
@@ -362,8 +362,7 @@ theorem eigen_tr {s:ℂ} {A : R22}
 
 /- # THEN I JUST STARTED HAVING FUN
 
-If you are working with matrices, I encourage you to try these. I put the solutions
-in LinAlg.lean
+If you are working with matrices, I encourage you to try these. I put the solutions in LinAlg.lean
  -/
 
 
@@ -471,7 +470,7 @@ theorem mul_inv_left (A : R22)
 
 /- # PROVING A BASIC RESULT
 
-  My goal was to show S(n) = sum(i=1 to n) = n(n+1)/2.
+  My goal was to show S(n) = sum(i=1 to n) i = n(n+1)/2.
 
   I remembered that they way to do this was to separate the sum:
 
@@ -515,8 +514,10 @@ theorem helper {a b c: ℕ} (q:ℚ) : a+b = c → (↑a+↑b)*q = (↑c)*q := by
   intro h
   let d := a+b
   have h1 : (d:ℚ) = (a:ℚ)+(b:ℚ) := by exact Nat.cast_add a b
-  have : d*q = c*q := by exact congrFun (congrArg HMul.hMul (congrArg Nat.cast h)) q
-  have : (a+b)*q = c*q := by exact Mathlib.Tactic.Ring.mul_congr (id (Eq.symm h1)) rfl this
+  have : d*q = c*q := by
+    exact congrFun (congrArg HMul.hMul (congrArg Nat.cast h)) q
+  have : (a+b)*q = c*q := by
+    exact Mathlib.Tactic.Ring.mul_congr (id (Eq.symm h1)) rfl this
   exact this
 
 
@@ -664,10 +665,10 @@ theorem sum_add {α : Type*} [Field α] {n:ℕ} {f g : ℕ → α}
 def smul {m n:ℕ} (a:ℚ) (A: Matrix (Fin m) (Fin n) ℚ) :=
   λ i j => a * A i j
 
-def exp {n:ℕ} (A : Matrix (Fin n) (Fin n) ℚ) :=
-  sum (λ k => (smul ((1:ℚ)/(Nat.factorial k)) (A^k)) ) 8
+def exp {n:ℕ} (A : Matrix (Fin n) (Fin n) ℚ) (m:ℕ) :=
+  sum (λ k => (smul ((1:ℚ)/(Nat.factorial k)) (A^k)) ) m
 
-#eval exp !![1,1;0,1]
+#eval exp !![1,1;0,1] 8
 
 #eval !![(685.0 )/252, (1957.0 )/720; 0, (685.0)/252]
 
