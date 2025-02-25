@@ -82,7 +82,7 @@
 ## Week 9
 
   - FEB 25: 
-    - [Hierarchies Rendered](./EE546_W25/docmaker/build/SL2.md)
+    - [Hierarchies Rendered](./docmaker/build/SL2.md)
     - [Hierarchies Code](./EE546_W25/Lectures/SL2.lean)
 
   - FEB 27: Group Progess Updates 
