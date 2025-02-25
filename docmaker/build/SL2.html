@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>SL2</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#documentation-maker"
+id="toc-documentation-maker">Documentation Maker</a></li>
+<li><a href="#classes-and-instances"
+id="toc-classes-and-instances">Classes and instances</a>
+<ul>
+<li><a href="#example-types-used-in-this-chapter"
+id="toc-example-types-used-in-this-chapter">Example types used in this
+chapter</a></li>
+<li><a href="#avoid-sets" id="toc-avoid-sets">Avoid Sets</a></li>
+<li><a href="#the-ln-way-use-types" id="toc-the-ln-way-use-types">The
+L∀∃N Way: Use Types</a></li>
+<li><a href="#interfacing-with-classes"
+id="toc-interfacing-with-classes">Interfacing with classes</a></li>
+<li><a href="#using-classes-in-definitions-and-theorems"
+id="toc-using-classes-in-definitions-and-theorems">Using classes in
+definitions and theorems</a></li>
+<li><a href="#other-basic-classes" id="toc-other-basic-classes">Other
+basic classes</a>
+<ul>
+<li><a href="#exercise" id="toc-exercise">Exercise</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#extended-example-the-special-linear-group-sl2"
+id="toc-extended-example-the-special-linear-group-sl2">Extended Example:
+The Special Linear Group, SL2</a>
+<ul>
+<li><a href="#elements-of-sl2" id="toc-elements-of-sl2">Elements of
+SL2</a></li>
+<li><a href="#classes-and-instances-1"
+id="toc-classes-and-instances-1">Classes and Instances</a></li>
+<li><a href="#coercion" id="toc-coercion">Coercion</a></li>
+<li><a href="#multiplication" id="toc-multiplication">Multiplication</a>
+<ul>
+<li><a href="#exercise-1" id="toc-exercise-1">Exercise</a></li>
+</ul></li>
+<li><a href="#inverses" id="toc-inverses">Inverses</a>
+<ul>
+<li><a href="#exercise-2" id="toc-exercise-2">Exercise</a></li>
+</ul></li>
+<li><a href="#the-identity" id="toc-the-identity">The Identity</a>
+<ul>
+<li><a href="#exercise-3" id="toc-exercise-3">Exercise</a></li>
+</ul></li>
+<li><a href="#associativity"
+id="toc-associativity">Associativity</a></li>
+<li><a href="#the-identity-is-well-behaved"
+id="toc-the-identity-is-well-behaved">The Identity is well behaved</a>
+<ul>
+<li><a href="#exercise-4" id="toc-exercise-4">Exercise</a></li>
+</ul></li>
+<li><a href="#inverse-theorems-and-group"
+id="toc-inverse-theorems-and-group">Inverse theorems and Group</a>
+<ul>
+<li><a href="#example-calculation" id="toc-example-calculation">Example
+Calculation</a></li>
+<li><a href="#exercise-5" id="toc-exercise-5">Exercise</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#fractional-linear-transformations"
+id="toc-fractional-linear-transformations">Fractional Linear
+Transformations</a>
+<ul>
+<li><a href="#an-flt-class" id="toc-an-flt-class">An FLT class</a></li>
+<li><a href="#first-goal-flts-preserve-uhp"
+id="toc-first-goal-flts-preserve-uhp">First Goal : FLT’s preserve
+UHP</a></li>
+<li><a href="#flt-is-a-group" id="toc-flt-is-a-group">FLT is a
+group</a></li>
+</ul></li>
+</ul>
+</nav>
+<center>
+<h1>
+EE 546 : Automated Reasoning
+</h1>
+</center>
+<center>
+<h2>
+HIERARCHIES
+</h2>
+</center>
+<center>
+Department of Electrical and Computer Engineering<br /> Unviersity of
+Washington<br /> Prof. Eric Klavins<br /> Winter 2025<br /> Solutions:
+H2Solve.lean
+</center>
+<p><br /></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Mathlib.LinearAlgebra.Matrix.Determinant.Basic</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Mathlib.Tactic</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Mathlib.Algebra.Group.MinimalAxioms</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Mathlib.Data.Complex.Basic</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">EE546_W25.Lib.ComplexSimps</span>  <span class="co">-- My own libraries</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">EE546_W25.Lib.UHP</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>open <span class="dt">Complex</span></span></code></pre></div>
+<h1 id="documentation-maker">Documentation Maker</h1>
+<p>This file can be converted into viewable Markdown by using a new
+script:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> EE546_W25/docmaker/dm.py</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> dm.py ../EE546_W25/Lectures/SL2.lean <span class="op">&gt;</span> SL2.md</span></code></pre></div>
+<p>You can then view the file either directly in VSCode using Cmd-V or
+in your favorite Markdown viewer. I like <a
+href="https://chromewebstore.google.com/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk?hl=en&amp;pli=1">this
+one</a>.</p>
+<p>Note that you can use Latex and it will render in the Markdown
+Viewer:</p>
+<p><span class="math display">\[
+\sum_{n=0}^\infty r^n = \frac{1}{1-r}.
+\]</span></p>
+<p>More sophisticated converters can be used as well. Lean uses
+<code>DocGen</code>, but it seems to want to build your entire project
+including all the dependencies. The various books like MIL and TIL seem
+to use Sphinx, which seemed like overkill for the present purposes.</p>
+<p>For your final project, you will need to use this script (or figure
+out how to use one of the other ones) to generate a nicely written up
+report.</p>
+<h1 id="classes-and-instances">Classes and instances</h1>
+<p><img src="../img/mathlib-hierarchies.jpg" /></p>
+<p>In some ways, mathematics is about data structures, their properties,
+and their relationships to each other. One relationship we have
+encountered is “constructed from”. For example, ℤ is constructed from ℕ
+and ℚ is constructed from ℤ.</p>
+<p>Another relationship is “is a specialization of”. For example,</p>
+<ul>
+<li>Matrices that commute are a specialization of all matrices.</li>
+<li>The type of matricies of determinant one is a specialization of all
+matrices.</li>
+<li>The type of complex numbers with positive imaginary part is a
+specialization of complex numbers.</li>
+</ul>
+<p>In Lean, a <code>class</code> is a group of types that all share the
+same constraints. An <code>instance</code> of a class is a statement
+that particular type has the constraints required by the class. For
+example:</p>
+<ul>
+<li>The set of non-negative integers instantiates the class
+<code>Add</code>, because the sum of any two non-negative integers is
+also non-negative.</li>
+<li>The set of matricies with non-zero determinant instantiates the
+class <code>Inv</code>, because the inverse of such a matrix is
+invertable.</li>
+</ul>
+<p>Specialization lifts to classes as well. For example:</p>
+<ul>
+<li>The class <code>AddSemiGroup</code> specializes the class
+<code>Add</code>, requiring that addition is associatve. In fact, you
+can not even describe associativity without first having a operation
+<code>+</code> to associate.</li>
+</ul>
+<p>To say this in Lean, you use <code>extend</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">AddSemigroup&#39;</span> (<span class="dt">G</span> <span class="op">:</span> <span class="dt">Type</span><span class="op">*</span>) extends <span class="dt">Add</span> <span class="dt">G</span> <span class="kw">where</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  add_assoc <span class="op">:</span> ∀ a b c <span class="op">:</span> <span class="dt">G</span>, a <span class="op">+</span> b <span class="op">+</span> c <span class="ot">=</span> a <span class="op">+</span> (b <span class="op">+</span> c)</span></code></pre></div>
+<p>To instantiate this class, you have to start with a type that has
+already instantiated <code>Add</code>.</p>
+<h2 id="example-types-used-in-this-chapter">Example types used in this
+chapter</h2>
+<p>In this document we introduce three new types:</p>
+<ul>
+<li><p><code>UHP</code>: Complex numbers with positive imaginary
+part</p></li>
+<li><p><code>SL2</code>: 2x2 integer matrices with determinant
+1</p></li>
+<li><p><code>FLT</code>: Functions of the form <span
+class="math inline">\(z \mapsto \frac{az+b}{cz+d}\)</span> for <span
+class="math inline">\(z\)</span> : UHP</p></li>
+</ul>
+<p>We will see that SL2 and UHP both form a <code>Group</code>, which
+means they have:</p>
+<ul>
+<li>An associative multiplication operation</li>
+<li>A multiplicative indentity element</li>
+<li>Inverses</li>
+</ul>
+<p>UHP, on the other hand, just instantes <code>Add</code>. Other
+properties, like multiplication, are not preserved by UHP.</p>
+<h2 id="avoid-sets">Avoid Sets</h2>
+<p>One way to define all of these data types would be to use and
+subsets. For example:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>namespace <span class="dt">Avoid</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>def <span class="dt">UHP</span> <span class="op">:</span> <span class="dt">Set</span> ℂ <span class="op">:=</span> { z <span class="op">|</span> z<span class="op">.</span>im <span class="op">&gt;</span> <span class="dv">0</span> }</span></code></pre></div>
+<p>But that runs into problems. With this definition, UHP has type Set
+ℂ. It is not a type in and of itself.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>variable (z <span class="op">:</span> <span class="dt">UHP</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#check z  -- @Set.Elem ℂ UHP</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>end <span class="dt">Avoid</span></span></code></pre></div>
+<p>And since it is not a type, you cannot use the class/instance
+infrastcture Lean has for types.</p>
+<h2 id="the-ln-way-use-types">The L∀∃N Way: Use Types</h2>
+<p>Lean is based on type theory! Let’s use it! This approach packages
+values and properties into a core Lean data type that works with classes
+and instances.</p>
+<p>As an aside, the @[ext] modifier lets you use the <code>ext</code>
+tactic, which states that two structures are equal if their fields are
+equal. And the <code>by decide</code> bit is a default proof for very
+simple elements of UHP.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>namespace <span class="dt">Temp</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[ext]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>structure <span class="dt">UHP</span> <span class="kw">where</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  z <span class="op">:</span> ℂ</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  pos_im <span class="op">:</span> z<span class="op">.</span>im <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">:=</span> by decide</span></code></pre></div>
+<p>With this definition in place, we can define new elements of UHP and
+operations on them. For example, below we define the imaginary number
+<span class="math inline">\(j\)</span> and addition on UHP. Note that
+for addition to work, we have to show that the sum of two complex
+numbers with non-negative imaginary parts in also imaginary.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>def j <span class="op">:</span> <span class="dt">UHP</span> <span class="op">:=</span> ⟨ <span class="dt">I</span>, by simp ⟩</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>def uhp_add (x y<span class="op">:</span> <span class="dt">UHP</span>) <span class="op">:</span> <span class="dt">UHP</span> <span class="op">:=</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  ⟨</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    x<span class="op">.</span>z <span class="op">+</span> y<span class="op">.</span>z,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    im_gt_to_sum_gt x<span class="op">.</span>pos_im y<span class="op">.</span>pos_im</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  ⟩</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>example <span class="op">:</span> uhp_add j j <span class="ot">=</span> ⟨ <span class="dv">2</span><span class="op">*</span><span class="dt">I</span>, by simp ⟩ <span class="op">:=</span> by</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  simp[uhp_add,j]</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  ring</span></code></pre></div>
+<h2 id="interfacing-with-classes">Interfacing with classes</h2>
+<p>As described above, a <em>class</em> in Lean is a way to define an
+interface between new data types and the methods that operate on them.
+And example class is <code>Add</code> which is defined as follows:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">Add&#39;</span> (α <span class="op">:</span> <span class="dt">Type</span><span class="op">*</span>) <span class="kw">where</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  add <span class="op">:</span> α → α → α</span></code></pre></div>
+<p>This class can be instantiated by anything that has some kind of
+addition. Then you can use all the infrastructure Lean has for addition,
+including the + notation.</p>
+<p>Here is how you do that for our new type <code>UHP</code>. Note that
+we also have to instantiate HAdd (which stands for Heterogeneous
+Add).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#check_failure j + j</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[simp]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> uhp_hadd_inst <span class="op">:</span> <span class="dt">HAdd</span> <span class="dt">UHP</span> <span class="dt">UHP</span> <span class="dt">UHP</span> <span class="op">:=</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  ⟨ uhp_add ⟩</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[simp]</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> uhp_add_inst <span class="op">:</span> <span class="dt">Add</span> <span class="dt">UHP</span> <span class="op">:=</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  ⟨ uhp_add ⟩</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="pp">#check j + j</span></span></code></pre></div>
+<h2 id="using-classes-in-definitions-and-theorems">Using classes in
+definitions and theorems</h2>
+<p>As we encountered when discussing sums, we can define our own sum
+method. It would be very nice to be able to use it on any type that
+instantiates <code>Add</code>. It turns out this is easily done as
+follows using square braces.</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>def <span class="fu">sum</span> {α <span class="op">:</span> <span class="dt">Type</span><span class="op">*</span>} [<span class="dt">Add</span> α] [<span class="dt">Zero</span> α] (f <span class="op">:</span> ℕ → α) (n<span class="op">:</span>ℕ) <span class="op">:</span> α</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">:=</span> match n with</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> Nat.zero <span class="ot">=&gt;</span> <span class="dv">0</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> Nat.succ k <span class="ot">=&gt;</span> f k <span class="op">+</span> <span class="fu">sum</span> f k</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#eval sum (λ i : ℕ =&gt; i) 10</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>def <span class="dt">M</span> <span class="op">:</span> <span class="dt">Matrix</span> (<span class="dt">Fin</span> <span class="dv">2</span>) (<span class="dt">Fin</span> <span class="dv">2</span>) ℕ <span class="op">:=</span> <span class="op">!!</span>[<span class="dv">1</span>,<span class="dv">0</span>;<span class="dv">0</span>,<span class="dv">1</span>]</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="pp">#eval sum (λ _ =&gt; M) 3</span></span></code></pre></div>
+<p>(The above definition does not work with UHP, however, since it
+expects the type <code>α</code> to have a defined <code>Zero</code>
+element, and UHP doesn’t have zero.)</p>
+<h2 id="other-basic-classes">Other basic classes</h2>
+<p>There are not many other classes that <code>UHP</code> works well
+with. But some that are nice to instantiate are</p>
+<ul>
+<li><code>CoeSort</code>, which allows you to write x instead of x.z
+when the type checker expects the underlying value type, in this case as
+a Complex number.</li>
+<li><code>Inhabited</code>, showing the UHP has a least one thing in
+it.</li>
+</ul>
+<p>We can also define some niceties to make UHPs easier to read.</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> uhp_coe_inst<span class="op">:</span> <span class="dt">CoeSort</span> <span class="dt">UHP</span> ℂ <span class="op">:=</span> ⟨ λ u <span class="ot">=&gt;</span> u<span class="op">.</span>z ⟩</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> uhp_inhabited_inst <span class="op">:</span> <span class="dt">Inhabited</span> <span class="dt">UHP</span> <span class="op">:=</span> ⟨ j ⟩</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>abbrev UHP.re (x<span class="op">:</span><span class="dt">UHP</span>) <span class="op">:=</span> x<span class="op">.</span>z<span class="op">.</span>re</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>abbrev UHP.im (x<span class="op">:</span><span class="dt">UHP</span>) <span class="op">:=</span> x<span class="op">.</span>z<span class="op">.</span>im</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>def UHP.conj (z<span class="op">:</span><span class="dt">UHP</span>) <span class="op">:</span> ℂ <span class="op">:=</span> z<span class="op">.</span>re <span class="op">-</span> z<span class="op">.</span>im <span class="op">*</span> <span class="dt">I</span></span></code></pre></div>
+<h3 id="exercise">Exercise</h3>
+<p>A nontrivial type has at least two elements. A class noting this is
+declared like this:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">Nontrivial&#39;</span> (α <span class="op">:</span> <span class="dt">Type</span><span class="op">*</span>) <span class="op">:</span> <span class="dt">Prop</span> <span class="kw">where</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>   exists_pair_ne <span class="op">:</span> ∃ x y <span class="op">:</span> α, x ≠ y</span></code></pre></div>
+<p>Here is an example for you to try.</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> uhp_non_triv <span class="op">:</span> <span class="dt">Nontrivial</span> <span class="dt">UHP</span> <span class="op">:=</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  ⟨ sorry ⟩</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>end <span class="dt">Temp</span></span></code></pre></div>
+<h1 id="extended-example-the-special-linear-group-sl2">Extended Example:
+The Special Linear Group, SL2</h1>
+<p>Consider the 2x2 matrices with Integer entries of the form</p>
+<p><span class="math display">\[
+  \begin{pmatrix}
+  a &amp; b\\
+  c &amp; d
+  \end{pmatrix}\;\;\;\mathrm{where}\;ad - bc = 1
+  \]</span></p>
+<p>That is, the determinant of the matrix is 1. These matrices form a
+group called the Special Linear Group SL(2,ℤ), which we want to teach
+Lean about. First we define a structure to hold the value and a proof
+the value has determinant 1.</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[ext]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>structure <span class="dt">SL2</span> <span class="kw">where</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  val <span class="op">:</span> <span class="dt">Matrix</span> (<span class="dt">Fin</span> <span class="dv">2</span>) (<span class="dt">Fin</span> <span class="dv">2</span>) ℤ</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  det1 <span class="op">:</span> val<span class="op">.</span>det <span class="ot">=</span> <span class="dv">1</span> <span class="op">:=</span> by decide</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#check SL2.ext</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#check SL2.ext_iff</span></span></code></pre></div>
+<h2 id="elements-of-sl2">Elements of SL2</h2>
+<p>Each element has a matrix value and a proof that the value has
+determinant one. These can be written in a variety of ways.</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- use default constructor</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#check SL2.mk !![1,1;0,1] rfl</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#check ({val:=!![1,1;0,1], det1 := rfl} : SL2)</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- use default constructor with default proof for det1</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#check SL2.mk !![1,1;0,1]</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#check ({val:=!![1,1;0,1]} : SL2)</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="pp">#check (⟨!![1,1;0,1], rfl⟩ : SL2)</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="pp">#check_failure SL2.mk !![1,1;1,1]</span></span></code></pre></div>
+<p>Two distinguished elements in SL2 are the following matrices:</p>
+<p><span class="math display">\[
+  T = \begin{pmatrix}
+  1 &amp; 1\\
+  1 &amp; 0
+  \end{pmatrix} \; \; \mathrm{and} \; \;
+  W = \begin{pmatrix}
+  0 &amp; -1\\
+  1 &amp; 0
+  \end{pmatrix}
+  \]</span></p>
+<p>These elements are said to <em>generate</em> SL2, because every
+element of SL2 can be formed from a combination of <span
+class="math inline">\(T\)</span>, <span class="math inline">\(S\)</span>
+and their inverses (although we will not prove that in this
+chapter).</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>def <span class="dt">T</span> <span class="op">:=</span> SL2.mk <span class="op">!!</span>[<span class="dv">1</span>,<span class="dv">1</span>;<span class="dv">0</span>,<span class="dv">1</span>]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>def <span class="dt">S</span> <span class="op">:=</span> SL2.mk <span class="op">!!</span>[<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>; <span class="dv">1</span>, <span class="dv">0</span>]</span></code></pre></div>
+<h2 id="classes-and-instances-1">Classes and Instances</h2>
+<p>We would like to use all the notation and theorems associated with
+groups without reproving everything. To that end, we will use the
+following classes:</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Inhabited</code></td>
+<td>SL2 has at least one element</td>
+</tr>
+<tr>
+<td><code>CoeSort</code></td>
+<td>Write A instead of A.val when context is clear</td>
+</tr>
+<tr>
+<td><code>HMul</code>, <code>Mul</code></td>
+<td>SL2 has multiplication</td>
+</tr>
+<tr>
+<td><code>Inv</code></td>
+<td>SL2 has inverses</td>
+</tr>
+<tr>
+<td><code>One</code></td>
+<td>SL2 has an identity</td>
+</tr>
+<tr>
+<td><code>SemiGroup</code></td>
+<td>SL2 multiplication is associative</td>
+</tr>
+<tr>
+<td><code>MulOneClass</code></td>
+<td><span class="math inline">\(1A = A\)</span></td>
+</tr>
+<tr>
+<td><code>Group</code></td>
+<td><span class="math inline">\(A⁻¹A = 1\)</span> and <span
+class="math inline">\(AA⁻¹ = 1\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>To get started, we can show that SL2 is inhabited by assigned a
+default element, in this case, the identity matrix.</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> mod_inhabited_inst <span class="op">:</span> <span class="dt">Inhabited</span> <span class="dt">SL2</span> <span class="op">:=</span> ⟨ SL2.mk <span class="op">!!</span>[<span class="dv">1</span>,<span class="dv">0</span>;<span class="dv">0</span>,<span class="dv">1</span>] ⟩</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>def SL2.default <span class="op">:</span> <span class="dt">SL2</span> <span class="op">:=</span> Inhabited.default</span></code></pre></div>
+<h2 id="coercion">Coercion</h2>
+<p>When we have M : SL2, we would like use M as a matrix. But we end up
+having to write M.val in such contexts. For example, in the first
+attempt at definition multiplicaton below, the first argument to the
+constructor expects a matrix. In the second, we use the matrix as a
+function.</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>def sl2_mul&#39; (<span class="dt">A</span> <span class="dt">B</span> <span class="op">:</span> <span class="dt">SL2</span>) <span class="op">:</span> <span class="dt">SL2</span> <span class="op">:=</span> ⟨ A.val <span class="op">*</span> B.val, by simp[A.det1,B.det1] ⟩</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>def f&#39; (<span class="dt">A</span><span class="op">:</span><span class="dt">SL2</span>) (i<span class="op">:</span> <span class="dt">Fin</span> <span class="dv">2</span>) <span class="op">:</span> ℤ <span class="op">:=</span> A.val i i</span></code></pre></div>
+<p>To make our code more readable, we can provide a coercion from SL2
+into a Matrix or a function.</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> mod_group_coe<span class="op">:</span> <span class="dt">CoeSort</span> <span class="dt">SL2</span> (<span class="dt">Matrix</span> (<span class="dt">Fin</span> <span class="dv">2</span>) (<span class="dt">Fin</span> <span class="dv">2</span>) ℤ) <span class="op">:=</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  ⟨ λ <span class="dt">M</span> <span class="ot">=&gt;</span> M.val ⟩</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> mod_group_coe_fun<span class="op">:</span> <span class="dt">CoeFun</span> <span class="dt">SL2</span> (λ _ <span class="ot">=&gt;</span> (<span class="dt">Fin</span> <span class="dv">2</span>) → (<span class="dt">Fin</span> <span class="dv">2</span>) → ℤ) <span class="op">:=</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  ⟨ λ <span class="dt">M</span> <span class="ot">=&gt;</span> (λ i j <span class="ot">=&gt;</span> M.val i j) ⟩</span></code></pre></div>
+<p>Now the above definition can be writte a bit more concisely.</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>def sl2_mul (<span class="dt">A</span> <span class="dt">B</span> <span class="op">:</span> <span class="dt">SL2</span>) <span class="op">:</span> <span class="dt">SL2</span> <span class="op">:=</span> ⟨ <span class="dt">A</span> <span class="op">*</span> <span class="dt">B</span>, by simp[A.det1,B.det1] ⟩</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>def f (<span class="dt">A</span><span class="op">:</span><span class="dt">SL2</span>) (i<span class="op">:</span> <span class="dt">Fin</span> <span class="dv">2</span>) <span class="op">:</span> ℤ <span class="op">:=</span> <span class="dt">A</span> i i</span></code></pre></div>
+<h2 id="multiplication">Multiplication</h2>
+<p>To interface with classes that require multiplication, we instantiate
+both <code>Mul</code> and <code>HMul</code>, allowing us to use the
+<code>*</code> notation and to build other instances that extend these
+classes.</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#check_failure S*T</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> sl2_hmul_inst<span class="op">:</span> <span class="dt">HMul</span> <span class="dt">SL2</span> <span class="dt">SL2</span> <span class="dt">SL2</span> <span class="op">:=</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  ⟨ sl2_mul ⟩</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> sl2_mul_inst<span class="op">:</span> <span class="dt">Mul</span> <span class="dt">SL2</span> <span class="op">:=</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  ⟨ sl2_mul ⟩</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="pp">#check S*T</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="pp">#eval S*T</span></span></code></pre></div>
+<p>It is also quite useful to tell the simplifier what multiplication
+means, so that you don’t have to constantly be breaking this definition
+down inside proofs.</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[simp]</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>theorem sl2_mul_simp (<span class="dt">A</span> <span class="dt">B</span> <span class="op">:</span> <span class="dt">SL2</span>) <span class="op">:</span> <span class="dt">A</span> <span class="op">*</span> <span class="dt">B</span> <span class="ot">=</span> ⟨ <span class="dt">A</span><span class="op">*</span><span class="dt">B</span>, by simp[A.det1,B.det1] ⟩ <span class="op">:=</span> by</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  calc <span class="dt">A</span> <span class="op">*</span> <span class="dt">B</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  _  <span class="ot">=</span> ⟨ <span class="dt">A</span>, A.det1 ⟩ <span class="op">*</span> ⟨ <span class="dt">B</span>, B.det1 ⟩ <span class="op">:=</span> rfl</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  _  <span class="ot">=</span> ⟨ <span class="dt">A</span><span class="op">*</span><span class="dt">B</span>, by simp[A.det1,B.det1] ⟩ <span class="op">:=</span> rfl <span class="op">--!</span>hide</span></code></pre></div>
+<p>While we are at it, we can do the same for UHP:</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[simp]</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>theorem uhp_add_simp (x y <span class="op">:</span> <span class="dt">UHP</span>) <span class="op">:</span> x <span class="op">+</span> y <span class="ot">=</span> ⟨ x <span class="op">+</span> y, by exact <span class="dt">Right</span><span class="op">.</span>add_pos&#39; x<span class="op">.</span>pos_im y<span class="op">.</span>pos_im ⟩ <span class="op">:=</span> by</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  simp[uhp_add]</span></code></pre></div>
+<h3 id="exercise-1">Exercise</h3>
+<p>Here is an example problem to try to prove that uses these
+definitions.</p>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>example <span class="op">:</span> ¬ ∀ <span class="dt">A</span> <span class="dt">B</span> <span class="op">:</span> <span class="dt">SL2</span>, <span class="dt">A</span><span class="op">*</span><span class="dt">B</span> <span class="ot">=</span> <span class="dt">B</span><span class="op">*</span><span class="dt">A</span> <span class="op">:=</span> sorry</span></code></pre></div>
+<h2 id="inverses">Inverses</h2>
+<p>Next we show that the inverse of every element of type SL2 is also of
+type SL2. This is because the determinant of the inverse of a matrix is
+the inverse of its determinant, and SL2 determinants are all 1.</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#check_failure T⁻¹</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>noncomputable                             <span class="co">-- noncomputable because this method does</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> sl2_inv_inst<span class="op">:</span> <span class="dt">Inv</span> <span class="dt">SL2</span> <span class="op">:=</span>         <span class="co">-- not show how to derive the inverse, just</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  ⟨ λ <span class="dt">M</span> <span class="ot">=&gt;</span> ⟨ <span class="dt">M</span>⁻¹, by simp[M.det1] ⟩  ⟩    <span class="co">-- that it exists since M.det = 1.</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#check T⁻¹</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[simp]</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>theorem sl2_inv_simp (<span class="dt">A</span> <span class="op">:</span> <span class="dt">SL2</span>) <span class="op">:</span> <span class="dt">A</span>⁻¹ <span class="ot">=</span> ⟨ <span class="dt">A</span>⁻¹, by simp[A.det1] ⟩ <span class="op">:=</span> rfl</span></code></pre></div>
+<p>Recall that the inverse of a matrix <span
+class="math inline">\(A\)</span> , when it exists, is <span
+class="math inline">\(|A|^{-1}\)</span> times the adjunct of <span
+class="math inline">\(A\)</span>. Since SL2 determinants are all 1, we
+can show that the inverse of a matrix of type SL2 is equal to its
+adjunct.</p>
+<p>First we define the adjunct of a matrix.</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>def adj (<span class="dt">A</span> <span class="op">:</span> <span class="dt">SL2</span>) <span class="op">:</span> <span class="dt">SL2</span> <span class="op">:=</span> ⟨ <span class="op">!!</span>[<span class="dt">A</span> <span class="dv">1</span> <span class="dv">1</span>, <span class="op">-</span><span class="dt">A</span> <span class="dv">0</span> <span class="dv">1</span>; <span class="op">-</span><span class="dt">A</span> <span class="dv">1</span> <span class="dv">0</span>, <span class="dt">A</span> <span class="dv">0</span> <span class="dv">0</span> ], by</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  dsimp</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  have h <span class="op">:=</span> A.det1</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  simp_all[Matrix.det_fin_two]</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  rw[←h]</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  ring ⟩</span></code></pre></div>
+<p>Then we state and prove our first theorem.</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>theorem sl2_inv_simp_eq_adj (<span class="dt">A</span> <span class="op">:</span> <span class="dt">SL2</span>) <span class="op">:</span> <span class="dt">A</span>⁻¹ <span class="ot">=</span> adj <span class="dt">A</span> <span class="op">:=</span> by</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  simp[adj,sl2_inv_inst]</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  simp[Matrix.inv]</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  have h <span class="op">:</span> A.val<span class="op">.</span>det <span class="ot">=</span> <span class="dv">1</span> <span class="op">:=</span> by apply A.det1</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  simp[h]</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  simp[Matrix.adjugate_fin_two]</span></code></pre></div>
+<h3 id="exercise-2">Exercise</h3>
+<p>Here is an example that uses all these definitions and theorems.</p>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>example <span class="op">:</span> ∀ <span class="dt">A</span> <span class="dt">B</span> <span class="op">:</span> <span class="dt">SL2</span>, (<span class="dt">A</span><span class="op">*</span><span class="dt">B</span>)⁻¹ <span class="ot">=</span> <span class="dt">B</span>⁻¹ <span class="op">*</span> <span class="dt">A</span>⁻¹ <span class="op">:=</span> sorry</span></code></pre></div>
+<h2 id="the-identity">The Identity</h2>
+<p>As it stands, although SL2 has the same identity as matricies in
+general, Lean doesnot’ know about it. So we can’t use notation like
+<span class="math inline">\(1\)</span> and we can’t build more instances
+that expect a 1inst_. But all we need to do is intantiate
+<code>One</code>.</p>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[simp]</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>def one <span class="op">:</span> <span class="dt">SL2</span> <span class="op">:=</span> ⟨ <span class="dv">1</span>, by simp ⟩</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#check_failure T * 1</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> sl2_one_inst<span class="op">:</span> <span class="dt">One</span> <span class="dt">SL2</span> <span class="op">:=</span> ⟨ one ⟩</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#check T * 1</span></span></code></pre></div>
+<p>It also helps to explain to the simplifier how one works.</p>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[simp]</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>theorem sl2_one_simp <span class="op">:</span> (<span class="dv">1</span><span class="op">:</span><span class="dt">SL2</span>) <span class="ot">=</span> one <span class="op">:=</span> rfl</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[simp]</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>theorem sl2_one_simp_expl <span class="op">:</span> (<span class="dv">1</span><span class="op">:</span><span class="dt">SL2</span>) <span class="ot">=</span> ⟨ <span class="op">!!</span>[(<span class="dv">1</span><span class="op">:</span>ℤ),<span class="dv">0</span>;<span class="dv">0</span>,<span class="dv">1</span>], by simp ⟩ <span class="op">:=</span> by</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  simp[one]</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  exact Matrix.one_fin_two</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>theorem sl2_one_simp_expl&#39; <span class="op">:</span> (<span class="dv">1</span><span class="op">:</span><span class="dt">SL2</span>) <span class="ot">=</span> <span class="op">!!</span>[(<span class="dv">1</span><span class="op">:</span>ℤ),<span class="dv">0</span>;<span class="dv">0</span>,<span class="dv">1</span>] <span class="op">:=</span> by</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  simp[one]</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  exact Matrix.one_fin_two</span></code></pre></div>
+<h3 id="exercise-3">Exercise</h3>
+<p>Here is a simple theorem in which all you really need to do is unpack
+the definition of SL2. Hint: use
+<code>Matrix.nonsing_inv_mul</code>.</p>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>example <span class="op">:</span> ∀ <span class="dt">A</span> <span class="op">:</span> <span class="dt">SL2</span>, <span class="dt">A</span>⁻¹<span class="op">*</span><span class="dt">A</span> <span class="ot">=</span> <span class="dv">1</span> <span class="op">:=</span> sorry</span></code></pre></div>
+<h2 id="associativity">Associativity</h2>
+<p>As described above, a <code>Semigroup</code> is a type that has an
+operation (in this case <code>*</code>) that is associative. To register
+this property with Lean we instantite this class as follows.</p>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[simp]</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>theorem sl2_mul_assoc <span class="op">:</span> ∀ <span class="dt">A</span> <span class="dt">B</span> <span class="dt">C</span> <span class="op">:</span> <span class="dt">SL2</span> , <span class="dt">A</span> <span class="op">*</span> <span class="dt">B</span> <span class="op">*</span> <span class="dt">C</span> <span class="ot">=</span> <span class="dt">A</span> <span class="op">*</span> ( <span class="dt">B</span> <span class="op">*</span> <span class="dt">C</span> ) <span class="op">:=</span> by</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  intro <span class="dt">A</span> <span class="dt">B</span> <span class="dt">C</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  simp[Matrix.mul_assoc]</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> inst_mod_semi<span class="op">:</span> <span class="dt">Semigroup</span> <span class="dt">SL2</span> <span class="op">:=</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  ⟨ sl2_mul_assoc ⟩</span></code></pre></div>
+<h2 id="the-identity-is-well-behaved">The Identity is well behaved</h2>
+<p>Next we prove that <code>1</code> behaves like a multiplicative
+inverse.</p>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[simp]</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>theorem sl2_one_simp_left <span class="op">:</span> ∀ <span class="dt">A</span> <span class="op">:</span> <span class="dt">SL2</span>, <span class="dv">1</span> <span class="op">*</span> <span class="dt">A</span> <span class="ot">=</span> <span class="dt">A</span> <span class="op">:=</span> by</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  intro <span class="dt">A</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  simp</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[simp]</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>theorem sl2_one_simp_right <span class="op">:</span> ∀ <span class="dt">A</span> <span class="op">:</span> <span class="dt">SL2</span>, <span class="dt">A</span> <span class="op">*</span> <span class="dv">1</span> <span class="ot">=</span> <span class="dt">A</span> <span class="op">:=</span> by</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  intro <span class="dt">A</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  simp</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> inst_mul_one <span class="op">:</span> <span class="dt">MulOneClass</span> <span class="dt">SL2</span> <span class="op">:=</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  ⟨ sl2_one_simp_left, sl2_one_simp_right ⟩</span></code></pre></div>
+<h3 id="exercise-4">Exercise</h3>
+<p>Show that SL2 is not commutative in general. So you could not
+instantiate <code>CommGroup</code>, for example.</p>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#eval S*T</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#eval T*S</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>example <span class="op">:</span> <span class="dt">S</span><span class="op">*</span><span class="dt">T</span> ≠ <span class="dt">T</span><span class="op">*</span><span class="dt">S</span> <span class="op">:=</span> sorry</span></code></pre></div>
+<h2 id="inverse-theorems-and-group">Inverse theorems and Group</h2>
+<p>Finally, we show that SL2 forms a group. The last ingredient is to
+show that inverses are well behaved.</p>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[simp]</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>theorem sl2_inv_simp_left <span class="op">:</span> ∀ <span class="dt">A</span> <span class="op">:</span> <span class="dt">SL2</span>, <span class="dt">A</span>⁻¹ <span class="op">*</span> <span class="dt">A</span> <span class="ot">=</span> <span class="dv">1</span> <span class="op">:=</span> by</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  intro <span class="dt">A</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  simp[A.det1]</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[simp]</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>theorem sl2_inv_simp_right <span class="op">:</span> ∀ <span class="dt">A</span> <span class="op">:</span> <span class="dt">SL2</span>, <span class="dt">A</span> <span class="op">*</span> <span class="dt">A</span>⁻¹ <span class="ot">=</span> <span class="dv">1</span> <span class="op">:=</span> by</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  intro <span class="dt">A</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  simp[A.det1]</span></code></pre></div>
+<p>The group instance is then formed as follows. Note that the
+<code>Group</code> class lists a lot of redundant properties. The helper
+method <code>Group.ofLeftAxioms</code> allows use to just use the
+minimal set of properties and it derives the rest for us.</p>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>noncomputable</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> inst_mod_group <span class="op">:</span> <span class="dt">Group</span> <span class="dt">SL2</span> <span class="op">:=</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">@</span>Group.ofLeftAxioms <span class="dt">SL2</span> _ _ _ sl2_mul_assoc sl2_one_simp_left sl2_inv_simp_left</span></code></pre></div>
+<h3 id="example-calculation">Example Calculation</h3>
+<p>Now we can use Mathlibs built in simplification rules for groups
+either directly, or by just calling the <code>group</code> tactic.</p>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>example (<span class="dt">A</span> <span class="dt">B</span> <span class="op">:</span> <span class="dt">SL2</span>)<span class="op">:</span> (<span class="dt">A</span>⁻¹<span class="op">*</span><span class="dt">B</span><span class="op">*</span><span class="dt">A</span>)⁻¹ <span class="ot">=</span> <span class="dt">A</span>⁻¹<span class="op">*</span><span class="dt">B</span>⁻¹<span class="op">*</span><span class="dt">A</span> <span class="op">:=</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  calc (<span class="dt">A</span>⁻¹<span class="op">*</span><span class="dt">B</span><span class="op">*</span><span class="dt">A</span>)⁻¹</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  _  <span class="ot">=</span> <span class="dt">A</span>⁻¹ <span class="op">*</span> (<span class="dt">A</span>⁻¹<span class="op">*</span><span class="dt">B</span>)⁻¹   <span class="op">:=</span> by rw[DivisionMonoid.mul_inv_rev]</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  _  <span class="ot">=</span> <span class="dt">A</span>⁻¹ <span class="op">*</span> (<span class="dt">B</span>⁻¹<span class="op">*</span><span class="dt">A</span>⁻¹⁻¹) <span class="op">:=</span> by rw[DivisionMonoid.mul_inv_rev]</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  _  <span class="ot">=</span> <span class="dt">A</span>⁻¹ <span class="op">*</span> (<span class="dt">B</span>⁻¹<span class="op">*</span><span class="dt">A</span>)     <span class="op">:=</span> by rw[DivisionMonoid.inv_inv]</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  _  <span class="ot">=</span> <span class="dt">A</span>⁻¹ <span class="op">*</span> <span class="dt">B</span>⁻¹ <span class="op">*</span> <span class="dt">A</span>     <span class="op">:=</span> by rw[Semigroup.mul_assoc]</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>example (<span class="dt">A</span> <span class="dt">B</span> <span class="op">:</span> <span class="dt">SL2</span>)<span class="op">:</span> (<span class="dt">A</span>⁻¹<span class="op">*</span><span class="dt">B</span><span class="op">*</span><span class="dt">A</span>)⁻¹ <span class="ot">=</span> <span class="dt">A</span>⁻¹<span class="op">*</span><span class="dt">B</span>⁻¹<span class="op">*</span><span class="dt">A</span> <span class="op">:=</span> by <span class="fu">group</span></span></code></pre></div>
+<h3 id="exercise-5">Exercise</h3>
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>example (<span class="dt">A</span> <span class="dt">B</span> <span class="dt">C</span> <span class="op">:</span> <span class="dt">SL2</span>) <span class="op">:</span> <span class="dt">A</span> <span class="op">*</span> (<span class="dt">B</span> <span class="op">*</span> <span class="dt">C</span>) <span class="op">*</span> (<span class="dt">A</span> <span class="op">*</span> <span class="dt">C</span>)⁻¹ <span class="op">*</span> (<span class="dt">A</span> <span class="op">*</span> <span class="dt">B</span> <span class="op">*</span> <span class="dt">A</span>⁻¹)⁻¹ <span class="ot">=</span> <span class="dv">1</span> <span class="op">:=</span> by sorry</span></code></pre></div>
+<h1 id="fractional-linear-transformations">Fractional Linear
+Transformations</h1>
+<p>A 2x2, integer fractional linear transformation with determinant 1,
+or FLT (for short), is a map on the UHP half of the complex plane of the
+form:</p>
+<p><span class="math display">\[
+    z \mapsto \frac{az+b}{cz+d}
+   \]</span></p>
+<p>where a<em>c - b</em>d ≠ 0. If, in addition,</p>
+<ul>
+<li>a, b, c and d are integers and</li>
+<li>a<em>c - b</em>d = 1</li>
+</ul>
+<p>then we obtain a different representation of the modular group with
+function composition as the group operation. We’ll build up that data
+structure here, and show the isomorphism.</p>
+<h2 id="an-flt-class">An FLT class</h2>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="op">@</span>[ext]</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>structure <span class="dt">FLT</span> <span class="kw">where</span>                        <span class="co">-- </span><span class="al">TODO</span><span class="co">: a general FLT class would</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  a <span class="op">:</span> ℤ                                    <span class="co">-- have any Ring as the type of of</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  b <span class="op">:</span> ℤ                                    <span class="co">-- a, b, c and d and would only</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  c <span class="op">:</span> ℤ                                    <span class="co">-- require a nonzero determinant.</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  d <span class="op">:</span> ℤ</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  det1 <span class="op">:</span> a<span class="op">*</span>d <span class="op">-</span> b<span class="op">*</span>c <span class="ot">=</span> <span class="dv">1</span> <span class="op">:=</span> by decide</span></code></pre></div>
+<h2 id="first-goal-flts-preserve-uhp">First Goal : FLT’s preserve
+UHP</h2>
+<p>Our first goal is to define the map <span class="math inline">\(z
+\mapsto (az+b)/(cz+d)\)</span> and show it takes <span
+class="math inline">\(z:UHP\)</span> to <span
+class="math inline">\(z:UHP\)</span>. A proof of this statement can be
+found <a
+href="https://public.websites.umich.edu/~hlm/nzm/modgp.pdf">here</a>.
+The proof is basically algebra, but there are a number of steps that a
+computer needs to understand before you can just crank through the
+equations.</p>
+<p>To proceed, we need some helper theorems. This first one shows that
+if <span class="math inline">\(z ≠ 0\)</span> then the denominator <span
+class="math inline">\(cz+d\)</span> is also not equal to zero, which is
+required to even define the entire map. We will need this theorem in two
+different places in the ultimate proof.</p>
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>theorem den_nz (f <span class="op">:</span> <span class="dt">FLT</span>) (z<span class="op">:</span> ℂ) <span class="op">:</span> z<span class="op">.</span>im ≠ <span class="dv">0</span> → f<span class="op">.</span>c <span class="op">*</span> z <span class="op">+</span> f<span class="op">.</span>d ≠ <span class="dv">0</span> <span class="op">:=</span> by</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  match f with</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> ⟨ a,b,c,d, hdet ⟩ <span class="ot">=&gt;</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  match z with</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> ⟨ x, y ⟩  <span class="ot">=&gt;</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  intro hz h</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  simp at h hz</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  obtain ⟨ h1, h2 ⟩ <span class="op">:=</span> h</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>  cases h2</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">case</span> inl hc0 <span class="ot">=&gt;</span></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>    have hd <span class="op">:</span> d <span class="ot">=</span> <span class="dv">0</span> <span class="op">:=</span> by simp_all[hc0]</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>    have <span class="op">:</span> a <span class="op">*</span> d <span class="op">-</span> b <span class="op">*</span> c <span class="ot">=</span> <span class="dv">0</span> <span class="op">:=</span> by simp[hc0,hd]</span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>    simp[this] at hdet</span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">case</span> inr hy0 <span class="ot">=&gt;</span> exact hz hy0</span></code></pre></div>
+<p>Now we define the map and include the associated proof that the map
+indeed goes from UHP to UHP.</p>
+<div class="sourceCode" id="cb41"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>noncomputable</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>def fl_map (f <span class="op">:</span> <span class="dt">FLT</span>) (z <span class="op">:</span> <span class="dt">UHP</span>) <span class="op">:</span> <span class="dt">UHP</span> <span class="op">:=</span> ⟨ (f<span class="op">.</span>a<span class="op">*</span>z <span class="op">+</span> f<span class="op">.</span>b)<span class="op">/</span>(f<span class="op">.</span>c<span class="op">*</span>z <span class="op">+</span> f<span class="op">.</span>d), by</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    have hz  <span class="op">:=</span> den_nz f z (uhp_im_nz z)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    have hzc <span class="op">:=</span> den_nz f z<span class="op">.</span>conj (uhp_conj_im_nz z)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    match f with</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> ⟨ a,b,c,d,hdet ⟩ <span class="ot">=&gt;</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    match z with</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> ⟨ z, hpos ⟩ <span class="ot">=&gt;</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    simp</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    simp only [intCast_re, intCast_im,uhp_conj_simp] at hz hzc</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> q <span class="op">:=</span> (c <span class="op">*</span> z<span class="op">.</span>conj <span class="op">+</span> d)</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    have h1 <span class="op">:</span> q ≠ <span class="dv">0</span> → q <span class="op">/</span> q <span class="ot">=</span> <span class="dv">1</span> <span class="op">:=</span> by</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>      intro h</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>      field_simp</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>    have h2 <span class="op">:</span> q ≠ <span class="dv">0</span> <span class="op">:=</span> by  exact hzc</span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>    have h3 <span class="op">:</span> q<span class="op">/</span>q <span class="ot">=</span> <span class="dv">1</span> <span class="op">:=</span> h1 h2</span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>    have h4 <span class="op">:</span> (a <span class="op">*</span> z <span class="op">+</span> b)<span class="op">/</span>(c <span class="op">*</span> z <span class="op">+</span> d)</span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>            <span class="ot">=</span> (c<span class="op">*</span>z<span class="op">.</span>conj <span class="op">+</span> d)<span class="op">*</span>(a <span class="op">*</span> z <span class="op">+</span> b) <span class="op">/</span> ((c<span class="op">*</span>z<span class="op">.</span>conj <span class="op">+</span> d)<span class="op">*</span>(c <span class="op">*</span> z <span class="op">+</span> d)) <span class="op">:=</span> by</span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>      calc (a <span class="op">*</span> z <span class="op">+</span> b)<span class="op">/</span>(c <span class="op">*</span> z <span class="op">+</span> d)</span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>      _  <span class="ot">=</span> (a <span class="op">*</span> z <span class="op">+</span> b)<span class="op">/</span>(c <span class="op">*</span> z <span class="op">+</span> d)<span class="op">:=</span> by simp</span>
+<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>      _  <span class="ot">=</span> ((c<span class="op">*</span>z<span class="op">.</span>conj <span class="op">+</span> d)<span class="op">/</span>(c<span class="op">*</span>z<span class="op">.</span>conj <span class="op">+</span> d))<span class="op">*</span>(a <span class="op">*</span> z <span class="op">+</span> b)<span class="op">/</span>(c <span class="op">*</span> z <span class="op">+</span> d) <span class="op">:=</span> by simp[h3,q]</span>
+<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>      _  <span class="ot">=</span> (c<span class="op">*</span>z<span class="op">.</span>conj <span class="op">+</span> d)<span class="op">*</span>(a <span class="op">*</span> z <span class="op">+</span> b) <span class="op">/</span> ((c<span class="op">*</span>z<span class="op">.</span>conj <span class="op">+</span> d)<span class="op">*</span>(c <span class="op">*</span> z <span class="op">+</span> d)) <span class="op">:=</span> by simp</span>
+<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>    rw[h4,mul_by_conj_plus,split_helper]</span>
+<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>    have h5 <span class="op">:</span> (a<span class="op">:</span><span class="dt">Complex</span>)<span class="op">*</span>d <span class="op">-</span> b<span class="op">*</span>c <span class="ot">=</span> <span class="dv">1</span> <span class="op">:=</span> by</span>
+<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>      rw[lift_both_sides] at hdet</span>
+<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a>      simp at hdet</span>
+<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>      exact hdet</span>
+<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a>    simp[h5]</span>
+<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a>    have hc0_to_d <span class="op">:</span> c <span class="ot">=</span> <span class="dv">0</span> → d ≠ <span class="dv">0</span> <span class="op">:=</span> by</span>
+<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a>      intro hc0</span>
+<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a>      simp[hc0] at hdet</span>
+<span id="cb41-43"><a href="#cb41-43" aria-hidden="true" tabindex="-1"></a>      exact right_ne_zero_of_mul_eq_one hdet</span>
+<span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-45"><a href="#cb41-45" aria-hidden="true" tabindex="-1"></a>    have hznz <span class="op">:</span> z<span class="op">.</span>im ≠ <span class="dv">0</span> <span class="op">:=</span> by exact Ne.symm (ne_of_lt hpos)</span>
+<span id="cb41-46"><a href="#cb41-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a>    apply im_of_frac2</span>
+<span id="cb41-48"><a href="#cb41-48" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span> simp[im_of_sum]</span>
+<span id="cb41-49"><a href="#cb41-49" aria-hidden="true" tabindex="-1"></a>      simp[im_zero_of_sq]</span>
+<span id="cb41-50"><a href="#cb41-50" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span> simp[re_of_sq]</span>
+<span id="cb41-51"><a href="#cb41-51" aria-hidden="true" tabindex="-1"></a>      by_cases hc <span class="op">:</span> c <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb41-52"><a href="#cb41-52" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span> simp[hc]</span>
+<span id="cb41-53"><a href="#cb41-53" aria-hidden="true" tabindex="-1"></a>        exact hc0_to_d hc</span>
+<span id="cb41-54"><a href="#cb41-54" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span> have h1 <span class="op">:</span> ↑c <span class="op">*</span> z<span class="op">.</span>im <span class="op">*</span> (↑c <span class="op">*</span> z<span class="op">.</span>im) <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">:=</span> by</span>
+<span id="cb41-55"><a href="#cb41-55" aria-hidden="true" tabindex="-1"></a>          simp[simp]</span>
+<span id="cb41-56"><a href="#cb41-56" aria-hidden="true" tabindex="-1"></a>          exact ⟨ hc, λ hzi <span class="ot">=&gt;</span> by exact hznz hzi ⟩</span>
+<span id="cb41-57"><a href="#cb41-57" aria-hidden="true" tabindex="-1"></a>        have h2 <span class="op">:</span> (↑c <span class="op">*</span> z<span class="op">.</span>re <span class="op">+</span> ↑d) <span class="op">*</span> (↑c <span class="op">*</span> z<span class="op">.</span>re <span class="op">+</span> ↑d) ≥ <span class="dv">0</span> <span class="op">:=</span> by</span>
+<span id="cb41-58"><a href="#cb41-58" aria-hidden="true" tabindex="-1"></a>          exact mul_self_nonneg (↑c <span class="op">*</span> z<span class="op">.</span>re <span class="op">+</span> ↑d)</span>
+<span id="cb41-59"><a href="#cb41-59" aria-hidden="true" tabindex="-1"></a>        exact add_pos_of_nonneg_of_pos h2 h1</span>
+<span id="cb41-60"><a href="#cb41-60" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span> simp[im_of_sum]</span>
+<span id="cb41-61"><a href="#cb41-61" aria-hidden="true" tabindex="-1"></a>      simp[z_norm_im_zero]</span>
+<span id="cb41-62"><a href="#cb41-62" aria-hidden="true" tabindex="-1"></a>      exact hpos</span>
+<span id="cb41-63"><a href="#cb41-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-64"><a href="#cb41-64" aria-hidden="true" tabindex="-1"></a>⟩</span></code></pre></div>
+<p>Here is an example showing the use of the map. Note that it would
+throw a type error if the output of fl_map were not in UHP. So this
+short statement actually packs a lot of information into it.</p>
+<div class="sourceCode" id="cb42"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#check (fl_map ⟨1, 1, 0, 1, rfl ⟩) ⟨ 2 + I, by simp ⟩</span></span></code></pre></div>
+<h2 id="flt-is-a-group">FLT is a group</h2>
+<p>Now we can start proving FLT is a group!</p>
+<div class="sourceCode" id="cb43"><pre
+class="sourceCode hs"><code class="sourceCode haskell"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>noncomputable</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> fl_coe_fun<span class="op">:</span> <span class="dt">CoeFun</span> <span class="dt">FLT</span> (λ _ <span class="ot">=&gt;</span> <span class="dt">UHP</span> → <span class="dt">UHP</span>) <span class="op">:=</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  ⟨ λ f <span class="ot">=&gt;</span> (λ z <span class="ot">=&gt;</span> fl_map f z) ⟩</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>def fl_to_sl2 (f <span class="op">:</span> <span class="dt">FLT</span>) <span class="op">:</span> <span class="dt">SL2</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">:=</span> ⟨ <span class="op">!!</span>[f<span class="op">.</span>a,f<span class="op">.</span>b;f<span class="op">.</span>c,f<span class="op">.</span>d], by simp[f<span class="op">.</span>det1] ⟩</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>def sl2_to_fl (<span class="dt">A</span> <span class="op">:</span> <span class="dt">SL2</span>) <span class="op">:</span> <span class="dt">FLT</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">:=</span> ⟨ <span class="dt">A</span> <span class="dv">0</span> <span class="dv">0</span>, <span class="dt">A</span> <span class="dv">0</span> <span class="dv">1</span>, <span class="dt">A</span> <span class="dv">1</span> <span class="dv">0</span>, <span class="dt">A</span> <span class="dv">1</span> <span class="dv">1</span>, by</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>    have h <span class="op">:=</span> A.det1</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>    simp[Matrix.det_fin_two] at h</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>    exact h⟩</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>theorem sl2_map_map <span class="op">:</span> sl2_to_fl ∘ fl_to_sl2 <span class="ot">=</span> <span class="fu">id</span> <span class="op">:=</span> by</span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>  funext</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>  simp[fl_to_sl2,sl2_to_fl]</span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>theorem fl_map_map <span class="op">:</span> fl_to_sl2 ∘ sl2_to_fl <span class="ot">=</span> <span class="fu">id</span> <span class="op">:=</span> by</span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>  funext <span class="dt">A</span></span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>  simp[fl_to_sl2,sl2_to_fl,<span class="dt">SL2</span>]</span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>  ext i j</span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>  fin_cases i <span class="op">&lt;</span>;<span class="op">&gt;</span> fin_cases j <span class="op">&lt;</span>;<span class="op">&gt;</span> simp</span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>theorem sl2_eq_imp_fl_eq (f g <span class="op">:</span> <span class="dt">FLT</span>)<span class="op">:</span> fl_to_sl2 f <span class="ot">=</span> fl_to_sl2 g → f <span class="ot">=</span> g <span class="op">:=</span> by</span>
+<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>  intro h</span>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>  simp[fl_to_sl2] at h</span>
+<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a>  apply Matrix.ext_iff<span class="op">.</span>mpr at h</span>
+<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>  ext</span>
+<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span> apply h <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span> apply h <span class="dv">0</span> <span class="dv">1</span></span>
+<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span> apply h <span class="dv">1</span> <span class="dv">0</span></span>
+<span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span> apply h <span class="dv">1</span> <span class="dv">1</span></span>
+<span id="cb43-33"><a href="#cb43-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a>theorem fl_eq_imp_sl2_eq (f g <span class="op">:</span> <span class="dt">FLT</span>)<span class="op">:</span> f <span class="ot">=</span> g → fl_to_sl2 f <span class="ot">=</span> fl_to_sl2 g <span class="op">:=</span> by</span>
+<span id="cb43-35"><a href="#cb43-35" aria-hidden="true" tabindex="-1"></a>  intro hfg</span>
+<span id="cb43-36"><a href="#cb43-36" aria-hidden="true" tabindex="-1"></a>  apply FLT.ext_iff<span class="op">.</span>mp at hfg</span>
+<span id="cb43-37"><a href="#cb43-37" aria-hidden="true" tabindex="-1"></a>  obtain ⟨ ha, hb, hc, hd ⟩ <span class="op">:=</span> hfg</span>
+<span id="cb43-38"><a href="#cb43-38" aria-hidden="true" tabindex="-1"></a>  simp[fl_to_sl2,ha,hb,hc,hd]</span>
+<span id="cb43-39"><a href="#cb43-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-40"><a href="#cb43-40" aria-hidden="true" tabindex="-1"></a>def fl_comp (f g <span class="op">:</span> <span class="dt">FLT</span>) <span class="op">:</span> <span class="dt">FLT</span> <span class="op">:=</span></span>
+<span id="cb43-41"><a href="#cb43-41" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> <span class="dt">A</span> <span class="op">:=</span> fl_to_sl2 f</span>
+<span id="cb43-42"><a href="#cb43-42" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> <span class="dt">B</span> <span class="op">:=</span> fl_to_sl2 g</span>
+<span id="cb43-43"><a href="#cb43-43" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> <span class="dt">AB</span> <span class="op">:=</span> <span class="dt">A</span><span class="op">*</span><span class="dt">B</span></span>
+<span id="cb43-44"><a href="#cb43-44" aria-hidden="true" tabindex="-1"></a>  ⟨ <span class="dt">AB</span> <span class="dv">0</span> <span class="dv">0</span>, <span class="dt">AB</span> <span class="dv">0</span> <span class="dv">1</span>, <span class="dt">AB</span> <span class="dv">1</span> <span class="dv">0</span>, <span class="dt">AB</span> <span class="dv">1</span> <span class="dv">1</span>, by</span>
+<span id="cb43-45"><a href="#cb43-45" aria-hidden="true" tabindex="-1"></a>    have h <span class="op">:=</span> AB.det1</span>
+<span id="cb43-46"><a href="#cb43-46" aria-hidden="true" tabindex="-1"></a>    simp[Matrix.det_fin_two] at h</span>
+<span id="cb43-47"><a href="#cb43-47" aria-hidden="true" tabindex="-1"></a>    exact h ⟩</span>
+<span id="cb43-48"><a href="#cb43-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-49"><a href="#cb43-49" aria-hidden="true" tabindex="-1"></a>noncomputable</span>
+<span id="cb43-50"><a href="#cb43-50" aria-hidden="true" tabindex="-1"></a>def fl_inv (f <span class="op">:</span> <span class="dt">FLT</span>) <span class="op">:</span> <span class="dt">FLT</span> <span class="op">:=</span></span>
+<span id="cb43-51"><a href="#cb43-51" aria-hidden="true" tabindex="-1"></a>  sl2_to_fl ( (fl_to_sl2 f)⁻¹)</span>
+<span id="cb43-52"><a href="#cb43-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-53"><a href="#cb43-53" aria-hidden="true" tabindex="-1"></a><span class="co">-- just checking whether coercion works</span></span>
+<span id="cb43-54"><a href="#cb43-54" aria-hidden="true" tabindex="-1"></a>example (f<span class="op">:</span> <span class="dt">FLT</span>) (z <span class="op">:</span> <span class="dt">UHP</span>) <span class="op">:</span> f z <span class="ot">=</span> f z <span class="op">:=</span> rfl</span>
+<span id="cb43-55"><a href="#cb43-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-56"><a href="#cb43-56" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> fl_inhabited <span class="op">:</span> <span class="dt">Inhabited</span> <span class="dt">FLT</span> <span class="op">:=</span> ⟨ ⟨ <span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,rfl ⟩ ⟩</span>
+<span id="cb43-57"><a href="#cb43-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-58"><a href="#cb43-58" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> fl_hmul_inst <span class="op">:</span> <span class="dt">HMul</span> <span class="dt">FLT</span> <span class="dt">FLT</span> <span class="dt">FLT</span> <span class="op">:=</span> ⟨ fl_comp ⟩</span>
+<span id="cb43-59"><a href="#cb43-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-60"><a href="#cb43-60" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> fl_mul_inst <span class="op">:</span> <span class="dt">Mul</span> <span class="dt">FLT</span> <span class="op">:=</span> ⟨ fl_comp ⟩</span>
+<span id="cb43-61"><a href="#cb43-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-62"><a href="#cb43-62" aria-hidden="true" tabindex="-1"></a>noncomputable</span>
+<span id="cb43-63"><a href="#cb43-63" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> fl_inv_inst <span class="op">:</span> <span class="dt">Inv</span> <span class="dt">FLT</span> <span class="op">:=</span> ⟨ fl_inv ⟩</span>
+<span id="cb43-64"><a href="#cb43-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-65"><a href="#cb43-65" aria-hidden="true" tabindex="-1"></a>def fl_one <span class="op">:</span> <span class="dt">FLT</span> <span class="op">:=</span> ⟨ <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, rfl ⟩</span>
+<span id="cb43-66"><a href="#cb43-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-67"><a href="#cb43-67" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> fl_one_inst <span class="op">:</span> <span class="dt">One</span> <span class="dt">FLT</span> <span class="op">:=</span> ⟨ fl_one ⟩</span>
+<span id="cb43-68"><a href="#cb43-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-69"><a href="#cb43-69" aria-hidden="true" tabindex="-1"></a>theorem fl_comp_sl2 (f g <span class="op">:</span> <span class="dt">FLT</span>)</span>
+<span id="cb43-70"><a href="#cb43-70" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span> fl_to_sl2 (f<span class="op">*</span>g) <span class="ot">=</span> (fl_to_sl2 f) <span class="op">*</span> (fl_to_sl2 g) <span class="op">:=</span> by</span>
+<span id="cb43-71"><a href="#cb43-71" aria-hidden="true" tabindex="-1"></a>    simp[fl_to_sl2,fl_hmul_inst,fl_comp]</span>
+<span id="cb43-72"><a href="#cb43-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-73"><a href="#cb43-73" aria-hidden="true" tabindex="-1"></a>theorem fl_comp_sl2_iff (f g h<span class="op">:</span> <span class="dt">FLT</span>)</span>
+<span id="cb43-74"><a href="#cb43-74" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span> h <span class="ot">=</span> f <span class="op">*</span> g ↔ (fl_to_sl2 h) <span class="ot">=</span> (fl_to_sl2 f) <span class="op">*</span> (fl_to_sl2 g) <span class="op">:=</span> by</span>
+<span id="cb43-75"><a href="#cb43-75" aria-hidden="true" tabindex="-1"></a>  apply Iff.intro</span>
+<span id="cb43-76"><a href="#cb43-76" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span> intro h1</span>
+<span id="cb43-77"><a href="#cb43-77" aria-hidden="true" tabindex="-1"></a>    simp_all[fl_to_sl2,fl_hmul_inst,fl_comp]</span>
+<span id="cb43-78"><a href="#cb43-78" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span> intro h2</span>
+<span id="cb43-79"><a href="#cb43-79" aria-hidden="true" tabindex="-1"></a>    rw[←fl_comp_sl2] at h2</span>
+<span id="cb43-80"><a href="#cb43-80" aria-hidden="true" tabindex="-1"></a>    apply sl2_eq_imp_fl_eq at h2</span>
+<span id="cb43-81"><a href="#cb43-81" aria-hidden="true" tabindex="-1"></a>    exact h2</span>
+<span id="cb43-82"><a href="#cb43-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-83"><a href="#cb43-83" aria-hidden="true" tabindex="-1"></a>theorem fl_mul_assoc <span class="op">:</span> ∀ f g h <span class="op">:</span> <span class="dt">FLT</span>, f <span class="op">*</span> g <span class="op">*</span> h <span class="ot">=</span> f <span class="op">*</span> (g <span class="op">*</span> h) <span class="op">:=</span> by</span>
+<span id="cb43-84"><a href="#cb43-84" aria-hidden="true" tabindex="-1"></a>  intro f g h</span>
+<span id="cb43-85"><a href="#cb43-85" aria-hidden="true" tabindex="-1"></a>  simp[fl_comp_sl2_iff,fl_to_sl2,fl_hmul_inst,fl_comp]</span>
+<span id="cb43-86"><a href="#cb43-86" aria-hidden="true" tabindex="-1"></a>  exact ⟨ by ring, by ring, by ring, by ring ⟩</span>
+<span id="cb43-87"><a href="#cb43-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-88"><a href="#cb43-88" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> fl_semi_inst<span class="op">:</span> <span class="dt">Semigroup</span> <span class="dt">FLT</span> <span class="op">:=</span></span>
+<span id="cb43-89"><a href="#cb43-89" aria-hidden="true" tabindex="-1"></a>  ⟨ fl_mul_assoc ⟩</span>
+<span id="cb43-90"><a href="#cb43-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-91"><a href="#cb43-91" aria-hidden="true" tabindex="-1"></a>theorem fl_mul_one_left (f <span class="op">:</span> <span class="dt">FLT</span>) <span class="op">:</span> <span class="dv">1</span> <span class="op">*</span> f <span class="ot">=</span> f <span class="op">:=</span> by</span>
+<span id="cb43-92"><a href="#cb43-92" aria-hidden="true" tabindex="-1"></a>  have <span class="op">:</span> <span class="dv">1</span> <span class="ot">=</span> fl_one <span class="op">:=</span> rfl</span>
+<span id="cb43-93"><a href="#cb43-93" aria-hidden="true" tabindex="-1"></a>  rw[this]</span>
+<span id="cb43-94"><a href="#cb43-94" aria-hidden="true" tabindex="-1"></a>  simp[fl_hmul_inst,fl_to_sl2,fl_comp,fl_one]</span>
+<span id="cb43-95"><a href="#cb43-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-96"><a href="#cb43-96" aria-hidden="true" tabindex="-1"></a>theorem fl_mul_one_right (f <span class="op">:</span> <span class="dt">FLT</span>) <span class="op">:</span> f <span class="op">*</span> <span class="dv">1</span><span class="ot">=</span> f <span class="op">:=</span> by</span>
+<span id="cb43-97"><a href="#cb43-97" aria-hidden="true" tabindex="-1"></a>  have <span class="op">:</span> <span class="dv">1</span> <span class="ot">=</span> fl_one <span class="op">:=</span> rfl</span>
+<span id="cb43-98"><a href="#cb43-98" aria-hidden="true" tabindex="-1"></a>  rw[this]</span>
+<span id="cb43-99"><a href="#cb43-99" aria-hidden="true" tabindex="-1"></a>  simp[fl_hmul_inst,fl_to_sl2,fl_comp,fl_one]</span>
+<span id="cb43-100"><a href="#cb43-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-101"><a href="#cb43-101" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> fl_mul_one_inst <span class="op">:</span> <span class="dt">MulOneClass</span> <span class="dt">FLT</span> <span class="op">:=</span></span>
+<span id="cb43-102"><a href="#cb43-102" aria-hidden="true" tabindex="-1"></a>  ⟨ fl_mul_one_left, fl_mul_one_right ⟩</span>
+<span id="cb43-103"><a href="#cb43-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-104"><a href="#cb43-104" aria-hidden="true" tabindex="-1"></a>def fl_adj (f <span class="op">:</span> <span class="dt">FLT</span>) <span class="op">:</span> <span class="dt">FLT</span> <span class="op">:=</span> ⟨ f<span class="op">.</span>d, <span class="op">-</span>f<span class="op">.</span>b, <span class="op">-</span>f<span class="op">.</span>c, f<span class="op">.</span>a, by</span>
+<span id="cb43-105"><a href="#cb43-105" aria-hidden="true" tabindex="-1"></a>  have h <span class="op">:=</span> f<span class="op">.</span>det1</span>
+<span id="cb43-106"><a href="#cb43-106" aria-hidden="true" tabindex="-1"></a>  rw[←h]</span>
+<span id="cb43-107"><a href="#cb43-107" aria-hidden="true" tabindex="-1"></a>  ring</span>
+<span id="cb43-108"><a href="#cb43-108" aria-hidden="true" tabindex="-1"></a> ⟩</span>
+<span id="cb43-109"><a href="#cb43-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-110"><a href="#cb43-110" aria-hidden="true" tabindex="-1"></a>theorem fl_inv_adj (f <span class="op">:</span> <span class="dt">FLT</span>) <span class="op">:</span> f⁻¹ <span class="ot">=</span> fl_adj f <span class="op">:=</span> by</span>
+<span id="cb43-111"><a href="#cb43-111" aria-hidden="true" tabindex="-1"></a>  simp[fl_inv_inst,fl_inv,sl2_to_fl,fl_to_sl2]</span>
+<span id="cb43-112"><a href="#cb43-112" aria-hidden="true" tabindex="-1"></a>  simp[Matrix.inv]</span>
+<span id="cb43-113"><a href="#cb43-113" aria-hidden="true" tabindex="-1"></a>  simp[f<span class="op">.</span>det1,fl_adj]</span>
+<span id="cb43-114"><a href="#cb43-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-115"><a href="#cb43-115" aria-hidden="true" tabindex="-1"></a>theorem fl_inv_left <span class="op">:</span> ∀ f <span class="op">:</span> <span class="dt">FLT</span>, f⁻¹ <span class="op">*</span> f <span class="ot">=</span> <span class="dv">1</span> <span class="op">:=</span> by</span>
+<span id="cb43-116"><a href="#cb43-116" aria-hidden="true" tabindex="-1"></a>  intro f</span>
+<span id="cb43-117"><a href="#cb43-117" aria-hidden="true" tabindex="-1"></a>  rw[fl_inv_adj]</span>
+<span id="cb43-118"><a href="#cb43-118" aria-hidden="true" tabindex="-1"></a>  have <span class="op">:</span> <span class="dv">1</span> <span class="ot">=</span> fl_one <span class="op">:=</span> rfl</span>
+<span id="cb43-119"><a href="#cb43-119" aria-hidden="true" tabindex="-1"></a>  rw[this]</span>
+<span id="cb43-120"><a href="#cb43-120" aria-hidden="true" tabindex="-1"></a>  simp[fl_hmul_inst,fl_comp,fl_adj,fl_to_sl2,fl_one]</span>
+<span id="cb43-121"><a href="#cb43-121" aria-hidden="true" tabindex="-1"></a>  have h <span class="op">:=</span> f<span class="op">.</span>det1</span>
+<span id="cb43-122"><a href="#cb43-122" aria-hidden="true" tabindex="-1"></a>  rw[←h]</span>
+<span id="cb43-123"><a href="#cb43-123" aria-hidden="true" tabindex="-1"></a>  exact ⟨ by ring, by ring, by ring, by ring ⟩</span>
+<span id="cb43-124"><a href="#cb43-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-125"><a href="#cb43-125" aria-hidden="true" tabindex="-1"></a>theorem fl_inv_right <span class="op">:</span> ∀ f <span class="op">:</span> <span class="dt">FLT</span>, f <span class="op">*</span> f⁻¹ <span class="ot">=</span> <span class="dv">1</span> <span class="op">:=</span> by</span>
+<span id="cb43-126"><a href="#cb43-126" aria-hidden="true" tabindex="-1"></a>  intro f</span>
+<span id="cb43-127"><a href="#cb43-127" aria-hidden="true" tabindex="-1"></a>  rw[fl_inv_adj]</span>
+<span id="cb43-128"><a href="#cb43-128" aria-hidden="true" tabindex="-1"></a>  have <span class="op">:</span> <span class="dv">1</span> <span class="ot">=</span> fl_one <span class="op">:=</span> rfl</span>
+<span id="cb43-129"><a href="#cb43-129" aria-hidden="true" tabindex="-1"></a>  rw[this]</span>
+<span id="cb43-130"><a href="#cb43-130" aria-hidden="true" tabindex="-1"></a>  simp[fl_hmul_inst,fl_comp,fl_adj,fl_to_sl2,fl_one]</span>
+<span id="cb43-131"><a href="#cb43-131" aria-hidden="true" tabindex="-1"></a>  have h <span class="op">:=</span> f<span class="op">.</span>det1</span>
+<span id="cb43-132"><a href="#cb43-132" aria-hidden="true" tabindex="-1"></a>  rw[←h]</span>
+<span id="cb43-133"><a href="#cb43-133" aria-hidden="true" tabindex="-1"></a>  exact ⟨ by ring, by ring, by ring, by ring ⟩</span>
+<span id="cb43-134"><a href="#cb43-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-135"><a href="#cb43-135" aria-hidden="true" tabindex="-1"></a>noncomputable</span>
+<span id="cb43-136"><a href="#cb43-136" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> fl_group_inst <span class="op">:</span> <span class="dt">Group</span> <span class="dt">FLT</span> <span class="op">:=</span></span>
+<span id="cb43-137"><a href="#cb43-137" aria-hidden="true" tabindex="-1"></a>  <span class="op">@</span>Group.ofLeftAxioms <span class="dt">FLT</span> _ _ _ fl_mul_assoc fl_mul_one_left fl_inv_left</span></code></pre></div>
+</body>
+</html>
