@@ -11,7 +11,7 @@ data = f.read()
 
 ## print(data)
 
-comment = "((?s)/-.*?-/)"
+comment = r'(?s:(/-.*?-/))'
 
 for str in re.split(comment, data)[1:]:
     if len(str) > 1 and str[0] == '/' and str[1] == '-':

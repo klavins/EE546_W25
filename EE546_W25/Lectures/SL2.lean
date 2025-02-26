@@ -58,7 +58,7 @@ For your final project, you will need to use this script (or figure out how to u
 
 /-
 
-# Some of Mathlibs Classes
+# Some of Mathlib's Classes
 
 <img src="../img/mathlib-hierarchies.jpg" />
 
@@ -139,7 +139,7 @@ structure UHP where
   z : ℂ
   pos_im : z.im > 0 := by decide
 
-/- With this definition in place, we can define new elements of UHP and operations on them. For example, below we define the imaginary number $j$ and addition on UHP. Note that for addition to work, we have to show that the sum of two complex numbers with non-negative imaginary parts in also imaginary. -/
+/- With this in place, we can define new elements of UHP and operations on them. For example, below we define the imaginary number $j$ and addition on UHP. Note that for addition to work, we have to show that the sum of two complex numbers with non-negative imaginary parts in also imaginary. -/
 
 def j : UHP := ⟨ I, by simp ⟩
 
@@ -568,7 +568,11 @@ theorem den_nz (f : FLT) (z: ℂ) : z.im ≠ 0 → f.c * z + f.d ≠ 0 := by
 
   case inr hy0 => exact hz hy0
 
-/- Now we define the map and include the associated proof that the map indeed goes from UHP to UHP. -/
+/- Now we define the map and include the associated proof that the map indeed goes from UHP to UHP.
+
+***TODO***: Make this proof *much* simpler by factoring out more lemmas about Complex and UHP.
+
+-/
 
 noncomputable
 def fl_map (f : FLT) (z : UHP) : UHP := ⟨ (f.a*z + f.b)/(f.c*z + f.d), by
@@ -641,7 +645,9 @@ def fl_map (f : FLT) (z : UHP) : UHP := ⟨ (f.a*z + f.b)/(f.c*z + f.d), by
 
 /- ## FLT is a group
 
-Now we can start proving FLT is a group! -/
+Now we can start proving FLT is a group!
+
+ -/
 
 noncomputable
 instance fl_coe_fun: CoeFun FLT (λ _ => UHP → UHP) :=
