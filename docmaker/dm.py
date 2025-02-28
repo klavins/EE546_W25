@@ -1,11 +1,17 @@
 import sys
 import re
 
+#
 # Converts to lean to markdown by converting comment blocks to markdown and code to markdown code blocks. 
-# The resulting markdown file can be viewed with your favorite viewer, or convered to html with something 
-# like pandoc -o build/output.html build/input.md --toc --standalone --mathjax --markdown-headings=atx
+# 
+# Usage:
+#  
+#   python3 dm.py my_lean_file.ean > my_lean_file.md
+#
+# The resulting markdown file can be viewed with your favorite viewer.
+#
 
-f = open(sys.argv[1], "r")
+f = open(sys.argv[1], "r", encoding='utf-8')
 
 data = f.read()
 
