@@ -93,12 +93,15 @@
 
 ## Week 10
 
-  - MAR 4: TBA
+  - MAR 4: 
+    - [Group Project Example Format](https://github.com/klavins/ModGroup)
+    - Tactics (Ember)
+    - Group work and consultations 
 
-  - MAR 6: TBA
+  - MAR 6: Group Progess Updates 
 
 ## Week 11
 
-  - MAR 4: Final Presentations
+  - MAR 4: Group work and consultations 
 
   - MAR 6: Final Presentations 
