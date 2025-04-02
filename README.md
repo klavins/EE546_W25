@@ -11,7 +11,7 @@
 ## Week 1
 
 - Jan 7 : Getting Started
-  - [Introduction](./EE546_W25/Intro.md)
+  - [Introduction](./EE546_W25/blob/main/EE546_W25/Lectures/Intro.md)
 
 - Jan 9 : Representing and reasoning about propositional statements
   - [Lean Basics](./EE546_W25/Intro.lean)
