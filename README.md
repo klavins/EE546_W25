@@ -14,7 +14,7 @@
   - [Introduction](./EE546_W25/Intro.md)
 
 - Jan 9 : Representing and reasoning about propositional statements
-  - [Lean Basics](./EE546_W25/Intro.md)
+  - [Lean Basics](./EE546_W25/Intro.lean)
   - [Propositional Logic](./EE546_W25/Lectures/PropositionalLogic.lean)
 
 ## Week 2
